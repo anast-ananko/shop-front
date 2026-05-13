@@ -8,4 +8,5 @@ export interface Book {
   description: string;
   posterUrl: string;
   isFavorite: boolean;
+  isInCart: boolean;
 }

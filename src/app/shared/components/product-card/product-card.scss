@@ -1,0 +1,68 @@
+.card {
+  max-width: 320px;
+  transition: .3s;
+}
+
+.mat-mdc-card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.favorite {
+  font-size: 24px;
+}
+
+.subtitle {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.header-image {
+  background-size: cover;
+  background-position: center;
+}
+
+.card-poster {
+  width: 100%;
+  aspect-ratio: 2 / 1.5;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+.card {
+  cursor: pointer;
+
+  .price {
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: .3s;
+  }
+
+  &:hover {
+    .price {
+      background-color: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+    }
+  }
+
+}
+
+.card:hover {
+  scale: 1.02;
+  z-index: 1;
+}

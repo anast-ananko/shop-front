@@ -3,7 +3,7 @@
 
 @if(filteredBooks(); as books){
   @for (book of books; track book.id) {
-    <p>{{ book.title }}</p>
+    <app-product-card [book]="book"></app-product-card>
   }
 }
 
