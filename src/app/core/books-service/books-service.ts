@@ -28,6 +28,13 @@ export class BooksService {
       books.map((book) => (book.id === id ? { ...book, isFavorite: !book.isFavorite } : book)),
     );
   }
+  
+  toggleCart(id: number): void {
+    this.books.update((books) =>
+      books.map((book) => (book.id === id ? { ...book, isInCart: !book.isInCart } : book)),
+    );
+  }
+
 
   updateSearchValue(value: string): void {
     this.searchValue.update((v) => v + value);
