@@ -3,14 +3,10 @@
   <mat-card-header>
     <div mat-card-avatar class="header-image" [style.background-image]="'url(' + book.posterUrl + ')'"></div>
     <mat-card-title>{{book.title}}</mat-card-title>
-    <mat-card-subtitle  class="subtitle">{{book.genre}}</mat-card-subtitle>
+    <mat-card-subtitle class="subtitle">{{book.genre}}</mat-card-subtitle>
 
     <button matButton class="favorite" (click)="favoriteToggled(book.id)">
-      @if (book.isFavorite) {
-      &#9829;
-      } @else {
-      &#9825;
-      }
+      <mat-icon> {{book.isFavorite ?'favorite': 'favorite_border'}}</mat-icon>
     </button>
 
   </mat-card-header>
@@ -28,7 +24,9 @@
   </mat-card-content>
 
   <mat-card-actions class="actions">
-    <button matButton>&#128722;</button>
+    <button matButton (click)="cartToggled(book.id)">
+      <mat-icon>{{ book.isInCart ? 'remove_shopping_cart' : 'add_shopping_cart' }}</mat-icon>
+    </button>
   </mat-card-actions>
 
 </mat-card>

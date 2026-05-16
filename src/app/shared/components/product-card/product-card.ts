@@ -3,10 +3,11 @@ import { Book } from '../../../types/book.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { BooksService } from '../../../core/books-service/books-service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-product-card',
-  imports: [MatCardModule, MatButtonModule],
+  imports: [MatCardModule, MatButtonModule, MatIconModule],
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss',
 })
