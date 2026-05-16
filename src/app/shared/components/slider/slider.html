@@ -1,0 +1,31 @@
+<div class="carousel-wrapper">
+  <button
+    class="carousel-arrow carousel-arrow--left"
+    type="button"
+    (click)="swiperEl.swiper.slidePrev()"
+  >
+    ‹
+  </button>
+
+  <swiper-container
+    #swiperEl
+    slides-per-view="4"
+    space-between="20"
+    loop="true"
+    class="carousel-container"
+  >
+    @for (book of books(); track book.id) {
+      <swiper-slide>
+        <app-slider-card [book]="book"></app-slider-card>
+      </swiper-slide>
+    }
+  </swiper-container>
+
+  <button
+    class="carousel-arrow carousel-arrow--right"
+    type="button"
+    (click)="swiperEl.swiper.slideNext()"
+  >
+    ›
+  </button>
+</div>
