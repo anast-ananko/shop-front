@@ -10,8 +10,10 @@
   text-align: center;
 }
 
-.favorite {
-  font-size: 24px;
+.mat-mdc-button>.mat-icon {
+  width: 100%;
+  margin: auto;
+  font-size: 30px;
 }
 
 .subtitle {
@@ -59,7 +61,6 @@
       color: var(--mat-sys-on-primary);
     }
   }
-
 }
 
 .card:hover {
