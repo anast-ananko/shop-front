@@ -1,7 +1,8 @@
 <h1>{{ title() }}</h1>
 <app-search></app-search>
+<app-slider />
 
-@if(filteredBooks(); as books){
+@if (filteredBooks(); as books) {
   @for (book of books; track book.id) {
     <app-product-card [book]="book"></app-product-card>
   }

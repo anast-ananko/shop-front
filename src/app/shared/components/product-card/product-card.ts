@@ -15,11 +15,10 @@ export class ProductCard {
   book = input<Book>();
   private bookService = inject(BooksService);
 
-    favoriteToggled(id: number): void {
+  favoriteToggled(id: number): void {
     this.bookService.toggleFavorite(id);
   }
-    cartToggled(id: number): void {
+  cartToggled(id: number): void {
     this.bookService.toggleCart(id);
   }
-
 }
