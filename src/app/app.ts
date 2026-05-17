@@ -1,13 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Search } from './shared/components/search/search';
+
 import { BooksService } from './core/books-service/books-service';
 import { ProductCard } from './shared/components/product-card/product-card';
 import { Slider } from './shared/components/slider/slider';
+import { Header } from "./core/header/header";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Search, ProductCard, Slider],
+  imports: [RouterOutlet, ProductCard, Slider, Header],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
