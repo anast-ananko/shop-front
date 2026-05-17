@@ -24,5 +24,4 @@ export class Search {
   removeSearch(): void {
     this.bookService.setSearchValue('');
   }
-
 }
