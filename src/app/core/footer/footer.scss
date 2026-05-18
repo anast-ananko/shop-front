@@ -1,0 +1,52 @@
+.footer-wrapper {
+  background-color: var(--mat-sys-primary);
+  padding: 10px 0;
+}
+
+.footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  background-color: var(--mat-sys-primary);
+
+  a {
+    color: var(--mat-sys-on-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+
+    .rsschool-link img {
+      height: 32px;
+      width: auto;
+    }
+  }
+}
+
+.footer-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.github-link img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  display: block;
+}
+
+.rs-link img {
+  width: 90px;
+  height: 60px;
+  object-fit: contain;
+  display: block;
+}

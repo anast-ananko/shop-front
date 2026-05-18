@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -25,10 +25,12 @@ import { Search } from '../../shared/components/search/search';
   styleUrl: './header.scss',
 })
 export class Header {
-  isAuth = false; // from AuthService
-  cartCount = 3; // from CartService
+  isAuth = input(false);
+  cartCount = input(0);
+
+  logoutClick = output<void>();
 
   logout() {
-    // this.isAuth = false;
+    this.logoutClick.emit();
   }
 }
