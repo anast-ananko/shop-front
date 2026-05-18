@@ -27,7 +27,7 @@
     </button>
 
     <mat-menu #authMenu="matMenu">
-      @if (!isAuth) {
+      @if (!isAuth()) {
         <button mat-menu-item [routerLink]="['/login']">Login</button>
         <button mat-menu-item [routerLink]="['/register']">Register</button>
       } @else {

@@ -18,4 +18,11 @@ export class App {
 
   private bookService = inject(BooksService);
   protected readonly filteredBooks = this.bookService.filteredBooks;
+
+  isAuth = signal(false);
+  cartCount = signal(3);
+
+  handleLogout() {
+    this.isAuth.set(false);
+  }
 }
