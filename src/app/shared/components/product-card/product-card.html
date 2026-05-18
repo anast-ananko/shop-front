@@ -1,0 +1,35 @@
+@if (book(); as book) {
+  <mat-card class="card" appearance="outlined">
+    <mat-card-header>
+      <div
+        mat-card-avatar
+        class="header-image"
+        [style.background-image]="'url(' + book.posterUrl + ')'"
+      ></div>
+      <mat-card-title>{{ book.title }}</mat-card-title>
+      <mat-card-subtitle class="subtitle">{{ book.genre }}</mat-card-subtitle>
+
+      <button matButton class="favorite" (click)="favoriteToggled(book.id)">
+        <mat-icon> {{ book.isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
+      </button>
+    </mat-card-header>
+
+    <img mat-card-image class="card-poster" [src]="book.posterUrl" alt="{{ book.title }}" />
+
+    <mat-card-content>
+      <p>
+        {{ book.description }}
+      </p>
+      <div class="content-wrapper">
+        <p>Rating: {{ book.rating }}</p>
+        <p class="price">Price: {{ book.duration }}$</p>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions class="actions">
+      <button matButton (click)="cartToggled(book.id)">
+        <mat-icon>{{ book.isInCart ? 'remove_shopping_cart' : 'add_shopping_cart' }}</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+}

@@ -1,0 +1,10 @@
+<mat-form-field class="search-form-field" subscriptSizing="dynamic">
+  <mat-label>Search book</mat-label>
+  <input matInput type="search" (input)="onSearch($event)" value="{{ searchValue() }}" />
+
+  @if (searchValue()) {
+    <button matSuffix matIconButton aria-label="Clear" (click)="removeSearch()">
+      <mat-icon>close</mat-icon>
+    </button>
+  }
+</mat-form-field>

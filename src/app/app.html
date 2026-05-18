@@ -1,0 +1,16 @@
+<app-header [isAuth]="isAuth()" [cartCount]="cartCount()" (logoutClick)="handleLogout()">
+</app-header>
+
+<main>
+  <app-slider />
+
+  <router-outlet />
+
+  @if (filteredBooks(); as books) {
+    @for (book of books; track book.id) {
+      <app-product-card [book]="book"></app-product-card>
+    }
+  }
+</main>
+
+<app-footer />
