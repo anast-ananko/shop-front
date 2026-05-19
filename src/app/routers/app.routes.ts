@@ -6,6 +6,7 @@ import { authRoutes } from './auth.routes';
 import { cartRoutes } from './cart.routes';
 import { catalogRoutes } from './catalog.routes';
 import { searchRoutes } from './search.routes';
+import { detailsRoutes } from './details.routes';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', component: Home },
@@ -14,6 +15,7 @@ export const routes: Routes = [
   ...catalogRoutes,
   ...aboutUsRoutes,
   ...cartRoutes,
+  ...detailsRoutes,
   ...notFoundRoutes,
   { path: '**', redirectTo: '404' },
 ];
