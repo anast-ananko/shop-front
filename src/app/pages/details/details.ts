@@ -13,6 +13,7 @@ import { CurrencyPipe } from '@angular/common';
 export class Details {
   private readonly bookService = inject(BooksService);
   private readonly route = inject(ActivatedRoute);
+  
   currentId = Number(this.route.snapshot.paramMap.get('id'));
   readonly book = this.bookService.getBookById(this.currentId);
 }
