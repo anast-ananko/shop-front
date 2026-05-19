@@ -12,7 +12,7 @@
         Catalog
       </a>
 
-      <a matButton [routerLink]="['/about']" routerLinkActive="active" class="nav-link">
+      <a matButton [routerLink]="['/about-us']" routerLinkActive="active" class="nav-link">
         About Us
       </a>
     </nav>
@@ -28,10 +28,10 @@
 
     <mat-menu #authMenu="matMenu">
       @if (!isAuth()) {
-        <button mat-menu-item [routerLink]="['/login']">Login</button>
-        <button mat-menu-item [routerLink]="['/register']">Register</button>
+        <button mat-menu-item [routerLink]="['/auth/sign-in']">Login</button>
+        <button mat-menu-item [routerLink]="['/auth/registration']">Register</button>
       } @else {
-        <button mat-menu-item [routerLink]="['/profile']">Profile</button>
+        <button mat-menu-item [routerLink]="['/auth/profile']">Profile</button>
         <button mat-menu-item (click)="logout()">Logout</button>
       }
     </mat-menu>
