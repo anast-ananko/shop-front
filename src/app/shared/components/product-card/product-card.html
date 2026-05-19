@@ -1,5 +1,5 @@
 @if (book(); as book) {
-  <mat-card class="card" appearance="outlined">
+  <mat-card class="card" appearance="outlined" [routerLink]="['/details', book.id]">
     <mat-card-header>
       <div
         mat-card-avatar

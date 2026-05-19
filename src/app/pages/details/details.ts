@@ -1,9 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { BooksService } from '../../core/books-service/books-service';
+import { MatButtonModule } from '@angular/material/button';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-details',
-  imports: [],
+  imports: [MatButtonModule, RouterLink, CurrencyPipe],
   templateUrl: './details.html',
   styleUrl: './details.scss',
 })
-export class Details {}
+export class Details {
+  private readonly bookService = inject(BooksService);
+  private readonly route = inject(ActivatedRoute);
+  currentId = Number(this.route.snapshot.paramMap.get('id'));
+  readonly book = this.bookService.getBookById(this.currentId);
+}
