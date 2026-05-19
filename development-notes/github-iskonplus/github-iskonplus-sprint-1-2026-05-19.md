@@ -20,3 +20,14 @@
 - **Time spent:** 2 hours
 - **AI usage:** AI tools were not used.
 
+---
+
+## Part 3
+
+- **What was done:** Created the Details page and implemented navigation from product cards to the Details page using Angular Router.
+- **Main challenge:** Correctly configuring dynamic routing and handling navigation from reusable product cards.
+- **Solution:** Configured Angular routes and added navigation logic to open the Details page when clicking on a product card.
+- **What I practiced:**| Practiced Angular routing, navigation handling, and working with dynamic page transitions.
+- **Time spent:**| 2 hours
+- **AI usage:** AI tools were not used.
+
