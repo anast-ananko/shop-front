@@ -1,1 +1,6 @@
-<p>home works!</p>
+  <app-slider />
+  @if (filteredBooks(); as books) {
+    @for (book of books; track book.id) {
+      <app-product-card [book]="book"></app-product-card>
+    }
+  }
