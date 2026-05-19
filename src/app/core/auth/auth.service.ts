@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
 import { TokenStorage } from './token.storage';
@@ -18,14 +18,29 @@ export class AuthService {
   private http = inject(HttpClient);
   private storage = inject(TokenStorage);
 
+  authState = signal<'guest' | 'customer' | 'loading'>('loading');
+
+  isAuth = computed(() => this.authState() === 'customer');
+  isGuest = computed(() => this.authState() === 'guest');
+
   initAuthFlow() {
     const customer = this.storage.getCustomerToken();
-    if (customer) return;
+    if (customer) {
+      this.authState.set('customer');
+      return;
+    }
 
     const anon = this.storage.getAnonymousToken();
-    if (anon) return;
+    if (anon) {
+      this.authState.set('guest');
+      return;
+    }
 
-    this.getAnonymousToken().subscribe();
+    this.authState.set('loading');
+
+    this.getAnonymousToken().subscribe(() => {
+      this.authState.set('guest');
+    });
   }
 
   getAppToken(): Observable<AppToken> {
@@ -73,6 +88,8 @@ export class AuthService {
         tap((res) => {
           this.storage.setCustomerToken(res.access_token);
           this.storage.setRefreshToken(res.refresh_token);
+
+          this.authState.set('customer');
         }),
       );
   }
@@ -98,7 +115,7 @@ export class AuthService {
       'Content-Type': 'application/json',
     });
 
-    return this.http.get<MeResponse>(`${this.url}/${this.project_key}me/signup`, {
+    return this.http.get<MeResponse>(`${this.url}/${this.project_key}me`, {
       headers,
     });
   }
@@ -125,12 +142,18 @@ export class AuthService {
       .pipe(
         tap((res) => {
           this.storage.setCustomerToken(res.access_token);
+          
+          this.authState.set('customer'); 
         }),
       );
   }
 
   logout(): void {
     this.storage.clearTokens();
-    this.getAnonymousToken();
+    this.authState.set('loading');
+
+    this.getAnonymousToken().subscribe(() => {
+      this.authState.set('guest');
+    });
   }
 }
