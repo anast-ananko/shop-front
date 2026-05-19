@@ -1,6 +1,6 @@
 .card {
   max-width: 320px;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .mat-mdc-card-header {
@@ -10,7 +10,7 @@
   text-align: center;
 }
 
-.mat-mdc-button>.mat-icon {
+.mat-mdc-button > .mat-icon {
   width: 100%;
   margin: auto;
   font-size: 30px;
@@ -43,7 +43,6 @@
 .actions {
   display: flex;
   justify-content: flex-end;
-
 }
 
 .card {
@@ -52,7 +51,7 @@
   .price {
     padding: 4px 8px;
     border-radius: 4px;
-    transition: .3s;
+    transition: 0.3s;
   }
 
   &:hover {

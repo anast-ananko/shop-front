@@ -1,3 +1,9 @@
 .search-form-field {
   width: 320px;
 }
+
+@media (max-width: 1024px) {
+  .search-form-field {
+    width: 250px;
+  }
+}

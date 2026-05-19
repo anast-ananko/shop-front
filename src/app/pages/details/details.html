@@ -1,0 +1,42 @@
+<section class="book-details">
+
+  @if (book) {
+  <div class="book-details-content">
+
+    <img class="book-details-poster" [src]="book.posterUrl" [alt]="book.title" />
+    <div class="book-details-info">
+
+      <h1>{{ book.title }}</h1>
+
+      <div class="wrapper-content description">
+        <p>Description:</p>
+        <p>{{ book.description }}</p>
+      </div>
+
+      <div class="wrapper-content">
+        <p>Year:</p>
+        <p>{{ book.year }}</p>
+      </div>
+      <div class="wrapper-content">
+        <p>Genre:</p>
+        <p>{{ book.genre }}</p>
+      </div>
+      <div class="wrapper-content">
+        <p>Rating:</p>
+        <p>{{ book.rating }} / 10</p>
+      </div>
+      <div class="wrapper-content">
+        <p>Price:</p>
+        <p>{{ book.duration | currency }}</p>
+      </div>
+
+
+    </div>
+
+  </div>
+
+  }
+
+  <a matButton="outlined" class="back-btn" [routerLink]="['/']">Back</a>
+
+</section>
