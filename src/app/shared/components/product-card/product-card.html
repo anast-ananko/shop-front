@@ -1,5 +1,5 @@
 @if (book(); as book) {
-  <mat-card class="card" appearance="outlined">
+  <mat-card class="card" appearance="outlined" [routerLink]="['/details', book.id]">
     <mat-card-header>
       <div
         mat-card-avatar
@@ -9,7 +9,7 @@
       <mat-card-title>{{ book.title }}</mat-card-title>
       <mat-card-subtitle class="subtitle">{{ book.genre }}</mat-card-subtitle>
 
-      <button matButton class="favorite" (click)="favoriteToggled(book.id)">
+      <button matButton class="favorite" (click)="favoriteToggled($event, book.id)">
         <mat-icon> {{ book.isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
       </button>
     </mat-card-header>
@@ -27,7 +27,7 @@
     </mat-card-content>
 
     <mat-card-actions class="actions">
-      <button matButton (click)="cartToggled(book.id)">
+      <button matButton (click)="cartToggled($event, book.id)">
         <mat-icon>{{ book.isInCart ? 'remove_shopping_cart' : 'add_shopping_cart' }}</mat-icon>
       </button>
     </mat-card-actions>
