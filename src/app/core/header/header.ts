@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { Search } from '../../shared/components/search/search';
 
@@ -20,6 +20,7 @@ import { Search } from '../../shared/components/search/search';
     MatMenuModule,
     Search,
     RouterLink,
+    RouterLinkActive,
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss',
