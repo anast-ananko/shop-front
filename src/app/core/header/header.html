@@ -8,19 +8,44 @@
     <app-search />
 
     <nav class="header-nav">
-      <a matButton [routerLink]="['/catalog']" routerLinkActive="active" class="nav-link">
+      <a
+        matButton
+        [routerLink]="['/']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
+      >
+        Home
+      </a>
+      <a
+        matButton
+        [routerLink]="['/catalog']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
+      >
         Catalog
       </a>
-
-      <a matButton [routerLink]="['/about-us']" routerLinkActive="active" class="nav-link">
+      <a
+        matButton
+        [routerLink]="['/about-us']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
+      >
         About Us
       </a>
+      <a
+        matButton
+        [routerLink]="['/cart']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
+      >
+        <mat-icon>shopping_cart</mat-icon>
+        Cart
+      </a>
     </nav>
-
-    <button matButton class="cart-button" [routerLink]="['/cart']">
-      <mat-icon>shopping_cart</mat-icon>
-      <span class="cart-text">Cart</span>
-    </button>
 
     <button matButton class="auth-trigger" [matMenuTriggerFor]="authMenu">
       <mat-icon>account_circle</mat-icon>

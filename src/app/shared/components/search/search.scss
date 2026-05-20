@@ -4,6 +4,12 @@
 
 @media (max-width: 1024px) {
   .search-form-field {
-    width: 250px;
+    width: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-form-field {
+    width: 200px;
   }
 }
