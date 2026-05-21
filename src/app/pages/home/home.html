@@ -1,6 +1,10 @@
-  <app-slider />
-  @if (filteredBooks(); as books) {
-    @for (book of books; track book.id) {
-      <app-product-card [book]="book"></app-product-card>
-    }
-  }
+@if (filteredBooks(); as books) {
+  <app-slider [sliderBooks]="books" [cardTemplate]="cardTemplate" />
+
+  <ng-template #cardTemplate let-popularBook>
+    <app-slider-card [book]="popularBook" />
+  </ng-template>
+}
+
+<app-popular />
+<app-latest />

@@ -19,6 +19,20 @@ export class BooksService {
     });
   });
 
+  readonly latestBooks = computed(() => {
+    // current realisation is based on our Book model => year property
+    // with API request would be changed to
+    // return this.books().map((el) => ({...el, year: new Date(el.year)})).sort((a, b) => (b.year.getTime() - a.year.getTime()));
+
+    return [...this.books()].sort((a, b) => b.year - a.year);
+  });
+
+  readonly popularBooks = computed(() => {
+    // I guess here would be similar to realisation just need to be installed
+    // what would be the treshold of our rating propert
+    return [...this.books()].sort((a, b) => b.rating - a.rating);
+  });
+
   getBookById(id: number): Book | undefined {
     return this.books().find((book) => book.id === id);
   }

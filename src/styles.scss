@@ -45,3 +45,21 @@ app-root {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+swiper-slide mat-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+swiper-slide {
+  display: flex;
+  justify-content: center;
+  height: auto;
+  margin: 10px 0;
+}
+
+.slider-card {
+  display: flex;
+}
