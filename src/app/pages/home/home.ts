@@ -10,6 +10,9 @@ import { ProductCard } from '../../shared/components/product-card/product-card';
   styleUrl: './home.scss',
 })
 export class Home {
-    private bookService = inject(BooksService);
+  private bookService = inject(BooksService);
+  constructor() {
+    this.bookService.getBooks().subscribe();
+  }
   protected readonly filteredBooks = this.bookService.filteredBooks;
 }
