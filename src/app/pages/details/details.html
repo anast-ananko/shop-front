@@ -3,7 +3,7 @@
   @if (book) {
   <div class="book-details-content">
 
-    <img class="book-details-poster" [src]="book.posterUrl" [alt]="book.title" />
+    <img class="book-details-poster" [src]="book.imageUrl" [alt]="book.title" />
     <div class="book-details-info">
 
       <h1>{{ book.title }}</h1>
@@ -15,11 +15,11 @@
 
       <div class="wrapper-content">
         <p>Year:</p>
-        <p>{{ book.year }}</p>
+        <p>{{ book.publicationYear }}</p>
       </div>
       <div class="wrapper-content">
         <p>Genre:</p>
-        <p>{{ book.genre }}</p>
+        <p>{{ book.category }}</p>
       </div>
       <div class="wrapper-content">
         <p>Rating:</p>
@@ -27,7 +27,7 @@
       </div>
       <div class="wrapper-content">
         <p>Price:</p>
-        <p>{{ book.duration | currency }}</p>
+        <p>{{ book.price | currency }}</p>
       </div>
 
 
