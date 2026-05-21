@@ -11,8 +11,5 @@ import { ProductCard } from '../../shared/components/product-card/product-card';
 })
 export class Home {
   private bookService = inject(BooksService);
-  constructor() {
-    this.bookService.getBooks().subscribe();
-  }
   protected readonly filteredBooks = this.bookService.filteredBooks;
 }

@@ -32,7 +32,7 @@ export class AuthService {
   isAuth = computed(() => this.authState() === 'customer');
   isGuest = computed(() => this.authState() === 'guest');
 
-    getAccessToken() {
+    getAccessToken(): Observable<AppToken> {
     const body = new HttpParams()
       .set('grant_type', 'client_credentials')
       .set('scope', this.scope);
@@ -43,9 +43,8 @@ export class AuthService {
       'Content-Type': 'application/x-www-form-urlencoded',
     });
 
-    return this.apiService.post<AppToken>(`${this.authUrl}/oauth/token`, body.toString(), headers )
-      .pipe(tap(
-        (res) => this.storage.setAppToken(res.access_token))
+      return this.apiService.post<AppToken>(`${this.authUrl}/oauth/token`, body.toString(), headers).pipe(
+        tap((res) => this.storage.setAppToken(res.access_token)),
       );
   }
 
