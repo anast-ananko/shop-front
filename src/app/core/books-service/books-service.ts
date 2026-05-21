@@ -5,7 +5,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Api } from '../http/services/api/api';
 import { environment } from '../http/environment/environment';
 import { map, tap } from 'rxjs';
-// import { getBooks } from '../../mock-data/db.books';
+import { BookAttributeName, Product, ProductsResponse } from '../../types/api.response';
 
 @Injectable({
   providedIn: 'root',
@@ -60,38 +60,47 @@ export class BooksService {
     });
 
     return this.apiService
-      .get(`${this.url}/${this.project_key}/product-projections?limit=100`, headers)
+      .get<ProductsResponse>(
+        `${this.url}/${this.project_key}/product-projections?limit=100`,
+        headers,
+      )
       .pipe(
-        map((response: any) =>
-          response.results.map((product: any) => this.mapProductToBook(product)),
-        ),
-        tap((books) => this.books.set(books)),
+        map((response) => response.results.map((product) => this.mapProductToBook(product))),
+        tap((books) => {
+          console.log('Fetched books:', books);
+          this.books.set(books);
+        }),
       );
   }
 
-  private mapProductToBook(product: any): Book {
-    const getAttribute = (name: string) =>
-      product.masterVariant.attributes.find((attribute: any) => attribute.name === name)?.value;
+ private mapProductToBook(product: Product): Book {
 
-    return {
-      id: product.id,
-      key: product.key,
-      title: product.name['en-US'],
-      description: product.description?.['en-US'] ?? '',
-      imageUrl: product.masterVariant.images?.[0]?.url ?? '',
-      price: product.masterVariant.prices?.[0]?.value?.centAmount ?? 0,
-      author: getAttribute('author'),
-      publicationYear: getAttribute('publicationYear'),
-      pages: getAttribute('pages'),
-      edition: getAttribute('edition'),
-      copiesLeft: getAttribute('copiesLeft'),
-      stockStatus: getAttribute('stockStatus'),
-      rating: getAttribute('rating'),
-      category: getAttribute('category'),
-      reviews: getAttribute('reviews'),
-      publisher: getAttribute('publisher'),
-      isFavorite: false,
-      isInCart: false,
-    };
-  }
+  const attributes = product.attributes ?? [];
+
+  const getAttribute = (name: string) =>
+    attributes.find((attribute) => attribute.name === name)?.value;
+
+  return {
+    id: product.id,
+    key: product.key,
+    title: product.name['en-US'] ?? '',
+    description: product.description?.['en-US'] ?? '',
+    imageUrl: product.masterVariant.images?.[0]?.url ?? '',
+    price: product.masterVariant.prices?.[0]?.value.centAmount ?? 0,
+    author: String(getAttribute('author') ?? ''),
+    publicationYear: Number(getAttribute('publicationYear') ?? 0),
+    pages: Number(getAttribute('pages') ?? 0),
+    edition: String(getAttribute('edition') ?? ''),
+    copiesLeft: Number(getAttribute('copiesLeft') ?? 0),
+    stockStatus: String(getAttribute('stockStatus') ?? ''),
+    rating: Number(getAttribute('rating') ?? 0),
+    category: String(getAttribute('category') ?? ''),
+    reviews: Number(getAttribute('reviews') ?? 0),
+    publisher: String(getAttribute('publisher') ?? ''),
+    isFavorite: false,
+    isInCart: false,
+  };
+
+}
+
 }
