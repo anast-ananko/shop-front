@@ -92,13 +92,15 @@ export class BooksService {
     const getAttribute = (name: string) =>
       attributes.find((attribute) => attribute.name === name)?.value;
 
+    const price = product.masterVariant.prices?.[0]?.value.centAmount ?? 0;
+
     return {
       id: product.id,
       key: product.key,
       title: product.name['en-US'] ?? '',
       description: product.description?.['en-US'] ?? '',
       imageUrl: product.masterVariant.images?.[0]?.url ?? '',
-      price: product.masterVariant.prices?.[0]?.value.centAmount ?? 0,
+      price: price / 100,
       author: String(getAttribute('author') ?? ''),
       publicationYear: Number(getAttribute('publicationYear') ?? 0),
       pages: Number(getAttribute('pages') ?? 0),
