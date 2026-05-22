@@ -6,7 +6,6 @@ import { Api } from '../http/services/api/api';
 import { environment } from '../http/environment/environment';
 import { map, Observable, tap } from 'rxjs';
 import { Product, ProductsResponse } from '../../types/api.response';
-import { AuthService } from '../http/services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,6 @@ import { AuthService } from '../http/services/auth/auth.service';
 export class BooksService {
   private storage = inject(TokenStorage);
   private apiService = inject(Api);
-  private authService = inject(AuthService);
 
   readonly books = signal<Book[]>([]);
   public searchValue = signal<string>('');
@@ -74,32 +72,6 @@ export class BooksService {
         tap((books) => this.books.set(books)),
       );
   }
-
-  // getBooks(): Observable<Book[]> {
-  //   const token = this.storage.getAppToken();
-
-  //   if (token) return this.getBooksRequest(token);
-
-  //   return this.authService
-  //     .getAccessToken()
-  //     .pipe(switchMap((res) => this.getBooksRequest(res.access_token)));
-  // }
-
-  // private getBooksRequest(token: string) {
-  //   const headers = new HttpHeaders({
-  //     Authorization: `Bearer ${token}`,
-  //   });
-
-  //   return this.apiService
-  //     .get<ProductsResponse>(
-  //       `${this.url}/${this.project_key}/product-projections?limit=${this.limit}`,
-  //       headers,
-  //     )
-  //     .pipe(
-  //       map((response) => response.results.map((product) => this.mapProductToBook(product))),
-  //       tap((books) => this.books.set(books)),
-  //     );
-  // }
 
   private mapProductToBook(product: Product): Book {
     const attributes = product.attributes ?? [];
