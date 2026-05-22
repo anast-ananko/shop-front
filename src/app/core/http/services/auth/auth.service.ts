@@ -32,10 +32,8 @@ export class AuthService {
   isAuth = computed(() => this.authState() === 'customer');
   isGuest = computed(() => this.authState() === 'guest');
 
-    getAccessToken(): Observable<AppToken> {
-    const body = new HttpParams()
-      .set('grant_type', 'client_credentials')
-      .set('scope', this.scope);
+  getAccessToken(): Observable<AppToken> {
+    const body = new HttpParams().set('grant_type', 'client_credentials').set('scope', this.scope);
 
     const basicAuth = btoa(`${this.client_id}:${this.secret}`);
     const headers = new HttpHeaders({
@@ -43,61 +41,49 @@ export class AuthService {
       'Content-Type': 'application/x-www-form-urlencoded',
     });
 
-      return this.apiService.post<AppToken>(`${this.authUrl}/oauth/token`, body.toString(), headers).pipe(
-        tap((res) => this.storage.setAppToken(res.access_token)),
-      );
+    return this.apiService
+      .post<AppToken>(`${this.authUrl}/oauth/token`, body.toString(), headers)
+      .pipe(tap((res) => this.storage.setAppToken(res.access_token)));
   }
 
-  // initAuthFlow() {
-  //   const customer = this.storage.getCustomerToken();
-  //   if (customer) {
-  //     this.authState.set('customer');
-  //     return;
-  //   }
+  initAuthFlow() {
+    const customer = this.storage.getCustomerToken();
+    if (customer) {
+      this.authState.set('customer');
+      return;
+    }
 
-  //   const anon = this.storage.getAnonymousToken();
-  //   if (anon) {
-  //     this.authState.set('guest');
-  //     return;
-  //   }
+    const anon = this.storage.getAnonymousToken();
+    if (anon) {
+      this.authState.set('guest');
+      return;
+    }
 
-  //   this.authState.set('loading');
+    this.authState.set('loading');
 
-  //   this.getAnonymousToken().subscribe(() => {
-  //     this.authState.set('guest');
-  //   });
-  // }
+    this.getAnonymousToken().subscribe(() => {
+      this.authState.set('guest');
+    });
+  }
 
-  // getAppToken(): Observable<AppToken> {
-  //   const body = new URLSearchParams();
-  //   body.set('grant_type', 'client_credentials');
-  //   body.set('client_id', this.client_id);
-  //   body.set('client_secret', this.secret);
-  //   body.set('scope', `manage_my_profile:${this.project_key}`);
+  getAnonymousToken(): Observable<Token> {
+    const body = new HttpParams().set('grant_type', 'client_credentials').set('scope', this.scope);
 
-  //   return this.http
-  //     .post<AppToken>(`${this.authUrl}/oauth/token`, body.toString(), {
-  //       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-  //     })
-  //     .pipe(tap((res) => this.storage.setAppToken(res.access_token)));
-  // }
+    const basicAuth = btoa(`${this.client_id}:${this.secret}`);
+    const headers = new HttpHeaders({
+      Authorization: `Basic ${basicAuth}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    });
 
-  // getAnonymousToken(): Observable<Token> {
-  //   const body = new URLSearchParams();
-  //   body.set('grant_type', 'client_credentials');
-  //   body.set('scope', 'anonymous_id');
-
-  //   return this.http
-  //     .post<Token>(`${this.authUrl}/oauth/${this.project_key}/anonymous/token`, body.toString(), {
-  //       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-  //     })
-  //     .pipe(
-  //       tap((res) => {
-  //         this.storage.setCustomerToken(res.access_token);
-  //         this.storage.setRefreshToken(res.refresh_token);
-  //       }),
-  //     );
-  // }
+    return this.apiService
+      .post<Token>(`${this.authUrl}/oauth/${this.project_key}/anonymous/token`, body.toString(), headers)
+      .pipe(
+        tap((res) => {
+          this.storage.setAnonymousToken(res.access_token);
+          this.storage.setRefreshToken(res.refresh_token);
+        }),
+      );
+  }
 
   login(email: string, password: string): Observable<Token> {
     const body = new URLSearchParams();
