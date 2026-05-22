@@ -1,0 +1,9 @@
+<div class="container">
+  <h3>Popular</h3>
+  @if (popularBooks(); as books) {
+    <app-slider [sliderBooks]="popularBooks()" [cardTemplate]="productCardTpl" />
+    <ng-template #productCardTpl let-popularBook>
+      <app-product-card [book]="popularBook" class="slider-card" />
+    </ng-template>
+  }
+</div>
