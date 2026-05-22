@@ -32,6 +32,7 @@ export class BooksService {
       return book.title.toLowerCase().includes(value);
     });
   });
+
   getBookById(id: string): Book | undefined {
     return this.books().find((book) => book.id === id);
   }
@@ -59,14 +60,6 @@ export class BooksService {
   getBooks(): Observable<Book[]> {
     const token = this.storage.getAppToken();
 
-    if (token) return this.getBooksRequest(token);
-
-    return this.authService
-      .getAccessToken()
-      .pipe(switchMap((res) => this.getBooksRequest(res.access_token)));
-  }
-
-  private getBooksRequest(token: string) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
@@ -81,6 +74,32 @@ export class BooksService {
         tap((books) => this.books.set(books)),
       );
   }
+
+  // getBooks(): Observable<Book[]> {
+  //   const token = this.storage.getAppToken();
+
+  //   if (token) return this.getBooksRequest(token);
+
+  //   return this.authService
+  //     .getAccessToken()
+  //     .pipe(switchMap((res) => this.getBooksRequest(res.access_token)));
+  // }
+
+  // private getBooksRequest(token: string) {
+  //   const headers = new HttpHeaders({
+  //     Authorization: `Bearer ${token}`,
+  //   });
+
+  //   return this.apiService
+  //     .get<ProductsResponse>(
+  //       `${this.url}/${this.project_key}/product-projections?limit=${this.limit}`,
+  //       headers,
+  //     )
+  //     .pipe(
+  //       map((response) => response.results.map((product) => this.mapProductToBook(product))),
+  //       tap((books) => this.books.set(books)),
+  //     );
+  // }
 
   private mapProductToBook(product: Product): Book {
     const attributes = product.attributes ?? [];

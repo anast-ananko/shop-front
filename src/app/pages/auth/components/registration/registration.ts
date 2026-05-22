@@ -17,9 +17,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCard, MatCardTitle } from '@angular/material/card';
 
-import { AuthService } from '../../../../core/auth/auth.service';
+
 import { postalCodeValidator } from '../../../../utils/postal-code.validator';
 import { CountriesService } from '../../../../core/services/countries.service';
+import { AuthService } from '../../../../core/http/services/auth/auth.service';
 
 @Component({
   selector: 'app-registration',
