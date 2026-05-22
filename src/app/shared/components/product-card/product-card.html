@@ -4,17 +4,17 @@
       <div
         mat-card-avatar
         class="header-image"
-        [style.background-image]="'url(' + book.posterUrl + ')'"
+        [style.background-image]="'url(' + book.imageUrl"
       ></div>
       <mat-card-title>{{ book.title }}</mat-card-title>
-      <mat-card-subtitle class="subtitle">{{ book.genre }}</mat-card-subtitle>
+      <mat-card-subtitle class="subtitle">{{ book.author }}</mat-card-subtitle>
 
       <button matButton class="favorite" (click)="favoriteToggled($event, book.id)">
         <mat-icon> {{ book.isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
       </button>
     </mat-card-header>
 
-    <img mat-card-image class="card-poster" [src]="book.posterUrl" alt="{{ book.title }}" />
+    <img mat-card-image class="card-poster" [src]="book.imageUrl" alt="{{ book.title }}" />
 
     <mat-card-content>
       <p>
@@ -22,7 +22,7 @@
       </p>
       <div class="content-wrapper">
         <p>Rating: {{ book.rating }}</p>
-        <p class="price">Price: {{ book.duration }}$</p>
+        <p class="price">Price: {{ book.price }}$</p>
       </div>
     </mat-card-content>
 
