@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { BooksService } from '../../../core/books-service/books-service';
-import { ProductCard } from '../../../shared/components/product-card/product-card';
-import { Slider } from '../../../shared/components/slider/slider';
+import { BooksService } from '../../../../core/books-service/books-service';
+import { ProductCard } from '../../../../shared/components/product-card/product-card';
+import { Slider } from '../../../../shared/components/slider/slider';
 
 @Component({
   selector: 'app-popular',

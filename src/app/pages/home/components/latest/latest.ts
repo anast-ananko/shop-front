@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { BooksService } from '../../../core/books-service/books-service';
-import { Slider } from '../../../shared/components/slider/slider';
-import { ProductCard } from '../../../shared/components/product-card/product-card';
+import { BooksService } from '../../../../core/books-service/books-service';
+import { Slider } from '../../../../shared/components/slider/slider';
+import { ProductCard } from '../../../../shared/components/product-card/product-card';
 
 @Component({
   selector: 'app-latest',
