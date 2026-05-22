@@ -4,7 +4,7 @@ import { TokenStorage } from '../http/services/auth/token.storage';
 import { HttpHeaders } from '@angular/common/http';
 import { Api } from '../http/services/api/api';
 import { environment } from '../http/environment/environment';
-import { map, Observable, switchMap, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { Product, ProductsResponse } from '../../types/api.response';
 import { AuthService } from '../http/services/auth/auth.service';
 

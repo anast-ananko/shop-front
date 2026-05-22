@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -16,7 +16,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCard, MatCardTitle } from '@angular/material/card';
-
 
 import { postalCodeValidator } from '../../../../utils/postal-code.validator';
 import { CountriesService } from '../../../../core/services/countries.service';
@@ -40,7 +39,7 @@ import { AuthService } from '../../../../core/http/services/auth/auth.service';
   templateUrl: './registration.html',
   styleUrl: './registration.scss',
 })
-export class Registration {
+export class Registration implements OnInit {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
   countriesService = inject(CountriesService);
@@ -134,9 +133,10 @@ export class Registration {
 
     if (!errors) return;
 
-    const { [errorKey]: removed, ...rest } = errors;
+    const updatedErrors = { ...errors };
+    delete updatedErrors[errorKey];
 
-    control.setErrors(Object.keys(rest).length ? rest : null);
+    control.setErrors(Object.keys(updatedErrors).length ? updatedErrors : null);
   }
 
   submit() {
