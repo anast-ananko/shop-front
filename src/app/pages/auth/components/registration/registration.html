@@ -153,6 +153,8 @@
             @if (form.controls.billingAddress.hasError('invalidPostalCode')) {
               <mat-error> Invalid postal code for selected country </mat-error>
             }
+
+            <mat-checkbox formControlName="isDefault"> Set as default address </mat-checkbox>
           </div>
         </mat-card>
       }
@@ -173,7 +175,7 @@
     <div class="auth-footer">
       <span>Already have an account?</span>
 
-      <a matButton color="accent" routerLink='["/login"]'> Login </a>
+      <a matButton color="accent" routerLink='["/sign-in"]'> Login </a>
     </div>
   </div>
 </div>

@@ -85,6 +85,7 @@ export class Registration implements OnInit {
         city: [''],
         postalCode: [''],
         country: [''],
+        isDefault: [true],
       },
       { validators: postalCodeValidator },
     ),
