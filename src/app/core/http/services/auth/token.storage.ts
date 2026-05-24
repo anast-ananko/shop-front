@@ -23,6 +23,10 @@ export class TokenStorage {
     return localStorage.getItem(this.ANON_KEY);
   }
 
+  deleteAnonymousToken(): void {
+    return localStorage.removeItem(this.ANON_KEY);
+  }
+
   setRefreshToken(token: string): void {
     localStorage.setItem(this.REF_KEY, token);
   }

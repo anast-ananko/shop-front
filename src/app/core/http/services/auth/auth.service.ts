@@ -4,7 +4,7 @@ import { Observable, tap } from 'rxjs';
 
 import { environment } from '../../environment/environment';
 import { TokenStorage } from './token.storage';
-import { AppToken, SignupRequest, SignupResponse, Token } from './models';
+import { AppToken, Customer, SignupRequest, SignupResponse, Token } from './models';
 import { Api } from '../api/api';
 
 @Injectable({
@@ -21,10 +21,10 @@ export class AuthService {
   private storage = inject(TokenStorage);
   private apiService = inject(Api);
 
-  authState = signal<'guest' | 'customer' | 'loading'>('loading');
+  customer = signal<Customer | null>(null);
 
-  isAuth = computed(() => this.authState() === 'customer');
-  isGuest = computed(() => this.authState() === 'guest');
+  isAuth = computed(() => this.customer() !== null);
+  isGuest = computed(() => this.customer() === null);
 
   getAccessToken(): Observable<AppToken> {
     const body = new HttpParams().set('grant_type', 'client_credentials').set('scope', this.scope);
@@ -43,21 +43,15 @@ export class AuthService {
   initAuthFlow() {
     const customer = this.storage.getCustomerToken();
     if (customer) {
-      this.authState.set('customer');
       return;
     }
 
     const anon = this.storage.getAnonymousToken();
     if (anon) {
-      this.authState.set('guest');
       return;
     }
 
-    this.authState.set('loading');
-
-    this.getAnonymousToken().subscribe(() => {
-      this.authState.set('guest');
-    });
+    this.getAnonymousToken().subscribe();
   }
 
   getAnonymousToken(): Observable<Token> {
@@ -79,8 +73,6 @@ export class AuthService {
         tap((res) => {
           this.storage.setAnonymousToken(res.access_token);
           this.storage.setRefreshToken(res.refresh_token);
-
-          this.authState.set('guest');
         }),
       );
   }
@@ -108,8 +100,7 @@ export class AuthService {
         tap((res) => {
           this.storage.setCustomerToken(res.access_token);
           this.storage.setRefreshToken(res.refresh_token);
-
-          this.authState.set('customer');
+          this.storage.deleteAnonymousToken();
         }),
       );
   }
@@ -122,11 +113,13 @@ export class AuthService {
       'Content-Type': 'application/json',
     });
 
-    return this.apiService.post<SignupResponse>(
-      `${this.url}/${this.project_key}me/signup`,
-      data,
-      headers,
-    );
+    return this.apiService
+      .post<SignupResponse>(`${this.url}/${this.project_key}/me/signup`, data, headers)
+      .pipe(
+        tap((res) => {
+          this.customer.set(res.customer);
+        }),
+      );
   }
 
   // refreshToken(): Observable<Token> | undefined {
@@ -157,12 +150,9 @@ export class AuthService {
   //     );
   // }
 
-  // logout(): void {
-  //   this.storage.clearTokens();
-  //   this.authState.set('loading');
+  logout(): void {
+    this.storage.clearTokens();
 
-  //   this.getAnonymousToken().subscribe(() => {
-  //     this.authState.set('guest');
-  //   });
-  // }
+    this.getAnonymousToken().subscribe();
+  }
 }

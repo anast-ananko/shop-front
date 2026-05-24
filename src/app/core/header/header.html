@@ -52,7 +52,7 @@
     </button>
 
     <mat-menu #authMenu="matMenu">
-      @if (!isAuth()) {
+      @if (!this.authService.isAuth()) {
         <button mat-menu-item [routerLink]="['/auth/sign-in']">Login</button>
         <button mat-menu-item [routerLink]="['/auth/registration']">Register</button>
       } @else {
