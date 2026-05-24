@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -17,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCard, MatCardTitle } from '@angular/material/card';
 import { map, Observable, switchMap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { postalCodeValidator } from '../../../../utils/postal-code.validator';
 import { CountriesService } from '../../../../core/services/countries.service';
@@ -31,7 +32,7 @@ interface AddressFormValue {
   city: string | null;
   postalCode: string | null;
   country: string | null;
-};
+}
 
 @Component({
   selector: 'app-registration',
@@ -57,6 +58,7 @@ export class Registration implements OnInit {
   private authService = inject(AuthService);
   private customerService = inject(CustomerService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   serverError = signal<string | null>(null);
   success = signal<boolean>(false);
@@ -242,6 +244,7 @@ export class Registration implements OnInit {
             ),
           );
         }),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         next: () => {
