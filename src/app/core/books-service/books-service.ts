@@ -1,13 +1,25 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Book } from '../../types/book.interface';
-import { getBooks } from '../../mock-data/db.books';
+import { TokenStorage } from '../http/services/auth/token.storage';
+import { HttpHeaders } from '@angular/common/http';
+import { Api } from '../http/services/api/api';
+import { environment } from '../http/environment/environment';
+import { map, Observable, tap } from 'rxjs';
+import { Product, ProductsResponse } from '../../types/api.response';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BooksService {
-  readonly books = signal<Book[]>(getBooks());
+  private storage = inject(TokenStorage);
+  private apiService = inject(Api);
+
+  readonly books = signal<Book[]>([]);
   public searchValue = signal<string>('');
+
+  private url = environment.apiUrl;
+  private project_key = environment.projectKey;
+  private readonly limit = 100;
 
   readonly favoriteBooks = computed(() => this.books().filter((book) => book.isFavorite));
 
@@ -19,17 +31,31 @@ export class BooksService {
     });
   });
 
-  getBookById(id: number): Book | undefined {
+  readonly latestBooks = computed(() => {
+    // current realisation is based on our Book model => year property
+    // with API request would be changed to
+    // return this.books().map((el) => ({...el, year: new Date(el.year)})).sort((a, b) => (b.year.getTime() - a.year.getTime()));
+
+    return [...this.books()].sort((a, b) => b.publicationYear - a.publicationYear);
+  });
+
+  readonly popularBooks = computed(() => {
+    // I guess here would be similar to realisation just need to be installed
+    // what would be the treshold of our rating propert
+    return [...this.books()].sort((a, b) => b.rating - a.rating);
+  });
+
+  getBookById(id: string): Book | undefined {
     return this.books().find((book) => book.id === id);
   }
 
-  toggleFavorite(id: number): void {
+  toggleFavorite(id: string): void {
     this.books.update((books) =>
       books.map((book) => (book.id === id ? { ...book, isFavorite: !book.isFavorite } : book)),
     );
   }
 
-  toggleCart(id: number): void {
+  toggleCart(id: string): void {
     this.books.update((books) =>
       books.map((book) => (book.id === id ? { ...book, isInCart: !book.isInCart } : book)),
     );
@@ -41,5 +67,52 @@ export class BooksService {
 
   setSearchValue(value: string): void {
     this.searchValue.set(value);
+  }
+
+  getBooks(): Observable<Book[]> {
+    const token = this.storage.getAppToken();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.apiService
+      .get<ProductsResponse>(
+        `${this.url}/${this.project_key}/product-projections?limit=${this.limit}`,
+        headers,
+      )
+      .pipe(
+        map((response) => response.results.map((product) => this.mapProductToBook(product))),
+        tap((books) => this.books.set(books)),
+      );
+  }
+
+  private mapProductToBook(product: Product): Book {
+    const attributes = product.attributes ?? [];
+    const getAttribute = (name: string) =>
+      attributes.find((attribute) => attribute.name === name)?.value;
+
+    const price = product.masterVariant.prices?.[0]?.value.centAmount ?? 0;
+
+    return {
+      id: product.id,
+      key: product.key,
+      title: product.name['en-US'] ?? '',
+      description: product.description?.['en-US'] ?? '',
+      imageUrl: product.masterVariant.images?.[0]?.url ?? '',
+      price: price / 100,
+      author: String(getAttribute('author') ?? ''),
+      publicationYear: Number(getAttribute('publicationYear') ?? 0),
+      pages: Number(getAttribute('pages') ?? 0),
+      edition: String(getAttribute('edition') ?? ''),
+      copiesLeft: Number(getAttribute('copiesLeft') ?? 0),
+      stockStatus: String(getAttribute('stockStatus') ?? ''),
+      rating: Number(getAttribute('rating') ?? 0),
+      category: String(getAttribute('category') ?? ''),
+      reviews: Number(getAttribute('reviews') ?? 0),
+      publisher: String(getAttribute('publisher') ?? ''),
+      isFavorite: false,
+      isInCart: false,
+    };
   }
 }

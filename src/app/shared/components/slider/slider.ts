@@ -1,16 +1,15 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
-import { BooksService } from '../../../core/books-service/books-service';
-import { SliderCard } from './slider-card/slider-card';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, input, TemplateRef } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
+import { Book } from '../../../types/book.interface';
 
 @Component({
   selector: 'app-slider',
-  imports: [SliderCard],
+  imports: [NgTemplateOutlet],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './slider.html',
   styleUrl: './slider.scss',
 })
 export class Slider {
-  private bookService = inject(BooksService);
-
-  books = this.bookService.books;
+  sliderBooks = input<Book[]>();
+  cardTemplate = input<TemplateRef<unknown>>();
 }

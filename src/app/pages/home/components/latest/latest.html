@@ -1,0 +1,10 @@
+<div class="container">
+  <h3>Latest</h3>
+  @if (latestBooks(); as books) {
+    <app-slider [sliderBooks]="books" [cardTemplate]="cardTemplate" />
+
+    <ng-template #cardTemplate let-latestBook>
+      <app-product-card [book]="latestBook" class="slider-card" />
+    </ng-template>
+  }
+</div>

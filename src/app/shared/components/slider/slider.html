@@ -14,9 +14,11 @@
     loop="true"
     class="carousel-container"
   >
-    @for (book of books(); track book.id) {
+    @for (book of sliderBooks(); track book.id) {
       <swiper-slide>
-        <app-slider-card [book]="book"></app-slider-card>
+        <ng-container
+          *ngTemplateOutlet="cardTemplate(); context: { $implicit: book }"
+        ></ng-container>
       </swiper-slide>
     }
   </swiper-container>

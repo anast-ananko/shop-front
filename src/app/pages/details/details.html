@@ -3,32 +3,82 @@
   @if (book) {
   <div class="book-details-content">
 
-    <img class="book-details-poster" [src]="book.posterUrl" [alt]="book.title" />
+    <img class="book-details-poster" [src]="book.imageUrl" [alt]="book.title" />
     <div class="book-details-info">
 
       <h1>{{ book.title }}</h1>
 
       <div class="wrapper-content description">
-        <p>Description:</p>
-        <p>{{ book.description }}</p>
+        <div class="wrapper-description">
+          <p>Description:</p>
+          <p>{{ book.description }}</p>
+        </div>
+
+        <div class="wrapper-book-info">
+
+          <div class="book-info">
+            <p>Genre:</p>
+            <p>{{ book.category }}</p>
+          </div>
+
+          <div class="book-info">
+            <p>Author:</p>
+            <p>{{ book.author }}</p>
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="wrapper-content">
-        <p>Year:</p>
-        <p>{{ book.year }}</p>
+      <div class="wrapper-details">
+
+        <div class="details">
+          <div class="wrapper-content">
+            <p>Publisher:</p>
+            <p class="details-info">{{ book.publisher }}</p>
+          </div>
+          <div class="wrapper-content">
+            <p>Reviews:</p>
+            <p class="details-info">{{ book.reviews }}</p>
+          </div>
+          <div class="wrapper-content">
+            <p>Edition:</p>
+            <p class="details-info">{{ book.edition }}</p>
+          </div>
+          <div class="wrapper-content">
+            <p>In stock:</p>
+            <p class="details-info">{{ book.copiesLeft }}</p>
+          </div>
+        </div>
+
+        <div class="details">
+          <div class="wrapper-content">
+            <p>Year:</p>
+            <p class="details-info">{{ book.publicationYear }}</p>
+          </div>
+          <div class="wrapper-content">
+            <p>Rating:</p>
+            <p class="details-info">{{ book.rating }}</p>
+          </div>
+          <div class="wrapper-content">
+            <p>Pages:</p>
+            <p class="details-info">{{ book.pages }}</p>
+          </div>
+          <div class="wrapper-content">
+            <p>Price:</p>
+            <p class="details-info">{{ book.price | currency }}</p>
+          </div>
+        </div>
+
       </div>
-      <div class="wrapper-content">
-        <p>Genre:</p>
-        <p>{{ book.genre }}</p>
-      </div>
-      <div class="wrapper-content">
-        <p>Rating:</p>
-        <p>{{ book.rating }} / 10</p>
-      </div>
-      <div class="wrapper-content">
-        <p>Price:</p>
-        <p>{{ book.duration | currency }}</p>
-      </div>
+
+
+
+      <!--
+
+  category: string;
+
+ -->
 
 
     </div>
