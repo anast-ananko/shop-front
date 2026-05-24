@@ -1,27 +1,35 @@
 .card {
+  width: 100%;
   max-width: 270px;
+  flex: 0 0 270px;
   transition: 0.3s;
   display: flex;
   flex-direction: column;
+  max-height: 600px;
 }
 
 .mat-mdc-card-header {
-  flex-basis: 50px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
   text-align: center;
+  align-items: center;
 }
 
-.mat-mdc-button > .mat-icon {
+.mat-mdc-card-avatar {
+  margin-bottom: 0px;
+}
+
+.header-title {
+  margin: 0 auto;
+  padding-top: 0px;
+}
+
+.mat-mdc-button>.mat-icon {
   width: 100%;
   margin: auto;
   font-size: 30px;
 }
 
-.subtitle {
-  color: var(--mat-sys-on-surface-variant);
-}
 
 .header-image {
   background-size: cover;
@@ -37,15 +45,26 @@
   display: block;
 }
 
+.author {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
 .content-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  p {
+    margin: 0;
+  }
 }
 
 .actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .card {
@@ -68,4 +87,5 @@
 .card:hover {
   scale: 1.02;
   z-index: 1;
+  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
 }
