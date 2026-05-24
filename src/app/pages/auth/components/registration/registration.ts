@@ -25,6 +25,14 @@ import { CustomerService } from '../../../../core/http/services/customer/custome
 import { customerActions } from '../../../../core/http/services/customer/customerActions';
 import { Address, MeResponse } from '../../../../core/http/services/customer/models';
 
+interface AddressFormValue {
+  streetName: string | null;
+  streetNumber: string | null;
+  city: string | null;
+  postalCode: string | null;
+  country: string | null;
+};
+
 @Component({
   selector: 'app-registration',
   imports: [
@@ -153,7 +161,7 @@ export class Registration implements OnInit {
     control.setErrors(Object.keys(updatedErrors).length ? updatedErrors : null);
   }
 
-  private mapAddress(address: any): Omit<Address, 'id'> {
+  private mapAddress(address: AddressFormValue): Omit<Address, 'id'> {
     return {
       streetName: address.streetName ?? '',
       streetNumber: address.streetNumber ?? '',
