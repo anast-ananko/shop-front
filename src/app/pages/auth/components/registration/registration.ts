@@ -99,11 +99,11 @@ export class Registration implements OnInit {
 
     billingAddress: this.fb.group(
       {
-        streetName: [''],
-        streetNumber: [''],
-        city: [''],
-        postalCode: [''],
-        country: [''],
+        streetName: ['', Validators.required],
+        streetNumber: ['', Validators.required],
+        city: ['', Validators.required],
+        postalCode: ['', Validators.required],
+        country: ['', Validators.required],
         isDefault: [true],
       },
       { validators: postalCodeValidator },
@@ -120,6 +120,12 @@ export class Registration implements OnInit {
     this.form.valueChanges.subscribe(() => {
       this.serverError.set(null);
     });
+
+    this.form.get('billingSameAsShipping')?.valueChanges.subscribe((same) => {
+      this.syncBilling(same);
+    });
+
+    this.syncBilling(this.form.get('billingSameAsShipping')!.value);
   }
 
   private initAddressLogic(address: FormGroup): void {
@@ -135,6 +141,16 @@ export class Registration implements OnInit {
     address.valueChanges.subscribe(() => {
       this.syncAddressErrorToControls(address);
     });
+  }
+
+  private syncBilling(same: boolean): void {
+    const billing = this.form.get('billingAddress');
+
+    if (same) {
+      billing?.disable({ emitEvent: false });
+    } else {
+      billing?.enable({ emitEvent: false });
+    }
   }
 
   private syncAddressErrorToControls(address: FormGroup): void {
@@ -174,9 +190,17 @@ export class Registration implements OnInit {
   }
 
   private addAddress(address: Omit<Address, 'id'>): Observable<string> {
-    return this.customerService
-      .updateMe([customerActions.addAddress(address)])
-      .pipe(map((customer) => customer.addresses.at(-1)!.id));
+    return this.customerService.updateMe([customerActions.addAddress(address)]).pipe(
+      map((customer) => {
+        const address = customer.addresses.at(-1);
+
+        if (!address) {
+          throw new Error('No address returned from API');
+        }
+
+        return address.id;
+      }),
+    );
   }
 
   private setDefault(type: 'shipping' | 'billing', addressId: string): Observable<MeResponse> {
@@ -230,11 +254,17 @@ export class Registration implements OnInit {
 
           if (form.billingSameAsShipping) {
             return this.handleAddress('shipping', shipping, !!form.shippingAddress.isDefault).pipe(
-              switchMap((customer) =>
-                form.shippingAddress.isDefault
-                  ? this.setDefault('billing', customer.addresses.at(-1)!.id)
-                  : this.addId('billing', customer.addresses.at(-1)!.id),
-              ),
+              switchMap((customer) => {
+                const address = customer.addresses.at(-1);
+
+                if (!address) {
+                  throw new Error('No address returned from API');
+                }
+
+                return form.shippingAddress.isDefault
+                  ? this.setDefault('billing', address.id)
+                  : this.addId('billing', address.id);
+              }),
             );
           }
 

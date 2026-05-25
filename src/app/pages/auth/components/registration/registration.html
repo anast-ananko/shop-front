@@ -125,53 +125,51 @@
         </mat-checkbox>
       </div>
 
-      @if (!form.value.billingSameAsShipping) {
-        <mat-card class="address-card billing-card">
-          <mat-card-title>Billing Address</mat-card-title>
+      <mat-card class="address-card billing-card">
+        <mat-card-title>Billing Address</mat-card-title>
 
-          <div formGroupName="billingAddress">
-            <mat-form-field>
-              <mat-label>Street Name</mat-label>
-              <input matInput placeholder="Street" formControlName="streetName" />
-            </mat-form-field>
+        <div formGroupName="billingAddress">
+          <mat-form-field>
+            <mat-label>Street Name</mat-label>
+            <input matInput placeholder="Street" formControlName="streetName" />
+          </mat-form-field>
 
-            <mat-form-field>
-              <mat-label>Street Number</mat-label>
-              <input matInput placeholder="Street" formControlName="streetNumber" />
-            </mat-form-field>
+          <mat-form-field>
+            <mat-label>Street Number</mat-label>
+            <input matInput placeholder="Street" formControlName="streetNumber" />
+          </mat-form-field>
 
-            <mat-form-field>
-              <mat-label>City</mat-label>
-              <input matInput placeholder="City" formControlName="city" />
-            </mat-form-field>
+          <mat-form-field>
+            <mat-label>City</mat-label>
+            <input matInput placeholder="City" formControlName="city" />
+          </mat-form-field>
 
-            <mat-form-field
-              [class.mat-form-field-invalid]="
-                form.controls.billingAddress.hasError('invalidPostalCode') &&
-                (form.controls.billingAddress.touched || form.controls.billingAddress.dirty)
-              "
-            >
-              <mat-label>Postal Code</mat-label>
-              <input matInput formControlName="postalCode" />
-            </mat-form-field>
+          <mat-form-field
+            [class.mat-form-field-invalid]="
+              form.controls.billingAddress.hasError('invalidPostalCode') &&
+              (form.controls.billingAddress.touched || form.controls.billingAddress.dirty)
+            "
+          >
+            <mat-label>Postal Code</mat-label>
+            <input matInput formControlName="postalCode" />
+          </mat-form-field>
 
-            <mat-form-field>
-              <mat-label>Country</mat-label>
-              <mat-select formControlName="country">
-                @for (c of countriesService.countries(); track c.code) {
-                  <mat-option [value]="c.code"> {{ c.name }} ({{ c.code }}) </mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
+          <mat-form-field>
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country">
+              @for (c of countriesService.countries(); track c.code) {
+                <mat-option [value]="c.code"> {{ c.name }} ({{ c.code }}) </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
 
-            @if (form.controls.billingAddress.hasError('invalidPostalCode')) {
-              <mat-error> Invalid postal code for selected country </mat-error>
-            }
+          @if (form.controls.billingAddress.hasError('invalidPostalCode')) {
+            <mat-error> Invalid postal code for selected country </mat-error>
+          }
 
-            <mat-checkbox formControlName="isDefault"> Set as default address </mat-checkbox>
-          </div>
-        </mat-card>
-      }
+          <mat-checkbox formControlName="isDefault"> Set as default address </mat-checkbox>
+        </div>
+      </mat-card>
 
       <div class="actions">
         <button matButton="filled" color="primary" type="submit" [disabled]="form.invalid">
