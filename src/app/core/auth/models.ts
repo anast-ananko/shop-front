@@ -1,4 +1,5 @@
-import { Address, CustomerGroupAssignment, StoreReference } from '../http/services/customer/models';
+import { Address, CustomerGroupAssignment, StoreReference } from "../services/customer/models";
+
 
 export interface AppToken {
   access_token: string;

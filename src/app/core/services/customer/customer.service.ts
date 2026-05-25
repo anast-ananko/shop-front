@@ -2,11 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
-import { environment } from '../../environment/environment';
-import { TokenStorage } from '../../../auth/token.storage';
-import { Api } from '../api/api';
+import { environment } from '../../http/environment/environment';
 import { MeResponse } from './models';
-import { AuthService } from '../../../auth/auth.service';
+import { TokenStorage } from '../../auth/token.storage';
+import { AuthService } from '../../auth/auth.service';
+import { Api } from '../../http/services/api/api';
+
 
 @Injectable({
   providedIn: 'root',
