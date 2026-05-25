@@ -8,7 +8,7 @@ import { provideRouter } from '@angular/router';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { routes } from './routers/app.routes';
-import { AppInitializerService } from './core/services/app-initializer.service';
+import { AppInitializerService } from './core/services/app-initializer/app-initializer.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [

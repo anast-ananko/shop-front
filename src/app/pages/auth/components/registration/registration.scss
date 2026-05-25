@@ -53,13 +53,20 @@ mat-checkbox {
   transition: all 0.3s ease;
 }
 
-.server-error {
+.server {
   margin-top: 12px;
-  color: var(--mat-sys-error);
   padding: 10px 12px;
   border-radius: 6px;
   font-size: 13px;
   text-align: center;
+}
+
+.server-error {
+  color: var(--mat-sys-error);
+}
+
+.server-success {
+  color: green;
 }
 
 .actions {
