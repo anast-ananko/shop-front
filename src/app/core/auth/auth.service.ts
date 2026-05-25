@@ -23,7 +23,7 @@ export class AuthService {
 
   customer = signal<Customer | null>(null);
 
-  isAuth = computed(() => this.customer() !== null);
+  isAuth = computed(() => !!this.customer());
   isGuest = computed(() => this.customer() === null);
 
   getAccessToken(): Observable<AppToken> {
@@ -152,6 +152,7 @@ export class AuthService {
 
   logout(): void {
     this.storage.clearTokens();
+    this.customer.set(null);
 
     this.getAnonymousToken().subscribe();
   }
