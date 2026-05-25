@@ -1,4 +1,4 @@
-import { CustomerBase } from '../auth/models';
+import { CustomerBase } from '../../../auth/models';
 
 export type MeResponse = CustomerBase & AuditFields;
 

@@ -2,10 +2,10 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
-import { environment } from '../../environment/environment';
+import { environment } from '../http/environment/environment';
 import { TokenStorage } from './token.storage';
 import { AppToken, Customer, SignupRequest, SignupResponse, Token } from './models';
-import { Api } from '../api/api';
+import { Api } from '../http/services/api/api';
 
 @Injectable({
   providedIn: 'root',

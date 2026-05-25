@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { Search } from '../../shared/components/search/search';
-import { AuthService } from '../http/services/auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',

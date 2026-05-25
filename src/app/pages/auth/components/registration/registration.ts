@@ -20,8 +20,8 @@ import { map, Observable, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { postalCodeValidator } from '../../../../utils/postal-code.validator';
-import { CountriesService } from '../../../../core/services/countries.service';
-import { AuthService } from '../../../../core/http/services/auth/auth.service';
+import { CountriesService } from '../../../../core/services/countries/countries.service';
+import { AuthService } from '../../../../core/auth/auth.service';
 import { CustomerService } from '../../../../core/http/services/customer/customer.service';
 import { customerActions } from '../../../../core/http/services/customer/customerActions';
 import { Address, MeResponse } from '../../../../core/http/services/customer/models';

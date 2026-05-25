@@ -3,10 +3,10 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
 import { environment } from '../../environment/environment';
-import { TokenStorage } from '../auth/token.storage';
+import { TokenStorage } from '../../../auth/token.storage';
 import { Api } from '../api/api';
 import { MeResponse } from './models';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +47,7 @@ export class CustomerService {
       .post<MeResponse>(`${this.url}/${this.project_key}/me`, body, headers)
       .pipe(
         tap((customer) => {
-          this.authService.customer.set(customer); 
+          this.authService.customer.set(customer);
         }),
       );
   }
