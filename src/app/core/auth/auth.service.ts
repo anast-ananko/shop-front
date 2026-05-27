@@ -77,11 +77,11 @@ export class AuthService {
       );
   }
 
-  getCustomerToken(email: string, password: string): Observable<Token> {
+  getCustomerToken(dto: {email: string, password: string}): Observable<Token> {
     const body = new HttpParams()
       .set('grant_type', 'password')
-      .set('username', email)
-      .set('password', password)
+      .set('username', dto.email)
+      .set('password', dto.password)
       .set('scope', this.scope);
 
     const basicAuth = btoa(`${this.client_id}:${this.secret}`);

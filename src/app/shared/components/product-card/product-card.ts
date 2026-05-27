@@ -2,7 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { Book } from '../../../types/book.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { BooksService } from '../../../core/books-service/books-service';
+import { BooksService } from '../../../core/services//books-service/books-service';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
