@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
 import { AuthService } from '../../auth/auth.service';
-import { BooksService } from '../../books-service/books-service';
+import { BooksService } from '../books-service/books-service';
 
 @Injectable({
   providedIn: 'root',
