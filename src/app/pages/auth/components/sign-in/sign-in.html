@@ -35,14 +35,14 @@
 
       <div class="actions">
         <button matButton="filled" color="primary" type="submit" [disabled]="form.invalid">
-          Register
+          Sign In
         </button>
       </div>
 
       @if (serverError(); as error) {
         <div class="server server-error"> {{ error }} </div>
       }
-      
+
     </form>
 
     <div class="auth-footer">

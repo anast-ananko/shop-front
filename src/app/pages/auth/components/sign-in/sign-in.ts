@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -27,7 +27,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.scss',
 })
-export class SignIn {
+export class SignIn implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -47,7 +47,13 @@ export class SignIn {
     ],
   });
 
-    successLogin() {
+  ngOnInit() {
+    this.form.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.serverError.set(null));
+  }
+
+  successLogin() {
     this.form.reset();
     this.router.navigateByUrl('/');
   }
