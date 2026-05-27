@@ -39,11 +39,10 @@
         </button>
       </div>
 
-      @if (serverError()) {
-        <div class="server server-error">
-          {{ serverError() }}
-        </div>
+      @if (serverError(); as error) {
+        <div class="server server-error"> {{ error }} </div>
       }
+      
     </form>
 
     <div class="auth-footer">

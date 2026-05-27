@@ -245,7 +245,7 @@ export class Registration implements OnInit {
     this.authService
       .signup(signupPayload)
       .pipe(
-        switchMap(() => this.authService.getCustomerToken(form.email, form.password)),
+        switchMap(() => this.authService.getCustomerToken({ email: signupPayload.email, password: signupPayload.password })),
 
         switchMap(() => {
           const shipping = this.mapAddress(form.shippingAddress);

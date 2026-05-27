@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -7,12 +7,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { RouterModule } from '@angular/router';
-
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../../../core/auth/auth.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-sign-in',
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     ReactiveFormsModule,
     RouterModule,
     MatInputModule,
@@ -20,41 +22,47 @@ import { RouterModule } from '@angular/router';
     MatDatepickerModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatFormFieldModule],
+    MatFormFieldModule,
+  ],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.scss',
 })
 export class SignIn {
   private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
-    serverError = signal<string | null>(null);
+  serverError = signal<string | null>(null);
 
-    form = this.fb.nonNullable.group({
-      email: ['', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/)]],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/),
-        ],
+  form = this.fb.nonNullable.group({
+    email: ['', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/)]],
+    password: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/),
       ],
-    });
+    ],
+  });
 
+    successLogin() {
+    this.form.reset();
+    this.router.navigateByUrl('/');
+  }
 
+  submit() {
+    const signupPayload = this.form.getRawValue();
 
-
-    submit() {
-      if (this.form.invalid) return;
-
-
-      const form = this.form.getRawValue();
-
-      const signupPayload = {
-        email: form.email,
-        password: form.password,
-      };
-
-      console.log(signupPayload);
-    }
+    this.authService
+      .getCustomerToken(signupPayload)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => this.successLogin(),
+        error: (err) => {
+          this.serverError.set(err.error.message || 'An error occurred during sign in.');
+        },
+      });
+  }
 }
