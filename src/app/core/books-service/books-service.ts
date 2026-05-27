@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Book } from '../../types/book.interface';
-import { TokenStorage } from '../http/services/auth/token.storage';
+import { TokenStorage } from '../auth/token.storage';
 import { HttpHeaders } from '@angular/common/http';
 import { Api } from '../http/services/api/api';
 import { environment } from '../http/environment/environment';

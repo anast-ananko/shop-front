@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
+
 import { Auth } from '../pages/auth/auth';
+import { authRequiredGuard } from '../core/auth/guards/auth-required-guard';
 
 export const authRoutes: Routes = [
   {
@@ -26,6 +28,7 @@ export const authRoutes: Routes = [
           const m = await import('../pages/auth/components/profile/profile');
           return m.Profile;
         },
+        canActivate: [authRequiredGuard],
       },
     ],
   },
