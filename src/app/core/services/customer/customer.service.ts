@@ -8,7 +8,6 @@ import { TokenStorage } from '../../auth/token.storage';
 import { AuthService } from '../../auth/auth.service';
 import { Api } from '../../http/services/api/api';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -28,7 +27,11 @@ export class CustomerService {
       'Content-Type': 'application/json',
     });
 
-    return this.apiService.get<MeResponse>(`${this.url}/${this.project_key}me`, headers);
+    return this.apiService.get<MeResponse>(`${this.url}/${this.project_key}me`, headers).pipe(
+      tap((customer) => {
+        this.authService.customer.set(customer);
+      }),
+    );
   }
 
   updateMe(actions: unknown[]): Observable<MeResponse> {
