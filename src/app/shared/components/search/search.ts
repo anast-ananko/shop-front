@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { BooksService } from '../../../core/books-service/books-service';
+import { BooksService } from '../../../core/services/books-service/books-service';
 
 @Component({
   selector: 'app-search',

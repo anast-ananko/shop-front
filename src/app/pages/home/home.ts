@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Slider } from '../../shared/components/slider/slider';
-import { BooksService } from '../../core/books-service/books-service';
+import { BooksService } from '../../core/services/books-service/books-service';
 import { Popular } from './components/popular/popular';
 import { SliderCard } from '../../shared/components/slider/slider-card/slider-card';
 import { Latest } from './components/latest/latest';

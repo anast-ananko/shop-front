@@ -1,11 +1,11 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { Book } from '../../types/book.interface';
-import { TokenStorage } from '../auth/token.storage';
+import { Book } from '../../../types/book.interface';
+import { TokenStorage } from '../../auth/token.storage';
 import { HttpHeaders } from '@angular/common/http';
-import { Api } from '../http/services/api/api';
-import { environment } from '../http/environment/environment';
+import { Api } from '../../http/services/api/api';
+import { environment } from '../../http/environment/environment';
 import { map, Observable, tap } from 'rxjs';
-import { Product, ProductsResponse } from '../../types/api.response';
+import { Product, ProductsResponse } from '../../../types/api.response';
 
 @Injectable({
   providedIn: 'root',
