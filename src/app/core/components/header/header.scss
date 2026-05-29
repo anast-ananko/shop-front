@@ -19,7 +19,6 @@
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  color: var(--mat-sys-scrim);
 }
 
 .logo-img {
@@ -30,9 +29,7 @@
 .logo-text {
   font-size: 20px;
   font-weight: 400;
-  color: inherit;
   color: #ffffff;
-  // text-shadow: 0 0 3px #000000;
 }
 
 .header-nav {
@@ -42,7 +39,7 @@
 }
 
 .nav-link {
-  color: var(--mat-sys-on-primary);
+  color: #ffffff !important;
   font-size: 16px;
   font-weight: 400;
   border-radius: 6px;
@@ -85,6 +82,7 @@
     width: 40px;
     font-size: 40px;
     margin-right: 0;
+    color:#ffffff;
   }
 }
 
