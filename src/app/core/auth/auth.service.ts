@@ -45,14 +45,21 @@ export class AuthService {
   }
 
   initAuthFlow() {
-    const token = this.storage.getCustomerToken() ?? this.storage.getAnonymousToken();
-
-    if (token) {
+    const customer = this.storage.getCustomerToken();
+    if (customer) {
       this.customerService
         .getMe()
-        .pipe(tap((customer) => this.customer.set(customer)))
+        .pipe(
+          tap((customer) => this.customer.set(customer)),
+          takeUntilDestroyed(this.destroyRef),
+        )
         .subscribe();
 
+      return;
+    }
+
+    const anon = this.storage.getAnonymousToken();
+    if (anon) {
       return;
     }
 
