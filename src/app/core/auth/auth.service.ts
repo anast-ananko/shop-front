@@ -1,11 +1,13 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { environment } from '../http/environment/environment';
 import { TokenStorage } from './token.storage';
 import { AppToken, Customer, SignupRequest, SignupResponse, Token } from './models';
 import { Api } from '../http/services/api/api';
+import { CustomerService } from '../services/customer/customer.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +22,8 @@ export class AuthService {
 
   private storage = inject(TokenStorage);
   private apiService = inject(Api);
+  private destroyRef = inject(DestroyRef);
+  private customerService = inject(CustomerService);
 
   customer = signal<Customer | null>(null);
 
@@ -41,17 +45,18 @@ export class AuthService {
   }
 
   initAuthFlow() {
-    const customer = this.storage.getCustomerToken();
-    if (customer) {
+    const token = this.storage.getCustomerToken() ?? this.storage.getAnonymousToken();
+
+    if (token) {
+      this.customerService
+        .getMe()
+        .pipe(tap((customer) => this.customer.set(customer)))
+        .subscribe();
+
       return;
     }
 
-    const anon = this.storage.getAnonymousToken();
-    if (anon) {
-      return;
-    }
-
-    this.getAnonymousToken().subscribe();
+    this.getAnonymousToken().pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
   getAnonymousToken(): Observable<Token> {
@@ -77,7 +82,7 @@ export class AuthService {
       );
   }
 
-  getCustomerToken(dto: {email: string, password: string}): Observable<Token> {
+  getCustomerToken(dto: { email: string; password: string }): Observable<Token> {
     const body = new HttpParams()
       .set('grant_type', 'password')
       .set('username', dto.email)
@@ -120,6 +125,14 @@ export class AuthService {
           this.customer.set(res.customer);
         }),
       );
+  }
+
+  updateMe(actions: unknown[]) {
+    return this.customerService.updateMe(actions, this.customer()?.version ?? 1).pipe(
+      tap((customer) => {
+        this.customer.set(customer);
+      }),
+    );
   }
 
   // refreshToken(): Observable<Token> | undefined {

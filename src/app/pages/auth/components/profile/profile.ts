@@ -13,4 +13,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
 export class Profile {
   authService = inject(AuthService);
 
+  edit(field: string, value: unknown) {
+    console.log(field, value);
+  }
 }

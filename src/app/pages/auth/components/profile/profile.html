@@ -1,15 +1,15 @@
 @if (this.authService.customer(); as customer) {
-  <mat-card *ngIf="customer">
+  <mat-card>
     <div class="row">
       <span>First Name: {{ customer.firstName }}</span>
-      <button mat-icon-button (click)="edit('firstName', this.authService.customer.firstName)">
+      <button mat-icon-button (click)="edit('firstName', customer.firstName)">
         <mat-icon>edit</mat-icon>
       </button>
     </div>
 
     <div class="row">
       <span>Last Name: {{ customer.lastName }}</span>
-      <button mat-icon-button (click)="edit('lastName', this.authService.customer.lastName)">
+      <button mat-icon-button (click)="edit('lastName',customer.lastName)">
         <mat-icon>edit</mat-icon>
       </button>
     </div>
@@ -23,7 +23,7 @@
 
     <div class="row">
       <span>Date of Birth: {{ customer }}</span>
-      <button mat-icon-button (click)="edit('dateOfBirth', this.authService.customer.dateOfBirth)">
+      <button mat-icon-button (click)="edit('dateOfBirth', customer.dateOfBirth)">
         <mat-icon>edit</mat-icon>
       </button>
     </div>

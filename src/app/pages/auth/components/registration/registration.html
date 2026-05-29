@@ -1,130 +1,129 @@
 <div class="registration">
-  <div class="registration-container">
-    <h2>Registration</h2>
+  <h2>Registration</h2>
 
-    <form [formGroup]="form" (ngSubmit)="submit()">
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" formControlName="email" />
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email" formControlName="email" />
 
-        @if (form.controls.email.touched && form.controls.email.hasError('required')) {
-          <mat-error>Email is required</mat-error>
+      @if (form.controls.email.touched && form.controls.email.hasError('required')) {
+        <mat-error>Email is required</mat-error>
+      }
+      @if (form.controls.email.touched && form.controls.email.invalid) {
+        <mat-error>Invalid email</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" placeholder="Password" formControlName="password" />
+
+      @if (form.controls.password.touched && form.controls.password.hasError('required')) {
+        <mat-error>Password is required</mat-error>
+      }
+      @if (
+        form.controls.password.touched &&
+        (form.controls.password.hasError('pattern') || form.controls.password.hasError('minlength'))
+      ) {
+        <mat-error>
+          Password must be at least 8 characters and include letters and numbers
+        </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>First Name</mat-label>
+      <input matInput placeholder="First Name" formControlName="firstName" />
+
+      @if (form.controls.firstName.touched && form.controls.firstName.hasError('required')) {
+        <mat-error>First name is required</mat-error>
+      }
+      @if (form.controls.firstName.touched && form.controls.firstName.hasError('minlength')) {
+        <mat-error>First name must be at least 3 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      <input matInput placeholder="Last Name" formControlName="lastName" />
+
+      @if (form.controls.lastName.touched && form.controls.lastName.hasError('required')) {
+        <mat-error>Last name is required</mat-error>
+      }
+      @if (form.controls.lastName.touched && form.controls.lastName.hasError('minlength')) {
+        <mat-error>Last name must be at least 2 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Date of Birth</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Date of Birth"
+        formControlName="dateOfBirth"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker" />
+      <mat-datepicker #picker />
+
+      @if (form.controls.dateOfBirth.touched && form.controls.dateOfBirth.hasError('required')) {
+        <mat-error>Date of birth is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-card class="address-card">
+      <mat-card-title>Shipping Address</mat-card-title>
+
+      <div formGroupName="shippingAddress">
+        <mat-form-field>
+          <mat-label>Street Name</mat-label>
+          <input matInput placeholder="Street" formControlName="streetName" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Street Number</mat-label>
+          <input matInput placeholder="Street" formControlName="streetNumber" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>City</mat-label>
+          <input matInput placeholder="City" formControlName="city" />
+        </mat-form-field>
+
+        <mat-form-field
+          [class.mat-form-field-invalid]="
+            form.controls.shippingAddress.hasError('invalidPostalCode') &&
+            (form.controls.shippingAddress.touched || form.controls.shippingAddress.dirty)
+          "
+        >
+          <mat-label>Postal Code</mat-label>
+          <input matInput formControlName="postalCode" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Country</mat-label>
+          <mat-select formControlName="country">
+            @for (c of countriesService.countries(); track c.code) {
+              <mat-option [value]="c.code"> {{ c.name }} ({{ c.code }}) </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        @if (form.controls.shippingAddress.hasError('invalidPostalCode')) {
+          <mat-error> Invalid postal code for selected country </mat-error>
         }
-        @if (form.controls.email.touched && form.controls.email.invalid) {
-          <mat-error>Invalid email</mat-error>
-        }
-      </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input matInput type="password" placeholder="Password" formControlName="password" />
-
-        @if (form.controls.password.touched && form.controls.password.hasError('required')) {
-          <mat-error>Password is required</mat-error>
-        }
-        @if (
-          form.controls.password.touched &&
-          (form.controls.password.hasError('pattern') ||
-            form.controls.password.hasError('minlength'))
-        ) {
-          <mat-error>
-            Password must be at least 8 characters and include letters and numbers
-          </mat-error>
-        }
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>First Name</mat-label>
-        <input matInput placeholder="First Name" formControlName="firstName" />
-
-        @if (form.controls.firstName.touched && form.controls.firstName.hasError('required')) {
-          <mat-error>First name is required</mat-error>
-        }
-        @if (form.controls.firstName.touched && form.controls.firstName.hasError('minlength')) {
-          <mat-error>First name must be at least 3 characters</mat-error>
-        }
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Last Name</mat-label>
-        <input matInput placeholder="Last Name" formControlName="lastName" />
-
-        @if (form.controls.lastName.touched && form.controls.lastName.hasError('required')) {
-          <mat-error>Last name is required</mat-error>
-        }
-        @if (form.controls.lastName.touched && form.controls.lastName.hasError('minlength')) {
-          <mat-error>Last name must be at least 2 characters</mat-error>
-        }
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Date of Birth</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          placeholder="Date of Birth"
-          formControlName="dateOfBirth"
-        />
-        <mat-datepicker-toggle matSuffix [for]="picker" />
-        <mat-datepicker #picker />
-
-        @if (form.controls.dateOfBirth.touched && form.controls.dateOfBirth.hasError('required')) {
-          <mat-error>Date of birth is required</mat-error>
-        }
-      </mat-form-field>
-
-      <mat-card class="address-card">
-        <mat-card-title>Shipping Address</mat-card-title>
-
-        <div formGroupName="shippingAddress">
-          <mat-form-field>
-            <mat-label>Street Name</mat-label>
-            <input matInput placeholder="Street" formControlName="streetName" />
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Street Number</mat-label>
-            <input matInput placeholder="Street" formControlName="streetNumber" />
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>City</mat-label>
-            <input matInput placeholder="City" formControlName="city" />
-          </mat-form-field>
-
-          <mat-form-field
-            [class.mat-form-field-invalid]="
-              form.controls.shippingAddress.hasError('invalidPostalCode') &&
-              (form.controls.shippingAddress.touched || form.controls.shippingAddress.dirty)
-            "
-          >
-            <mat-label>Postal Code</mat-label>
-            <input matInput formControlName="postalCode" />
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Country</mat-label>
-            <mat-select formControlName="country">
-              @for (c of countriesService.countries(); track c.code) {
-                <mat-option [value]="c.code"> {{ c.name }} ({{ c.code }}) </mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-
-          @if (form.controls.shippingAddress.hasError('invalidPostalCode')) {
-            <mat-error> Invalid postal code for selected country </mat-error>
-          }
-
-          <mat-checkbox formControlName="isDefault"> Set as default address </mat-checkbox>
-        </div>
-      </mat-card>
-
-      <div class="checkbox">
-        <mat-checkbox formControlName="billingSameAsShipping">
-          Billing address same as shipping
-        </mat-checkbox>
+        <mat-checkbox formControlName="isDefault"> Set as default address </mat-checkbox>
       </div>
+    </mat-card>
 
+    <div class="checkbox">
+      <mat-checkbox formControlName="billingSameAsShipping">
+        Billing address same as shipping
+      </mat-checkbox>
+    </div>
+
+    @if (!form.controls.billingSameAsShipping.value) {
       <mat-card class="address-card billing-card">
         <mat-card-title>Billing Address</mat-card-title>
 
@@ -170,27 +169,27 @@
           <mat-checkbox formControlName="isDefault"> Set as default address </mat-checkbox>
         </div>
       </mat-card>
+    }
 
-      <div class="actions">
-        <button matButton="filled" color="primary" type="submit" [disabled]="form.invalid">
-          Register
-        </button>
-      </div>
-
-      @if (serverError()) {
-        <div class="server server-error">
-          {{ serverError() }}
-        </div>
-      }
-      @if (success()) {
-        <p class="server server-success">You have successfully registered!</p>
-      }
-    </form>
-
-    <div class="auth-footer">
-      <span>Already have an account?</span>
-
-      <a matButton color="accent" [routerLink]="['/auth', 'sign-in']"> Login </a>
+    <div class="actions">
+      <button matButton="filled" color="primary" type="submit" [disabled]="form.invalid">
+        Register
+      </button>
     </div>
+
+    @if (serverError()) {
+      <div class="server server-error">
+        {{ serverError() }}
+      </div>
+    }
+    @if (success()) {
+      <p class="server server-success">You have successfully registered!</p>
+    }
+  </form>
+
+  <div class="auth-footer">
+    <span>Already have an account?</span>
+
+    <a matButton color="accent" [routerLink]="['/auth', 'sign-in']"> Login </a>
   </div>
 </div>
