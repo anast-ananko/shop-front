@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { Auth } from '../pages/auth/auth';
 import { authRequiredGuard } from '../core/auth/guards/auth-required-guard';
+import { guestGuard } from '../core/auth/guards/guest-guard';
 
 export const authRoutes: Routes = [
   {
@@ -21,6 +22,7 @@ export const authRoutes: Routes = [
           const m = await import('../pages/auth/components/sign-in/sign-in');
           return m.SignIn;
         },
+        canActivate: [guestGuard],
       },
       {
         path: 'profile',
