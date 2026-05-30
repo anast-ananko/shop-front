@@ -32,6 +32,7 @@ export interface CustomerBase {
   addresses: Address[];
   shippingAddressIds: string[];
   billingAddressIds: string[];
+  dateOfBirth: string;
   isEmailVerified: boolean;
   stores: StoreReference[];
   authenticationMode: string;

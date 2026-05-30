@@ -16,7 +16,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCard, MatCardTitle } from '@angular/material/card';
-import { map, Observable, switchMap } from 'rxjs';
+import { map, Observable, of, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { postalCodeValidator } from '../../../../utils/postal-code.validator';
@@ -81,7 +81,7 @@ export class Registration implements OnInit {
       '',
       [Validators.required, Validators.minLength(3), Validators.pattern(/^[A-Za-zÀ-ž]+$/)],
     ],
-    dateOfBirth: ['', Validators.required],
+    dateOfBirth: this.fb.control<Date | null>(null, Validators.required),
 
     shippingAddress: this.fb.group(
       {
@@ -117,13 +117,16 @@ export class Registration implements OnInit {
     this.initAddressLogic(shipping);
     this.initAddressLogic(billing);
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.serverError.set(null);
     });
 
-    this.form.get('billingSameAsShipping')?.valueChanges.subscribe((same) => {
-      this.syncBilling(same);
-    });
+    this.form
+      .get('billingSameAsShipping')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((same) => {
+        this.syncBilling(same);
+      });
 
     this.syncBilling(this.form.get('billingSameAsShipping')!.value);
   }
@@ -132,13 +135,13 @@ export class Registration implements OnInit {
     const country = address.controls['country'];
     const postalCode = address.controls['postalCode'];
 
-    country.valueChanges.subscribe(() => {
+    country.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       postalCode.reset('');
       postalCode.markAsUntouched();
       address.updateValueAndValidity();
     });
 
-    address.valueChanges.subscribe(() => {
+    address.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.syncAddressErrorToControls(address);
     });
   }
@@ -190,7 +193,7 @@ export class Registration implements OnInit {
   }
 
   private addAddress(address: Omit<Address, 'id'>): Observable<string> {
-    return this.customerService.updateMe([customerActions.addAddress(address)]).pipe(
+    return this.authService.updateMe([customerActions.addAddress(address)]).pipe(
       map((customer) => {
         const address = customer.addresses.at(-1);
 
@@ -204,7 +207,7 @@ export class Registration implements OnInit {
   }
 
   private setDefault(type: 'shipping' | 'billing', addressId: string): Observable<MeResponse> {
-    return this.customerService.updateMe([
+    return this.authService.updateMe([
       type === 'shipping'
         ? customerActions.setDefaultShipping(addressId)
         : customerActions.setDefaultBilling(addressId),
@@ -212,7 +215,7 @@ export class Registration implements OnInit {
   }
 
   private addId(type: 'shipping' | 'billing', addressId: string): Observable<MeResponse> {
-    return this.customerService.updateMe([
+    return this.authService.updateMe([
       type === 'shipping'
         ? customerActions.addShippingAddressId(addressId)
         : customerActions.addBillingAddressId(addressId),
@@ -245,7 +248,25 @@ export class Registration implements OnInit {
     this.authService
       .signup(signupPayload)
       .pipe(
-        switchMap(() => this.authService.getCustomerToken({ email: signupPayload.email, password: signupPayload.password })),
+        switchMap(() =>
+          this.authService.getCustomerToken({
+            email: signupPayload.email,
+            password: signupPayload.password,
+          }),
+        ),
+
+        switchMap(() => {
+          if (!form.dateOfBirth) return of(null);
+          const date = form.dateOfBirth;
+
+          const dob = [
+            date.getFullYear(),
+            String(date.getMonth() + 1).padStart(2, '0'),
+            String(date.getDate()).padStart(2, '0'),
+          ].join('-');
+
+          return this.authService.updateMe([customerActions.setDateOfBirth(dob)]);
+        }),
 
         switchMap(() => {
           const shipping = this.mapAddress(form.shippingAddress);
