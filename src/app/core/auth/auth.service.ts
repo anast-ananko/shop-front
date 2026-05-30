@@ -1,7 +1,6 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { environment } from '../http/environment/environment';
 import { TokenStorage } from './token.storage';
@@ -22,7 +21,6 @@ export class AuthService {
 
   private storage = inject(TokenStorage);
   private apiService = inject(Api);
-  private destroyRef = inject(DestroyRef);
   private customerService = inject(CustomerService);
 
   customer = signal<Customer | null>(null);
@@ -51,7 +49,6 @@ export class AuthService {
         .getMe()
         .pipe(
           tap((customer) => this.customer.set(customer)),
-          takeUntilDestroyed(this.destroyRef),
         )
         .subscribe();
 
@@ -63,7 +60,7 @@ export class AuthService {
       return;
     }
 
-    this.getAnonymousToken().pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
+    this.getAnonymousToken().subscribe();
   }
 
   getAnonymousToken(): Observable<Token> {
