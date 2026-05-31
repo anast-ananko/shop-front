@@ -68,7 +68,6 @@ export class SignIn implements OnInit {
       .getCustomerToken(signupPayload)
       .pipe(
         switchMap(() => this.customerService.getMe()),
-        tap((customer) => this.authService.customer.set(customer)),
         takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => this.successLogin(),

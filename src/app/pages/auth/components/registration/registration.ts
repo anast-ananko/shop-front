@@ -56,9 +56,9 @@ export class Registration implements OnInit {
   private fb = inject(FormBuilder);
   countriesService = inject(CountriesService);
   private authService = inject(AuthService);
-  private customerService = inject(CustomerService);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
+  private customerService = inject(CustomerService);
 
   serverError = signal<string | null>(null);
   success = signal<boolean>(false);
@@ -193,7 +193,7 @@ export class Registration implements OnInit {
   }
 
   private addAddress(address: Omit<Address, 'id'>): Observable<string> {
-    return this.authService.updateMe([customerActions.addAddress(address)]).pipe(
+    return this.customerService.updateMe([customerActions.addAddress(address)]).pipe(
       map((customer) => {
         const address = customer.addresses.at(-1);
 
@@ -207,7 +207,7 @@ export class Registration implements OnInit {
   }
 
   private setDefault(type: 'shipping' | 'billing', addressId: string): Observable<MeResponse> {
-    return this.authService.updateMe([
+    return this.customerService.updateMe([
       type === 'shipping'
         ? customerActions.setDefaultShipping(addressId)
         : customerActions.setDefaultBilling(addressId),
@@ -215,7 +215,7 @@ export class Registration implements OnInit {
   }
 
   private addId(type: 'shipping' | 'billing', addressId: string): Observable<MeResponse> {
-    return this.authService.updateMe([
+    return this.customerService.updateMe([
       type === 'shipping'
         ? customerActions.addShippingAddressId(addressId)
         : customerActions.addBillingAddressId(addressId),
@@ -265,7 +265,7 @@ export class Registration implements OnInit {
             String(date.getDate()).padStart(2, '0'),
           ].join('-');
 
-          return this.authService.updateMe([customerActions.setDateOfBirth(dob)]);
+          return this.customerService.updateMe([customerActions.setDateOfBirth(dob)]);
         }),
 
         switchMap(() => {

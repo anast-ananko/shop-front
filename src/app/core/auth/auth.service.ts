@@ -23,10 +23,8 @@ export class AuthService {
   private apiService = inject(Api);
   private customerService = inject(CustomerService);
 
-  customer = signal<Customer | null>(null);
-
-  isAuth = computed(() => !!this.customer());
-  isGuest = computed(() => this.customer() === null);
+  isAuth = computed(() => !!this.customerService.customer());
+  isGuest = computed(() => this.customerService.customer() === null);
 
   getAccessToken(): Observable<AppToken> {
     const body = new HttpParams().set('grant_type', 'client_credentials').set('scope', this.scope);
@@ -47,9 +45,7 @@ export class AuthService {
     if (customer) {
       this.customerService
         .getMe()
-        .pipe(
-          tap((customer) => this.customer.set(customer)),
-        )
+        .pipe(tap((customer) => this.customerService.customer.set(customer)))
         .subscribe();
 
       return;
@@ -126,17 +122,9 @@ export class AuthService {
       .post<SignupResponse>(`${this.url}/${this.project_key}/me/signup`, data, headers)
       .pipe(
         tap((res) => {
-          this.customer.set(res.customer);
+          this.customerService.customer.set(res.customer);
         }),
       );
-  }
-
-  updateMe(actions: unknown[]) {
-    return this.customerService.updateMe(actions, this.customer()?.version ?? 1).pipe(
-      tap((customer) => {
-        this.customer.set(customer);
-      }),
-    );
   }
 
   // refreshToken(): Observable<Token> | undefined {
@@ -169,7 +157,7 @@ export class AuthService {
 
   logout(): void {
     this.storage.clearTokens();
-    this.customer.set(null);
+    this.customerService.customer.set(null);
 
     this.getAnonymousToken().subscribe();
   }
