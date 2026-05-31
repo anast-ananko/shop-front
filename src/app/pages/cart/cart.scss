@@ -1,8 +1,36 @@
 :host {
   width: 100%;
+  display: block;
+  padding: 0px 15px;
+    color: var(--mat-sys-primary);
+}
+
+.back-button{
+  margin-bottom: 20px;
+}
+
+.wrapper-cards{
   display: flex;
   flex-direction: column;
-  padding: 0px 15px;
-  background-color: #cccccc;
-  gap: 15px;
+  gap: 20px;
+  background-color: var(--mat-sys-surface-variant);
+  padding: 30px 15px;
+  min-height: 400px;
+  border-radius: 10px;
+  justify-content: space-between;
+
 }
+
+h2{
+  text-align: center;
+}
+
+.wrapper-total{
+  border-top: 1px solid var(--mat-sys-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+
+}
+

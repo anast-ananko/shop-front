@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from "@angular/material/icon";
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BooksService } from '../../../../core/services/books-service/books-service';
 import { Book } from '../../../../types/book.interface';
 import { DecimalPipe } from '@angular/common';
@@ -14,11 +14,27 @@ import { DecimalPipe } from '@angular/common';
   templateUrl: './card-cart.html',
   styleUrl: './card-cart.scss',
 })
-export class CardCart {
+export class CardCart implements OnInit {
   private bookService = inject(BooksService);
 
   book = input<Book>();
   counter = 1;
+  counterValue = output<{ id: string; total: number }>();
+
+  ngOnInit(): void {
+    this.emitCounterValue();
+  }
+
+  emitCounterValue(): void {
+    const book = this.book();
+    if (book?.price) {
+      const value = book.price * this.counter;
+      this.counterValue.emit({
+        id: book.id,
+        total: value,
+      });
+    }
+  }
 
   cartToggled(e: Event, id: string): void {
     e.stopPropagation();

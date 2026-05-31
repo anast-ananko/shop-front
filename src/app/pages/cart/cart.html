@@ -1,7 +1,24 @@
-<p>cart works!</p>
+<a matButton="filled" [routerLink]="['/']" class="back-button">
+  <mat-icon>arrow_back_ios</mat-icon>
+  Home
+</a>
+<div class="wrapper-cards">
 
-@if(books(); as books){
+  @if(booksInCart(); as books){
+
+  @if(books.length>0){
+  <h2>In your cart {{books.length}} {{books.length>1? 'books' : 'book'}}.</h2>
   @for (book of books; track book.id) {
-    <app-card-cart [book]="book"></app-card-cart>
+  <app-card-cart [book]="book" (counterValue)="cardTotalsChanged($event)"></app-card-cart>
   }
-}
+
+  }@else{
+  <h2>Your cart is empty.</h2>
+  }
+
+  }
+  <div class="wrapper-total">
+    <h3>Total: {{totalPrice() | number:'1.2-2'}}$</h3>
+    <button matButton="filled" [disabled]="booksInCart().length === 0">Order</button>
+  </div>
+</div>

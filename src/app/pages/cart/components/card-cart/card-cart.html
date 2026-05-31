@@ -20,11 +20,12 @@
       <p class="price">Price: {{ book.price }}$</p>
 
       <mat-button-toggle-group>
-        <button matButton (click)="counter = counter <2 ? 1 : counter - 1">
+        <button matButton (click)="counter = counter <2 ? 1 : counter - 1" (click)="emitCounterValue()">
           <mat-icon>remove</mat-icon>
         </button>
         <mat-button-toggle disabled>{{counter}}</mat-button-toggle>
-        <button matButton (click)="counter = book.copiesLeft - counter > 0 ? counter + 1 : counter">
+        <button matButton (click)="counter = book.copiesLeft - counter > 0 ? counter + 1 : counter"
+          (click)="emitCounterValue()">
           <mat-icon>add</mat-icon>
         </button>
 

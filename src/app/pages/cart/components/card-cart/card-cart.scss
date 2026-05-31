@@ -18,7 +18,7 @@
   }
 
   &:hover {
-    scale: 1.02;
+    scale: 1.01;
     box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
 
     .price.final {
@@ -87,8 +87,9 @@
 }
 
 
-@media (max-width: 650px) {
+@media (max-width: 860px) {
   .wrapper-card {
+    flex-direction: column;
     justify-content: space-around;
 
     .mat-mdc-card-content {
