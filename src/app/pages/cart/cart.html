@@ -1,1 +1,7 @@
 <p>cart works!</p>
+
+@if(books(); as books){
+  @for (book of books; track book.id) {
+    <app-card-cart [book]="book"></app-card-cart>
+  }
+}
