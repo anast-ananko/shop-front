@@ -19,7 +19,7 @@ export class CardCart implements OnInit {
 
   book = input<Book>();
   counter = 1;
-  counterValue = output<{ id: string; total: number }>();
+  totalSum = output<{ id: string; total: number }>();
 
   ngOnInit(): void {
     this.emitCounterValue();
@@ -27,17 +27,17 @@ export class CardCart implements OnInit {
 
   emitCounterValue(): void {
     const book = this.book();
+
     if (book?.price) {
       const value = book.price * this.counter;
-      this.counterValue.emit({
-        id: book.id,
-        total: value,
-      });
+      this.totalSum.emit({ id: book.id, total: value});
     }
   }
 
   cartToggled(e: Event, id: string): void {
     e.stopPropagation();
+    this.counter = 0;
+    this.emitCounterValue();
     this.bookService.toggleCart(id);
   }
 }
