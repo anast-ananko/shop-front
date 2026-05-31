@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { authRequiredGuard } from "../core/auth/guards/auth-required-guard";
+// import { authRequiredGuard } from "../core/auth/guards/auth-required-guard";
 export const cartRoutes: Routes = [
   {
     path: 'cart',
@@ -7,5 +7,5 @@ export const cartRoutes: Routes = [
       const m = await import("../pages/cart/cart");
       return m.Cart;
     },
-     canActivate: [authRequiredGuard],
+    //  canActivate: [authRequiredGuard],
   }]
