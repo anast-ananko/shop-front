@@ -1,1 +1,31 @@
-<p>profile works!</p>
+@if (this.authService.customer(); as customer) {
+  <mat-card>
+    <div class="row">
+      <span>First Name: {{ customer.firstName }}</span>
+      <button mat-icon-button (click)="edit('firstName', customer.firstName)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+
+    <div class="row">
+      <span>Last Name: {{ customer.lastName }}</span>
+      <button mat-icon-button (click)="edit('lastName',customer.lastName)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+
+    <div class="row">
+      <span>Email: {{ customer.email }}</span>
+      <button mat-icon-button (click)="edit('email', customer.email)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+
+    <div class="row">
+      <span>Date of Birth: {{ customer }}</span>
+      <button mat-icon-button (click)="edit('dateOfBirth', customer.dateOfBirth)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+  </mat-card>
+}

@@ -1,6 +1,5 @@
 import { Address } from "./models";
 
-
 export const customerActions = {
   addAddress: (address: Omit<Address, 'id'>) => ({ action: 'addAddress', address }),
   setDefaultShipping: (id: string) => ({
@@ -19,4 +18,8 @@ export const customerActions = {
     action: 'addBillingAddressId',
     addressId: id,
   }),
+  setDateOfBirth: (date: string) => ({
+    action: 'setDateOfBirth',
+    dateOfBirth: date,
+  })
 };

@@ -1,8 +1,8 @@
-  :host {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
   main {
     flex: 1;
@@ -11,7 +11,7 @@
     margin: 0 auto;
     padding: 20px 0px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

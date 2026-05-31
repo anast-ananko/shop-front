@@ -10,6 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { switchMap, tap } from 'rxjs';
+import { CustomerService } from '../../../../core/services/customer/customer.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -30,6 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class SignIn implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private customerService = inject(CustomerService);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
 
@@ -63,7 +66,10 @@ export class SignIn implements OnInit {
 
     this.authService
       .getCustomerToken(signupPayload)
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        switchMap(() => this.customerService.getMe()),
+        tap((customer) => this.authService.customer.set(customer)),
+        takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => this.successLogin(),
         error: (err) => {
