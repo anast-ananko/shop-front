@@ -6,6 +6,7 @@ import { environment } from '../http/environment/environment';
 import { TokenStorage } from './token.storage';
 import { AppToken, Customer, SignupRequest, SignupResponse, Token } from './models';
 import { Api } from '../http/services/api/api';
+import { CustomerService } from '../services/customer/customer.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,7 @@ export class AuthService {
 
   private storage = inject(TokenStorage);
   private apiService = inject(Api);
+  private customerService = inject(CustomerService);
 
   customer = signal<Customer | null>(null);
 
@@ -43,6 +45,13 @@ export class AuthService {
   initAuthFlow() {
     const customer = this.storage.getCustomerToken();
     if (customer) {
+      this.customerService
+        .getMe()
+        .pipe(
+          tap((customer) => this.customer.set(customer)),
+        )
+        .subscribe();
+
       return;
     }
 
@@ -77,7 +86,7 @@ export class AuthService {
       );
   }
 
-  getCustomerToken(dto: {email: string, password: string}): Observable<Token> {
+  getCustomerToken(dto: { email: string; password: string }): Observable<Token> {
     const body = new HttpParams()
       .set('grant_type', 'password')
       .set('username', dto.email)
@@ -120,6 +129,14 @@ export class AuthService {
           this.customer.set(res.customer);
         }),
       );
+  }
+
+  updateMe(actions: unknown[]) {
+    return this.customerService.updateMe(actions, this.customer()?.version ?? 1).pipe(
+      tap((customer) => {
+        this.customer.set(customer);
+      }),
+    );
   }
 
   // refreshToken(): Observable<Token> | undefined {

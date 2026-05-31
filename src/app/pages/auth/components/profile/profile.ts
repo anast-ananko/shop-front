@@ -1,9 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { MatCard } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+
+import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-profile',
-  imports: [],
+  imports: [MatCard, MatIcon],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
-export class Profile {}
+export class Profile {
+  authService = inject(AuthService);
+
+  edit(field: string, value: unknown) {
+    console.log(field, value);
+  }
+}
