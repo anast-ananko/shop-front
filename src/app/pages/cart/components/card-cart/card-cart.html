@@ -2,10 +2,10 @@
 <mat-card class="card-cart" appearance="outlined">
   <div class="wrapper-card">
     <mat-card-header>
-      <div mat-card-avatar class="header-image"
-        [style.background-image]="'url(' + book.imageUrl + ')'"></div>
+      <div mat-card-avatar class="header-image" [style.background-image]="'url(' + book.imageUrl + ')'"></div>
       <mat-card-title>{{book.title}}</mat-card-title>
       <mat-card-subtitle>{{book.category}}</mat-card-subtitle>
+      <mat-card-subtitle class="stock">In stock: {{ book.copiesLeft - counter }}</mat-card-subtitle>
 
       <mat-card-actions>
         <button matButton (click)="cartToggled($event, book.id)">
@@ -24,7 +24,7 @@
           <mat-icon>remove</mat-icon>
         </button>
         <mat-button-toggle disabled>{{counter}}</mat-button-toggle>
-        <button matButton (click)="counter = counter + 1">
+        <button matButton (click)="counter = book.copiesLeft - counter > 0 ? counter + 1 : counter">
           <mat-icon>add</mat-icon>
         </button>
 
