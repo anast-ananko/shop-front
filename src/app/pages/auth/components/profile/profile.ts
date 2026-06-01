@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -17,7 +17,7 @@ import { CustomerService } from '../../../../core/services/customer/customer.ser
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
-export class Profile {
+export class Profile implements OnInit  {
   private fb = inject(FormBuilder);
   authService = inject(AuthService);
   customerService = inject(CustomerService);
@@ -51,9 +51,16 @@ export class Profile {
 
   formPassword = this.fb.nonNullable.group(
     {
-      currentPassword: [''],
-      newPassword: ['', [Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/)]],
-      confirmPassword: [''],
+      currentPassword: ['', [Validators.required]],
+      newPassword: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/),
+        ],
+      ],
+      confirmPassword: ['', [Validators.required]],
     },
     {
       validators: passwordMatchValidator,
@@ -104,7 +111,7 @@ export class Profile {
 
     const value = control.value;
 
-    let action: any;
+    let action: unknown;
 
     switch (field) {
       case 'firstName':

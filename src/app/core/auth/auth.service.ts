@@ -1,10 +1,10 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
 import { environment } from '../http/environment/environment';
 import { TokenStorage } from './token.storage';
-import { AppToken, Customer, SignupRequest, SignupResponse, Token } from './models';
+import { AppToken, SignupRequest, SignupResponse, Token } from './models';
 import { Api } from '../http/services/api/api';
 import { CustomerService } from '../services/customer/customer.service';
 

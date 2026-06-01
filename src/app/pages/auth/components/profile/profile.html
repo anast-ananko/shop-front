@@ -157,7 +157,13 @@
 }
 
 <mat-card class="password-section">
-  <div class="password-header" (click)="togglePassword()">
+  <div
+    class="password-header"
+    tabindex="0"
+    (click)="togglePassword()"
+    (keydown.enter)="togglePassword()"
+    (keydown.space)="togglePassword()"
+  >
     <span>Change Password</span>
     <mat-icon>{{ showPassword() ? 'expand_less' : 'expand_more' }}</mat-icon>
   </div>
@@ -193,6 +199,15 @@
           [type]="showNewPassword() ? 'text' : 'password'"
           formControlName="newPassword"
         />
+        @if (
+          formPassword.controls.newPassword.touched &&
+          (formPassword.controls.newPassword.hasError('pattern') ||
+            formPassword.controls.newPassword.hasError('minlength'))
+        ) {
+          <mat-error
+            >Password must be at least 8 characters and include letters and numbers</mat-error
+          >
+        }
 
         <button
           matIconButton
@@ -257,7 +272,7 @@
         </div>
       }
       @if (serverSuccess()) {
-        <p class="server server-success">Password has been successfully updated.</p>
+        <p class="server server-success">Password has been successfully updated</p>
       }
     </form>
   }

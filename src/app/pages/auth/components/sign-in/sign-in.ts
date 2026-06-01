@@ -10,7 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { switchMap, tap } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { CustomerService } from '../../../../core/services/customer/customer.service';
 
 @Component({

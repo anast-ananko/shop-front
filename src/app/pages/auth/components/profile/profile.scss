@@ -46,7 +46,6 @@ mat-card {
   padding: 8px 12px;
   border: 1px solid transparent;
   border-radius: 6px;
-  background: #fafafa;
 }
 
 .value input {
@@ -110,7 +109,7 @@ mat-error {
   margin-top: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 18px;
 
   button[matIconButton] {
     margin-right: 10px;
@@ -143,15 +142,19 @@ mat-error {
     color: white;
     transition: 0.2s ease;
 
-    &:hover {
+    &:not(:disabled):hover {
       cursor: pointer;
-      scale: 1.1;
+      transform: scale(1.05);
     }
   }
 }
 
 .btn-save {
   background-color: green;
+
+  &:disabled {
+    background-color: var(--mat-sys-on-surface-variant);
+  }
 }
 
 .btn-cancel {
@@ -183,7 +186,7 @@ mat-error {
   .field {
     display: flex;
     flex-direction: column;
-    border: 1px solid  var(--mat-sys-on-surface-variant);
+    border: 1px solid var(--mat-sys-on-surface-variant);
     border-radius: 10px;
   }
 
