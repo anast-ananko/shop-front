@@ -1,33 +1,17 @@
 <div class="carousel-wrapper">
-  <button
-    class="carousel-arrow carousel-arrow--left"
-    type="button"
-    (click)="swiperEl.swiper.slidePrev()"
-  >
-    ‹
+  <button matButton (click)="swiperEl.swiper.slidePrev()">
+    <mat-icon>arrow_back_ios</mat-icon>
   </button>
 
-  <swiper-container
-    #swiperEl
-    slides-per-view="4"
-    space-between="20"
-    loop="true"
-    class="carousel-container"
-  >
+  <swiper-container #swiperEl slides-per-view="3" space-between="15" loop="true" class="carousel-container">
     @for (book of sliderBooks(); track book.id) {
-      <swiper-slide>
-        <ng-container
-          *ngTemplateOutlet="cardTemplate(); context: { $implicit: book }"
-        ></ng-container>
-      </swiper-slide>
+    <swiper-slide>
+      <ng-container *ngTemplateOutlet="cardTemplate(); context: { $implicit: book }"></ng-container>
+    </swiper-slide>
     }
   </swiper-container>
 
-  <button
-    class="carousel-arrow carousel-arrow--right"
-    type="button"
-    (click)="swiperEl.swiper.slideNext()"
-  >
-    ›
+  <button matButton (click)="swiperEl.swiper.slideNext()">
+    <mat-icon> arrow_forward_ios</mat-icon>
   </button>
 </div>
