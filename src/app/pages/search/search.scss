@@ -1,0 +1,14 @@
+:host {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+  align-items: stretch;
+  text-align: center;
+
+  app-product-card {
+    display: flex;
+
+  }
+}
