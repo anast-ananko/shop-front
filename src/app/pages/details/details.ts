@@ -3,10 +3,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BooksService } from '../../core/services/books-service/books-service';
 import { MatButtonModule } from '@angular/material/button';
 import { CurrencyPipe } from '@angular/common';
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-details',
-  imports: [MatButtonModule, RouterLink, CurrencyPipe],
+  imports: [MatButtonModule, RouterLink, CurrencyPipe, MatIcon],
   templateUrl: './details.html',
   styleUrl: './details.scss',
 })
