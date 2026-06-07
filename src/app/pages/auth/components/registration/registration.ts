@@ -85,9 +85,9 @@ export class Registration implements OnInit {
 
     shippingAddress: this.fb.group(
       {
-        streetName: ['', Validators.required],
-        streetNumber: ['', Validators.required],
-        city: ['', Validators.required],
+        streetName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+        streetNumber: ['', [Validators.required, Validators.maxLength(10)]],
+        city: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
         postalCode: ['', Validators.required],
         country: ['', Validators.required],
         isDefault: [true],
@@ -99,9 +99,9 @@ export class Registration implements OnInit {
 
     billingAddress: this.fb.group(
       {
-        streetName: ['', Validators.required],
-        streetNumber: ['', Validators.required],
-        city: ['', Validators.required],
+        streetName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+        streetNumber: ['', [Validators.required, Validators.maxLength(10)]],
+        city: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
         postalCode: ['', Validators.required],
         country: ['', Validators.required],
         isDefault: [true],
