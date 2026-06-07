@@ -1,0 +1,104 @@
+:host {
+  display: block;
+  margin: 20px;
+}
+
+h2[mat-dialog-title] {
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+.postal-error {
+  margin-top: -6px;
+  font-size: 13px;
+  grid-column: span 2;
+}
+
+.type-group {
+  display: flex;
+  gap: 20px;
+  margin-top: 8px;
+
+  mat-checkbox {
+    font-size: 14px;
+  }
+}
+
+mat-dialog-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  button {
+    min-width: 120px;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 5px;
+    cursor: pointer;
+    background-color: var(--mat-sys-primary);
+    color: white;
+    text-transform: uppercase;
+    transition: 0.2s ease;
+
+    &:hover,
+    &:active {
+      filter: brightness(1.1);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .btn-submit {
+    background-color: green;
+
+    &:disabled {
+      background-color: var(--mat-sys-on-surface-variant);
+      cursor: default;
+
+      &:hover,
+      &:active {
+        filter: none;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .btn-cancel {
+    background-color: var(--mat-sys-error);
+  }
+}
+
+@media (max-width: 500px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: span 1;
+  }
+
+  .type-group {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  mat-dialog-actions {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}

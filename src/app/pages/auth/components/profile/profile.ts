@@ -10,14 +10,23 @@ import { switchMap } from 'rxjs';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { passwordMatchValidator } from '../../../../utils/password-match.validator';
 import { CustomerService } from '../../../../core/services/customer/customer.service';
+import { AddressBlock } from '../../../../shared/components/address-block/address-block';
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule, MatCard, MatIcon, FormsModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    ReactiveFormsModule,
+    MatCard,
+    MatIcon,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    AddressBlock,
+  ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
-export class Profile implements OnInit  {
+export class Profile implements OnInit {
   private fb = inject(FormBuilder);
   authService = inject(AuthService);
   customerService = inject(CustomerService);
@@ -68,17 +77,6 @@ export class Profile implements OnInit  {
   );
 
   ngOnInit() {
-    const customer = this.customerService.customer();
-
-    if (!customer) return;
-
-    this.form.patchValue({
-      firstName: customer.firstName ?? '',
-      lastName: customer.lastName ?? '',
-      email: customer.email ?? '',
-      dateOfBirth: customer.dateOfBirth ?? '',
-    });
-
     this.formPassword.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.serverError.set(null);
     });
@@ -150,11 +148,11 @@ export class Profile implements OnInit  {
     });
   }
 
-  togglePassword() {
+  togglePassword(): void {
     this.showPassword.update((v) => !v);
   }
 
-  cancelPassword() {
+  cancelPassword(): void {
     this.showPassword.set(false);
     this.formPassword.patchValue({
       currentPassword: '',
@@ -167,22 +165,22 @@ export class Profile implements OnInit  {
     const current = this.formPassword.get('currentPassword')?.value;
     const newPass = this.formPassword.get('newPassword')?.value;
     const confirm = this.formPassword.get('confirmPassword')?.value;
+    const email = this.customerService.customer()?.email;
 
-    if (!current || !newPass || !confirm) return;
+    if (!current || !newPass || !confirm || !email) return;
 
     this.customerService
       .changePassword(current, newPass)
       .pipe(
         switchMap(() => {
           return this.authService.getCustomerToken({
-            email: this.form.getRawValue().email,
+            email,
             password: this.formPassword.getRawValue().newPassword,
           });
         }),
         switchMap(() => {
           return this.customerService.getMe();
         }),
-        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         next: () => {
@@ -191,12 +189,13 @@ export class Profile implements OnInit  {
 
           setTimeout(() => {
             this.serverSuccess.set(false);
+            this.showPassword.set(false);
           }, 3000);
         },
         error: (err) => {
           const apiError = err.error;
 
-          this.serverError.set(apiError?.message || 'Failed t0 change password');
+          this.serverError.set(apiError?.message || 'Failed to change password');
         },
       });
   }

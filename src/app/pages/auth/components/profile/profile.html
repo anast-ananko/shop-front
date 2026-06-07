@@ -1,6 +1,6 @@
 @if (customerService.customer(); as customer) {
-  <form [formGroup]="form">
-    <mat-card>
+  <mat-card>
+    <form [formGroup]="form" class="profile-form">
       <div class="card-header">
         <h2>Profile Information</h2>
       </div>
@@ -142,18 +142,18 @@
           <mat-error>Date is required</mat-error>
         }
       </div>
-    </mat-card>
 
-    @if (saveError()) {
-      <p class="server server-error">
-        {{ saveError() }}
-      </p>
-    }
+      @if (saveError()) {
+        <p class="server server-error">
+          {{ saveError() }}
+        </p>
+      }
 
-    @if (saveSuccess()) {
-      <p class="server server-success">Saved successfully</p>
-    }
-  </form>
+      @if (saveSuccess()) {
+        <p class="server server-success">Saved successfully</p>
+      }
+    </form>
+  </mat-card>
 }
 
 <mat-card class="password-section">
@@ -256,13 +256,11 @@
           [disabled]="formPassword.invalid"
           class="btn-save"
         >
-          <span>Update password</span>
-          <mat-icon>check_circle</mat-icon>
+          Update password
         </button>
 
         <button matButton color="primary" (click)="cancelPassword()" class="btn-cancel">
-          <span>Cancel</span>
-          <mat-icon>close</mat-icon>
+          Cancel
         </button>
       </div>
 
@@ -277,3 +275,5 @@
     </form>
   }
 </mat-card>
+
+<app-address-block />

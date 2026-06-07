@@ -32,6 +32,8 @@ export interface CustomerBase {
   addresses: Address[];
   shippingAddressIds: string[];
   billingAddressIds: string[];
+  defaultShippingAddressId: string;
+  defaultBillingAddressId: string;
   dateOfBirth: string;
   isEmailVerified: boolean;
   stores: StoreReference[];

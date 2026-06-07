@@ -7,6 +7,7 @@ import { TokenStorage } from './token.storage';
 import { AppToken, SignupRequest, SignupResponse, Token } from './models';
 import { Api } from '../http/services/api/api';
 import { CustomerService } from '../services/customer/customer.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,7 @@ export class AuthService {
   private storage = inject(TokenStorage);
   private apiService = inject(Api);
   private customerService = inject(CustomerService);
+  private router = inject(Router);
 
   isAuth = computed(() => !!this.customerService.customer());
   isGuest = computed(() => this.customerService.customer() === null);
@@ -160,5 +162,6 @@ export class AuthService {
     this.customerService.customer.set(null);
 
     this.getAnonymousToken().subscribe();
+    this.router.navigate(['/']);
   }
 }

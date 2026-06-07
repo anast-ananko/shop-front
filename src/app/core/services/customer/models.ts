@@ -25,3 +25,11 @@ export interface ClientInfo {
   clientId: string;
   isPlatformClient: boolean;
 }
+
+export type AddressVM = Address & {
+  isDefaultShipping?: boolean;
+  isDefaultBilling?: boolean;
+  isShipping: boolean;
+  isBilling: boolean;
+  countryName?: string;
+};

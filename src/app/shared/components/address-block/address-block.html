@@ -1,0 +1,38 @@
+<mat-card>
+  <div class="header">
+    <h2>Addresses</h2>
+
+    <button class="btn-add" (click)="addAddress()">
+      <mat-icon>add</mat-icon>
+      Add address
+    </button>
+  </div>
+
+  @if (defaultShipping() || defaultBilling()) {
+    <h2>Default addresses</h2>
+
+    <div class="address-flex">
+      @if (defaultShipping(); as shipping) {
+        <app-address-card [address]="shipping" [mode]="'defaultShipping'" [showActions]="false" />
+      }
+
+      @if (defaultBilling(); as billing) {
+        <app-address-card [address]="billing" [mode]="'defaultBilling'" [showActions]="false" />
+      }
+    </div>
+  }
+
+  @if (shippingAddresses().length > 0 || billingAddresses().length > 0) {
+    <h2>Other addresses</h2>
+
+    <div class="address-flex">
+      @for (address of shippingAddresses(); track address.id) {
+        <app-address-card [address]="address" [mode]="'shipping'" />
+      }
+
+      @for (address of billingAddresses(); track address.id) {
+        <app-address-card [address]="address" [mode]="'billing'" />
+      }
+    </div>
+  }
+</mat-card>
