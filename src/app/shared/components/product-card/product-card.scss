@@ -21,7 +21,13 @@
 
 .header-title {
   margin: 0 auto;
-  padding-top: 0px;
+  padding: 5px 15px;
+  line-height: 1.2;
+  height: calc(1.2em * 4);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
 .mat-mdc-button>.mat-icon {
