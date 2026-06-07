@@ -2,6 +2,8 @@
 
 ShopFront is a modern online bookstore where users can browse, search, and purchase books across different categories. The platform provides a smooth shopping experience with features like product filtering and a shopping cart.
 
+Deploy: <https://shopfront-bookstore.netlify.app>
+
 ---
 
 ## 👥 Team members
