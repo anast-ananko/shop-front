@@ -11,6 +11,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { passwordMatchValidator } from '../../../../utils/password-match.validator';
 import { CustomerService } from '../../../../core/services/customer/customer.service';
 import { AddressBlock } from '../../../../shared/components/address-block/address-block';
+import { customerActions } from '../../../../core/services/customer/customerActions';
 
 @Component({
   selector: 'app-profile',
@@ -113,17 +114,23 @@ export class Profile implements OnInit {
 
     switch (field) {
       case 'firstName':
-        action = { action: 'setFirstName', firstName: value };
+        action = customerActions.setFirstName(value);
         break;
+
       case 'lastName':
-        action = { action: 'setLastName', lastName: value };
+        action = customerActions.setLastName(value);
         break;
+
       case 'email':
-        action = { action: 'changeEmail', email: value };
+        action = customerActions.changeEmail(value);
         break;
+
       case 'dateOfBirth':
-        action = { action: 'setDateOfBirth', dateOfBirth: value };
+        action = customerActions.setDateOfBirth(value);
         break;
+
+      default:
+        return;
     }
 
     this.saveError.set(null);

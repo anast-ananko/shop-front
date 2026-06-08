@@ -43,4 +43,16 @@ export const customerActions = {
     action: 'removeAddress',
     addressId,
   }),
+  setFirstName: (firstName: string) => ({
+    action: 'setFirstName',
+    firstName,
+  }),
+  setLastName: (lastName: string) => ({
+    action: 'setLastName',
+    lastName,
+  }),
+  changeEmail: (email: string) => ({
+    action: 'changeEmail',
+    email,
+  }),
 };
