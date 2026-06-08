@@ -1,0 +1,109 @@
+<h2 mat-dialog-title>
+  {{ data.mode === 'edit' ? 'Edit address' : 'Add address' }}
+</h2>
+
+<form [formGroup]="form" appPostalCodeSync>
+  <div class="form-grid">
+    <mat-form-field>
+      <mat-label>Street Name</mat-label>
+      <input matInput formControlName="streetName" />
+
+      @if (form.controls.streetName.touched && form.controls.streetName.hasError('required')) {
+        <mat-error>Required</mat-error>
+      }
+
+      @if (form.controls.streetName.touched && form.controls.streetName.hasError('minlength')) {
+        <mat-error>Must be at least 3 characters</mat-error>
+      }
+
+      @if (form.controls.streetName.touched && form.controls.streetName.hasError('maxlength')) {
+        <mat-error>Must be at most 20 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Street Number</mat-label>
+      <input matInput formControlName="streetNumber" />
+
+      @if (form.controls.streetNumber.touched && form.controls.streetNumber.hasError('required')) {
+        <mat-error>Required</mat-error>
+      }
+
+      @if (form.controls.streetNumber.touched && form.controls.streetNumber.hasError('minlength')) {
+        <mat-error>Must be at most 10 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>City</mat-label>
+      <input matInput formControlName="city" />
+
+      @if (form.controls.city.touched && form.controls.city.hasError('required')) {
+        <mat-error>Required</mat-error>
+      }
+
+      @if (form.controls.city.touched && form.controls.city.hasError('minlength')) {
+        <mat-error>Must be at least 3 characters</mat-error>
+      }
+
+      @if (form.controls.city.touched && form.controls.city.hasError('maxlength')) {
+        <mat-error>Must be at most 20 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Postal Code</mat-label>
+      <input matInput formControlName="postalCode" />
+
+      @if (form.controls.postalCode.touched && form.controls.postalCode.hasError('required')) {
+        <mat-error>Required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Country</mat-label>
+      <mat-select formControlName="country">
+        @for (c of countriesService.countries(); track c.code) {
+          <mat-option [value]="c.code"> {{ c.name }} ({{ c.code }}) </mat-option>
+        }
+      </mat-select>
+
+      @if (form.controls.country.touched && form.controls.country.hasError('required')) {
+        <mat-error>Required</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  @if (form.hasError('invalidPostalCode')) {
+    <mat-error> Invalid postal code for selected country </mat-error>
+  }
+
+  @if (data.mode !== 'edit') {
+    <div class="type-group">
+      <mat-checkbox formControlName="isShipping">Shipping</mat-checkbox>
+      <mat-checkbox formControlName="isBilling">Billing</mat-checkbox>
+    </div>
+  }
+
+  <mat-dialog-actions>
+    <button
+      matButton
+      class="btn-submit"
+      [mat-dialog-close]="{
+        action: 'save',
+        address: form.getRawValue(),
+        mode: data.mode,
+      }"
+      [disabled]="form.invalid"
+    >
+      {{ data.mode === 'edit' ? 'Update' : 'Save' }}
+    </button>
+    <button
+      matButton
+      class="btn-cancel"
+      (click)="onClose()"
+    >
+      Cancel
+    </button>
+  </mat-dialog-actions>
+</form>

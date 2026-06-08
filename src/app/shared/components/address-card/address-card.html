@@ -1,0 +1,45 @@
+@if (address) {
+  <mat-card
+    class="address-card"
+    [ngClass]="{
+      default: mode === 'defaultShipping' || mode === 'defaultBilling',
+    }"
+  >
+    @if (headerText) {
+      <h3>{{ headerText }}</h3>
+    }
+
+    <div class="address-title">{{ address.streetName }} {{ address.streetNumber }}</div>
+
+    <div class="address-meta">
+      {{ address.postalCode }} {{ address.city }},
+      {{ countriesService.countries().find((c) => c.code === address.country)?.name }}
+    </div>
+
+    @if (showActions) {
+      <div>
+        @if (mode === 'shipping') {
+          <button matButton class="btn-default" (click)="setDefaultShipping()">
+            Make default shipping
+          </button>
+        }
+
+        @if (mode === 'billing') {
+          <button matButton class="btn-default" (click)="setDefaultBilling()">
+            Make default billing
+          </button>
+        }
+      </div>
+    }
+
+    <div class="actions">
+      <button matIconButton (click)="editAddress()">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button matIconButton (click)="deleteAddress()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-card>
+}

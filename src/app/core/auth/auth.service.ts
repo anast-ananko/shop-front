@@ -1,12 +1,13 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
 import { environment } from '../http/environment/environment';
 import { TokenStorage } from './token.storage';
-import { AppToken, Customer, SignupRequest, SignupResponse, Token } from './models';
+import { AppToken, SignupRequest, SignupResponse, Token } from './models';
 import { Api } from '../http/services/api/api';
 import { CustomerService } from '../services/customer/customer.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -22,11 +23,10 @@ export class AuthService {
   private storage = inject(TokenStorage);
   private apiService = inject(Api);
   private customerService = inject(CustomerService);
+  private router = inject(Router);
 
-  customer = signal<Customer | null>(null);
-
-  isAuth = computed(() => !!this.customer());
-  isGuest = computed(() => this.customer() === null);
+  isAuth = computed(() => !!this.customerService.customer());
+  isGuest = computed(() => this.customerService.customer() === null);
 
   getAccessToken(): Observable<AppToken> {
     const body = new HttpParams().set('grant_type', 'client_credentials').set('scope', this.scope);
@@ -47,9 +47,7 @@ export class AuthService {
     if (customer) {
       this.customerService
         .getMe()
-        .pipe(
-          tap((customer) => this.customer.set(customer)),
-        )
+        .pipe(tap((customer) => this.customerService.customer.set(customer)))
         .subscribe();
 
       return;
@@ -126,17 +124,9 @@ export class AuthService {
       .post<SignupResponse>(`${this.url}/${this.project_key}/me/signup`, data, headers)
       .pipe(
         tap((res) => {
-          this.customer.set(res.customer);
+          this.customerService.customer.set(res.customer);
         }),
       );
-  }
-
-  updateMe(actions: unknown[]) {
-    return this.customerService.updateMe(actions, this.customer()?.version ?? 1).pipe(
-      tap((customer) => {
-        this.customer.set(customer);
-      }),
-    );
   }
 
   // refreshToken(): Observable<Token> | undefined {
@@ -169,8 +159,9 @@ export class AuthService {
 
   logout(): void {
     this.storage.clearTokens();
-    this.customer.set(null);
+    this.customerService.customer.set(null);
 
     this.getAnonymousToken().subscribe();
+    this.router.navigate(['/']);
   }
 }

@@ -78,16 +78,72 @@
         <mat-form-field>
           <mat-label>Street Name</mat-label>
           <input matInput placeholder="Street" formControlName="streetName" />
+
+          @if (
+            form.controls.shippingAddress.controls.streetName.touched &&
+            form.controls.shippingAddress.controls.streetName.hasError('required')
+          ) {
+            <mat-error>Required</mat-error>
+          }
+
+          @if (
+            form.controls.shippingAddress.controls.streetName.touched &&
+            form.controls.shippingAddress.controls.streetName.hasError('minlength')
+          ) {
+            <mat-error>Must be at least 3 characters</mat-error>
+          }
+
+          @if (
+            form.controls.shippingAddress.controls.streetName.touched &&
+            form.controls.shippingAddress.controls.streetName.hasError('maxlength')
+          ) {
+            <mat-error>Must be at most 20 characters</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Street Number</mat-label>
           <input matInput placeholder="Street" formControlName="streetNumber" />
+
+          @if (
+            form.controls.shippingAddress.controls.streetNumber.touched &&
+            form.controls.shippingAddress.controls.streetNumber.hasError('required')
+          ) {
+            <mat-error>Required</mat-error>
+          }
+
+          @if (
+            form.controls.shippingAddress.controls.streetNumber.touched &&
+            form.controls.shippingAddress.controls.streetNumber.hasError('minlength')
+          ) {
+            <mat-error>Must be at most 10 characters</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>City</mat-label>
           <input matInput placeholder="City" formControlName="city" />
+
+          @if (
+            form.controls.shippingAddress.controls.city.touched &&
+            form.controls.shippingAddress.controls.city.hasError('required')
+          ) {
+            <mat-error>Required</mat-error>
+          }
+
+          @if (
+            form.controls.shippingAddress.controls.city.touched &&
+            form.controls.shippingAddress.controls.city.hasError('minlength')
+          ) {
+            <mat-error>Must be at least 3 characters</mat-error>
+          }
+
+          @if (
+            form.controls.shippingAddress.controls.city.touched &&
+            form.controls.shippingAddress.controls.city.hasError('maxlength')
+          ) {
+            <mat-error>Must be at most 20 characters</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field
@@ -98,6 +154,13 @@
         >
           <mat-label>Postal Code</mat-label>
           <input matInput formControlName="postalCode" />
+
+          @if (
+            form.controls.shippingAddress.controls.postalCode.touched &&
+            form.controls.shippingAddress.controls.postalCode.hasError('required')
+          ) {
+            <mat-error>Required</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field>
@@ -107,6 +170,13 @@
               <mat-option [value]="c.code"> {{ c.name }} ({{ c.code }}) </mat-option>
             }
           </mat-select>
+
+          @if (
+            form.controls.shippingAddress.controls.country.touched &&
+            form.controls.shippingAddress.controls.country.hasError('required')
+          ) {
+            <mat-error>Required</mat-error>
+          }
         </mat-form-field>
 
         @if (form.controls.shippingAddress.hasError('invalidPostalCode')) {
@@ -131,16 +201,72 @@
           <mat-form-field>
             <mat-label>Street Name</mat-label>
             <input matInput placeholder="Street" formControlName="streetName" />
+
+            @if (
+              form.controls.billingAddress.controls.streetName.touched &&
+              form.controls.billingAddress.controls.streetName.hasError('required')
+            ) {
+              <mat-error>Required</mat-error>
+            }
+
+            @if (
+              form.controls.billingAddress.controls.streetName.touched &&
+              form.controls.billingAddress.controls.streetName.hasError('minlength')
+            ) {
+              <mat-error>Must be at least 3 characters</mat-error>
+            }
+
+            @if (
+              form.controls.billingAddress.controls.streetName.touched &&
+              form.controls.billingAddress.controls.streetName.hasError('maxlength')
+            ) {
+              <mat-error>Must be at most 20 characters</mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Street Number</mat-label>
             <input matInput placeholder="Street" formControlName="streetNumber" />
+
+            @if (
+              form.controls.billingAddress.controls.streetNumber.touched &&
+              form.controls.billingAddress.controls.streetNumber.hasError('required')
+            ) {
+              <mat-error>Required</mat-error>
+            }
+
+            @if (
+              form.controls.billingAddress.controls.streetNumber.touched &&
+              form.controls.billingAddress.controls.streetNumber.hasError('minlength')
+            ) {
+              <mat-error>Must be at most 10 characters</mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>City</mat-label>
             <input matInput placeholder="City" formControlName="city" />
+
+            @if (
+              form.controls.billingAddress.controls.city.touched &&
+              form.controls.billingAddress.controls.city.hasError('required')
+            ) {
+              <mat-error>Required</mat-error>
+            }
+
+            @if (
+              form.controls.billingAddress.controls.city.touched &&
+              form.controls.billingAddress.controls.city.hasError('minlength')
+            ) {
+              <mat-error>Must be at least 3 characters</mat-error>
+            }
+
+            @if (
+              form.controls.billingAddress.controls.city.touched &&
+              form.controls.billingAddress.controls.city.hasError('maxlength')
+            ) {
+              <mat-error>Must be at most 20 characters</mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field
@@ -151,6 +277,13 @@
           >
             <mat-label>Postal Code</mat-label>
             <input matInput formControlName="postalCode" />
+
+            @if (
+              form.controls.billingAddress.controls.postalCode.touched &&
+              form.controls.billingAddress.controls.postalCode.hasError('required')
+            ) {
+              <mat-error>Required</mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
@@ -160,6 +293,13 @@
                 <mat-option [value]="c.code"> {{ c.name }} ({{ c.code }}) </mat-option>
               }
             </mat-select>
+
+            @if (
+              form.controls.billingAddress.controls.country.touched &&
+              form.controls.billingAddress.controls.country.hasError('required')
+            ) {
+              <mat-error>Required</mat-error>
+            }
           </mat-form-field>
 
           @if (form.controls.billingAddress.hasError('invalidPostalCode')) {
