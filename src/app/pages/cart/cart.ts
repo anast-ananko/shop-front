@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, QueryList, signal, ViewChildren } from '@angular/core';
 import { CardCart } from './components/card-cart/card-cart';
 
 import { BooksService } from '../../core/services/books-service/books-service';
@@ -19,6 +19,8 @@ export class Cart {
   protected readonly books = this.bookService.filteredBooks;
   cardTotals = signal<Record<string, number>>({});
 
+  @ViewChildren(CardCart) cardCartComponents?: QueryList<CardCart>;
+
   protected readonly booksInCart = computed(() => {
     return this.books().filter((book) => book.isInCart);
   });
@@ -33,4 +35,10 @@ export class Cart {
   protected readonly totalPrice = computed(() => {
     return Object.values(this.cardTotals()).reduce((sum, total) => sum + total, 0);
   });
+
+  removeCart(): void{
+    this.cardCartComponents?.forEach((cardCart) => {
+      cardCart.cartToggled(new Event('click'), cardCart.book()?.id || '');
+    });
+  }
 }

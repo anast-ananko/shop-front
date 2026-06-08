@@ -19,7 +19,7 @@
   }
   <div class="wrapper-total">
 
-    <button matButton [disabled]="booksInCart().length === 0">
+    <button matButton [disabled]="booksInCart().length === 0" (click)="removeCart()">
       <mat-icon>delete</mat-icon>
       Remove All Items
     </button>
