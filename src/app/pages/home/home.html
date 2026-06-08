@@ -1,0 +1,10 @@
+@if (filteredBooks(); as books) {
+  <app-slider [sliderBooks]="books" [cardTemplate]="cardTemplate" />
+
+  <ng-template #cardTemplate let-popularBook>
+    <app-slider-card [book]="popularBook" />
+  </ng-template>
+}
+
+<app-popular />
+<app-latest />

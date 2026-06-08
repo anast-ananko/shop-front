@@ -8,5 +8,5 @@ import { Book } from '../../../../types/book.interface';
   styleUrl: './slider-card.scss',
 })
 export class SliderCard {
-  book = input.required<Book>();
+  book = input<Book>();
 }

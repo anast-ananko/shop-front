@@ -1,0 +1,170 @@
+.header-wrapper {
+  background-color: var(--mat-sys-primary);
+  padding: 10px 0;
+}
+
+.header {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  height: 80px;
+  background-color: var(--mat-sys-primary);
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 60px;
+  width: auto;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav-link {
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 6px;
+  padding: 4px 10px;
+  text-transform: none;
+  transition: all 0.5s;
+  text-shadow: 0 0 3px #000000;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  &.active {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+.auth-trigger {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 5px;
+  color: var(--mat-sys-on-primary);
+  transition: all 0.5s;
+
+  &:hover {
+    scale: 1.1;
+  }
+
+  .active {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  mat-icon {
+    color: inherit;
+    display: block;
+    width: 40px;
+    font-size: 40px;
+    margin-right: 0;
+    color: #ffffff;
+  }
+}
+
+@media (max-width: 1024px) {
+  .header-wrapper {
+    padding: 5px 0;
+  }
+
+  .header {
+    max-width: 100%;
+    padding: 0 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    height: 120px;
+  }
+
+  .header-nav {
+    gap: 5px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+
+  .logo-img {
+    height: 60px;
+  }
+
+  .auth-trigger {
+    padding: 5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding-bottom: 10px;
+  }
+
+  .logo-link {
+    order: -1;
+  }
+
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .logo-img {
+    height: 50px;
+  }
+
+  .header-nav {
+    order: -1;
+    gap: 5px;
+  }
+
+  .auth-trigger {
+    order: -1;
+
+    mat-icon {
+      width: 30px;
+      font-size: 30px;
+    }
+
+    span {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 170px;
+    padding: 5px;
+  }
+
+  .logo-img {
+    height: 50px;
+  }
+
+  .auth-trigger mat-icon {
+    font-size: 32px;
+  }
+}

@@ -1,0 +1,31 @@
+<a matButton="filled" [routerLink]="['/']" class="back-button">
+  <mat-icon>arrow_back_ios</mat-icon>
+  Home
+</a>
+<div class="wrapper-cards">
+
+  @if(booksInCart(); as books){
+
+  @if(books.length>0){
+  <h2>In your cart {{books.length}} {{books.length>1? 'books' : 'book'}}.</h2>
+  @for (book of books; track book.id) {
+  <app-card-cart [book]="book" (totalSum)="cardTotalsChanged($event)"></app-card-cart>
+  }
+
+  }@else{
+  <h2>Your cart is empty.</h2>
+  }
+
+  }
+  <div class="wrapper-total">
+
+    <button matButton [disabled]="booksInCart().length === 0" (click)="removeCart()">
+      <mat-icon>delete</mat-icon>
+      Remove All Items
+    </button>
+
+    <h3 [class.disabled]="booksInCart().length === 0">Total: {{totalPrice() | number:'1.2-2'}}$ </h3>
+
+    <button matButton="filled" [disabled]="booksInCart().length === 0">Order</button>
+  </div>
+</div>
