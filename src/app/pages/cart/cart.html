@@ -18,7 +18,14 @@
 
   }
   <div class="wrapper-total">
+
+    <button matButton [disabled]="booksInCart().length === 0">
+      <mat-icon>delete</mat-icon>
+      Remove All Items
+    </button>
+
     <h3 [class.disabled]="booksInCart().length === 0">Total: {{totalPrice() | number:'1.2-2'}}$ </h3>
+
     <button matButton="filled" [disabled]="booksInCart().length === 0">Order</button>
   </div>
 </div>
