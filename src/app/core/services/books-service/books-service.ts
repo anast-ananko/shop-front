@@ -45,6 +45,10 @@ export class BooksService {
     return [...this.books()].sort((a, b) => b.rating - a.rating);
   });
 
+  readonly booksInCart = computed(() => {
+    return this.books().filter((book) => book.isInCart);
+  });
+
   getBookById(id: string): Book | undefined {
     return this.books().find((book) => book.id === id);
   }
