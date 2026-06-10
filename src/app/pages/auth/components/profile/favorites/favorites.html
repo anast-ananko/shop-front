@@ -1,25 +1,5 @@
-<div class="favorites-page">
-  @if (paginatedBooks(); as books) {
-
-  @if (books.length > 0) {
-
-  <h2>Your have {{ favoriteBooks().length }} favorite books.</h2>
-  <div class="wrapper-content">
-
-    @for (book of books; track book.id) {
-    <app-product-card [book]="book"></app-product-card>
-    }
-
-  </div>
-
-  }@else {
-  <h2>You have no favorite books.</h2>
-  }
-  }
-
-</div>
-
-<mat-paginator [length]="favoriteBooks().length" [pageSize]="pageSize()" [pageIndex]="pageIndex()"
-  [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true" (page)="handlePageEvent($event)"
-  aria-label="Select page">
-</mat-paginator>
+<app-paginated-books-catalog
+[filteredBooks]="favoriteBooks()"
+[title]="'favorite books'"
+[emptyMessage]="'You have no favorite books.'"
+/>
