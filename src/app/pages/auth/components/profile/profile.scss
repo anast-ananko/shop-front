@@ -1,11 +1,11 @@
 :host{
   width: 100% !important;
   display: block;
-  padding: 0px 15px;
 
   mat-tab-group{
     width: 100%;
     min-height: 100%;
+    padding: 0px 15px;
     .tab-content{
       padding: 45px 0px;
     }

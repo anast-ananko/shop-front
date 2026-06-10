@@ -2,13 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
 }
 
 mat-card {
   padding: 15px;
   width: 100%;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-  max-width: 600px;
 }
 
 form {
@@ -182,9 +184,11 @@ mat-error {
 }
 
 @media (max-width: 540px) {
-  mat-card {
+  :host{
     max-width: 300px;
 
+  }
+  mat-card {
     form {
       gap: 10px;
     }
