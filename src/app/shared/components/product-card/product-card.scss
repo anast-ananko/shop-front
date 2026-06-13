@@ -1,3 +1,5 @@
+@use '../../styles/mixins.scss' as mixins;
+
 .card {
   width: 100%;
   max-width: 270px;
@@ -9,10 +11,8 @@
 }
 
 .mat-mdc-card-header {
-  display: flex;
-  justify-content: space-between;
+  @include mixins.flex(space-between, center);
   text-align: center;
-  align-items: center;
 }
 
 .mat-mdc-card-avatar {
@@ -59,9 +59,7 @@
 }
 
 .content-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    @include mixins.flex(space-between, center);
 
   p {
     margin: 0;
@@ -69,8 +67,7 @@
 }
 
 .actions {
-  display: flex;
-  justify-content: space-between;
+    @include mixins.flex(space-between, center);
 }
 
 .card {

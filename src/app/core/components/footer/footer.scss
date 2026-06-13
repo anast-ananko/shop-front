@@ -1,21 +1,21 @@
+@use "../../../shared/styles/mixins.scss" as mixins;
+
 .footer-wrapper {
   background-color: var(--mat-sys-primary);
   padding: 10px 0;
 }
 
 .footer {
+  @include mixins.flex();
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
   height: 50px;
   background-color: var(--mat-sys-primary);
 
   a {
+    @include mixins.flex();
     color: var(--mat-sys-on-primary);
     text-decoration: none;
-    display: flex;
-    align-items: center;
     gap: 6px;
 
     mat-icon {
@@ -32,9 +32,8 @@
 }
 
 .footer-group {
-  display: flex;
+  @include mixins.flex();
   gap: 8px;
-  align-items: center;
 }
 
 .github-link img {

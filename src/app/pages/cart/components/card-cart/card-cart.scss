@@ -1,3 +1,5 @@
+@use "../../../../shared/styles/mixins.scss" as mixins;
+
 .card-cart {
   width: 100%;
   padding: 15px;
@@ -35,10 +37,8 @@
 }
 
 .wrapper-card {
-  display: flex;
+  @include mixins.flex(space-between, center);
   gap: 15px;
-  justify-content: space-between;
-  align-items: center;
   flex-wrap: wrap;
 
   .mat-mdc-card-header {
@@ -53,7 +53,7 @@
     }
   }
 
-  .stock{
+  .stock {
     font-size: 12px;
     color: #0000008a;
     padding-top: 5px;
@@ -61,9 +61,8 @@
   }
 
   .mat-mdc-card-content {
-    display: flex;
+    @include mixins.flex(space-between, flex-end);
     flex-direction: column;
-    align-items: flex-end;
     padding: 0;
     gap: 10px;
 
@@ -94,7 +93,7 @@
 
     .mat-mdc-card-content {
       align-items: center;
-      gap:5px;
+      gap: 5px;
 
     }
   }
