@@ -1,3 +1,5 @@
+@use '../../shared/styles/mixins.scss' as mixins;
+
 :host {
   width: 100%;
   display: block;
@@ -10,15 +12,13 @@
 }
 
 .wrapper-cards {
-  display: flex;
+  @include mixins.flex(space-between, null);
   flex-direction: column;
   gap: 20px;
   background-color: var(--mat-sys-surface-variant);
   padding: 30px 15px;
   min-height: 400px;
   border-radius: 10px;
-  justify-content: space-between;
-
 }
 
 h2 {
@@ -26,14 +26,12 @@ h2 {
 }
 
 .wrapper-total {
+  @include mixins.flex(space-between, center);
   border-top: 1px solid var(--mat-sys-primary);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 20px 0;
   gap: 20px;
 
-  h3{
+  h3 {
     font-size: 14px;
   }
 
