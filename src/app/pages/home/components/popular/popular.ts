@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { BooksService } from '../../../../core/services/books-service/books-service';
 import { ProductCard } from '../../../../shared/components/product-card/product-card';
 import { Slider } from '../../../../shared/components/slider/slider';
