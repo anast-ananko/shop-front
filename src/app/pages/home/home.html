@@ -1,3 +1,5 @@
+<app-popular />
+
 @if (filteredBooks(); as books) {
   <app-slider [sliderBooks]="books" [cardTemplate]="cardTemplate" />
 
@@ -6,5 +8,4 @@
   </ng-template>
 }
 
-<app-popular />
 <app-latest />
