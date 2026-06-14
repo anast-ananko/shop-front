@@ -1,3 +1,28 @@
+// .carousel-wrapper {
+//   width: 100%;
+//   display: flex;
+//   align-items: center;
+//   gap: 20px;
+// }
+
+// .carousel-container {
+//   flex: 1;
+//   min-width: 0;
+// }
+
+// .mat-icon{
+//   margin: 0px;
+//   font-size: 24px;
+// }
+
+// .carousel-wrapper button {
+//   flex: 0 0 40px;
+//   width: 40px;
+//   min-width: 40px;
+//   height: 40px;
+//   padding: 0;
+// }
+
 .carousel-wrapper {
   width: 100%;
   display: flex;
@@ -10,8 +35,23 @@
   min-width: 0;
 }
 
-.mat-icon{
-  margin: 0px;
+swiper-container {
+  width: 100%;
+}
+
+swiper-slide {
+  width: 100%;
+  min-width: 270px;
+  height: auto;
+}
+
+app-product-card {
+  display: block;
+  width: 100%;
+}
+
+.mat-icon {
+  margin: 0;
   font-size: 24px;
 }
 
@@ -22,3 +62,20 @@
   height: 40px;
   padding: 0;
 }
+
+@media (max-width: 680px) {
+  .carousel-wrapper {
+    gap: 0;
+  }
+
+  .carousel-wrapper button {
+    display: none;
+  }
+
+  swiper-slide {
+    min-width: 0;
+    width: 100%;
+  }
+
+}
+

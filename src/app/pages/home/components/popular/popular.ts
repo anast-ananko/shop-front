@@ -10,12 +10,8 @@ import { Slider } from '../../../../shared/components/slider/slider';
   styleUrl: './popular.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Popular implements OnInit {
+export class Popular {
   private readonly bookService = inject(BooksService);
-
   readonly popularBooks = this.bookService.popularBooks;
 
-  ngOnInit(): void {
-    console.log(this.popularBooks());
-  }
 }
