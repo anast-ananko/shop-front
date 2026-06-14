@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BooksService } from '../../core/services/books-service/books-service';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
   imports: [MatButtonModule, CurrencyPipe, MatIcon],
   templateUrl: './details.html',
   styleUrl: './details.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Details {
   private readonly bookService = inject(BooksService);

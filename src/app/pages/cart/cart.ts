@@ -1,4 +1,4 @@
-import { Component, computed, inject, QueryList, signal, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, QueryList, signal, ViewChildren } from '@angular/core';
 import { CardCart } from './components/card-cart/card-cart';
 
 import { BooksService } from '../../core/services/books-service/books-service';
@@ -13,6 +13,7 @@ import { DecimalPipe } from '@angular/common';
   imports: [CardCart, RouterLink, MatIconModule, MatFormFieldModule, MatButtonModule, DecimalPipe],
   templateUrl: './cart.html',
   styleUrl: './cart.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Cart {
   private bookService = inject(BooksService);
@@ -22,10 +23,6 @@ export class Cart {
 
 
   @ViewChildren(CardCart) cardCartComponents?: QueryList<CardCart>;
-
-  // protected readonly booksInCart = computed(() => {
-  //   return this.books().filter((book) => book.isInCart);
-  // });
 
   cardTotalsChanged(value: { id: string; total: number }): void {
     this.cardTotals.update((totals) => ({
