@@ -17,13 +17,15 @@ import { DecimalPipe } from '@angular/common';
 export class Cart {
   private bookService = inject(BooksService);
   protected readonly books = this.bookService.filteredBooks;
+  protected readonly booksInCart = this.bookService.booksInCart;
   cardTotals = signal<Record<string, number>>({});
+
 
   @ViewChildren(CardCart) cardCartComponents?: QueryList<CardCart>;
 
-  protected readonly booksInCart = computed(() => {
-    return this.books().filter((book) => book.isInCart);
-  });
+  // protected readonly booksInCart = computed(() => {
+  //   return this.books().filter((book) => book.isInCart);
+  // });
 
   cardTotalsChanged(value: { id: string; total: number }): void {
     this.cardTotals.update((totals) => ({

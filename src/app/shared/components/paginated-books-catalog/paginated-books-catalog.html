@@ -1,0 +1,25 @@
+<div class="paginated-books-catalog">
+  @if (paginatedBooks(); as books) {
+
+  @if (books.length > 0) {
+
+  <h2>You have {{ filteredBooks().length }} {{ title() }}.</h2>
+  <div class="wrapper-content">
+
+    @for (book of books; track book.id) {
+    <app-product-card [book]="book"></app-product-card>
+    }
+
+  </div>
+
+  }@else {
+  <h2>{{emptyMessage()}}</h2>
+  }
+  }
+
+</div>
+
+<mat-paginator [length]="filteredBooks().length" [pageSize]="pageSize()" [pageIndex]="pageIndex()"
+  [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true" (page)="handlePageEvent($event)"
+  aria-label="Select page">
+</mat-paginator>
