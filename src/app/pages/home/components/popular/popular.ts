@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BooksService } from '../../../../core/services/books-service/books-service';
 import { ProductCard } from '../../../../shared/components/product-card/product-card';
 import { Slider } from '../../../../shared/components/slider/slider';
@@ -9,12 +9,8 @@ import { Slider } from '../../../../shared/components/slider/slider';
   templateUrl: './popular.html',
   styleUrl: './popular.scss',
 })
-export class Popular implements OnInit {
+export class Popular {
   private readonly bookService = inject(BooksService);
-
   readonly popularBooks = this.bookService.popularBooks;
 
-  ngOnInit(): void {
-    console.log(this.popularBooks());
-  }
 }

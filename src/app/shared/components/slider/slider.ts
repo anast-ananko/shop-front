@@ -14,23 +14,10 @@ import { MatButtonModule } from '@angular/material/button';
 export class Slider {
   sliderBooks = input<Book[]>();
   cardTemplate = input<TemplateRef<unknown>>();
-  // swiperBreakpoints = {
-  //   320: {
-  //     slidesPerView: 1,
-  //     spaceBetween: 10,
-  //   },
-  //   600: {
-  //     slidesPerView: 2,
-  //     spaceBetween: 12,
-  //   },
-  //   900: {
-  //     slidesPerView: 3,
-  //     spaceBetween: 15,
-  //   },
 
-  //   1200: {
-  //     slidesPerView: 4,
-  //     spaceBetween: 15,
-  //   },
-  // };
+  breakpoints = {
+    0: { slidesPerView: 1, spaceBetween: 16 },
+    600: { slidesPerView: 2, spaceBetween: 16 },
+    1250: { slidesPerView: 3, spaceBetween: 20 },
+  };
 }
