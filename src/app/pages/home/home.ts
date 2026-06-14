@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Slider } from '../../shared/components/slider/slider';
 import { BooksService } from '../../core/services/books-service/books-service';
 import { Popular } from './components/popular/popular';
@@ -10,6 +10,7 @@ import { Latest } from './components/latest/latest';
   imports: [Slider, Popular, SliderCard, Latest],
   templateUrl: './home.html',
   styleUrl: './home.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Home {
   private bookService = inject(BooksService);

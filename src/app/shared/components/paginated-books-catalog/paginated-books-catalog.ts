@@ -1,4 +1,4 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ProductCard } from '../product-card/product-card';
 import { Book } from '../../../types/book.interface';
@@ -8,11 +8,12 @@ import { Book } from '../../../types/book.interface';
   imports: [MatPaginatorModule, ProductCard],
   templateUrl: './paginated-books-catalog.html',
   styleUrl: './paginated-books-catalog.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginatedBooksCatalog {
   filteredBooks = input<Book[]>([]);
-  title = input<string>("");
-  emptyMessage = input<string>("");
+  title = input<string>('');
+  emptyMessage = input<string>('');
 
   pageIndex = signal(0);
   pageSizeOptions = [4, 8, 12, 16];

@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -26,6 +26,7 @@ import { customerActions } from '../../../../../core/services/customer/customerA
   ],
   templateUrl: './settings.html',
   styleUrl: './settings.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Settings implements OnInit {
   private fb = inject(FormBuilder);

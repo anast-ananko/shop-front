@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -51,6 +51,7 @@ interface AddressFormValue {
   ],
   templateUrl: './registration.html',
   styleUrl: './registration.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Registration implements OnInit {
   private fb = inject(FormBuilder);

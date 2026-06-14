@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { BooksService } from '../../../../core/services/books-service/books-service';
 import { Slider } from '../../../../shared/components/slider/slider';
 import { ProductCard } from '../../../../shared/components/product-card/product-card';
@@ -8,9 +8,9 @@ import { ProductCard } from '../../../../shared/components/product-card/product-
   imports: [Slider, ProductCard],
   templateUrl: './latest.html',
   styleUrl: './latest.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Latest {
   private readonly bookService = inject(BooksService);
-
   readonly latestBooks = this.bookService.latestBooks;
 }

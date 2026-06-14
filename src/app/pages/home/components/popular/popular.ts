@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { BooksService } from '../../../../core/services/books-service/books-service';
 import { ProductCard } from '../../../../shared/components/product-card/product-card';
 import { Slider } from '../../../../shared/components/slider/slider';
@@ -8,6 +8,7 @@ import { Slider } from '../../../../shared/components/slider/slider';
   imports: [ProductCard, Slider],
   templateUrl: './popular.html',
   styleUrl: './popular.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Popular implements OnInit {
   private readonly bookService = inject(BooksService);
