@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -28,6 +28,7 @@ import { CustomerService } from '../../../../core/services/customer/customer.ser
   ],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignIn implements OnInit {
   private fb = inject(FormBuilder);

@@ -1,4 +1,11 @@
-import { Component, DestroyRef, inject, model, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  model,
+  OnInit,
+} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -39,6 +46,7 @@ export interface AddressDialogResult {
   ],
   templateUrl: './address-dialog.html',
   styleUrl: './address-dialog.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddressDialog implements OnInit {
   readonly dialogRef = inject(MatDialogRef<AddressDialog>);

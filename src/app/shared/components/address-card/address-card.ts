@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -19,6 +19,7 @@ import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
   imports: [MatCard, MatChipsModule, MatIcon, NgClass],
   templateUrl: './address-card.html',
   styleUrl: './address-card.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddressCard {
   readonly dialog = inject(MatDialog);

@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { countries } from 'countries-list';
 import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
@@ -22,6 +22,7 @@ export interface AddressDialogData {
   imports: [AddressCard, MatCard, MatIcon],
   templateUrl: './address-block.html',
   styleUrl: './address-block.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddressBlock {
   customerService = inject(CustomerService);

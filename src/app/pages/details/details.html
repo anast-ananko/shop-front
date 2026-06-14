@@ -72,24 +72,15 @@
 
       </div>
 
-
-
-      <!--
-
-  category: string;
-
- -->
-
-
     </div>
 
   </div>
 
   }
 
-  <a matButton="filled" class="back-btn" [routerLink]="['/']">
+  <button matButton="filled" class="back-btn" (click)="goBack()">
     <mat-icon>arrow_back_ios</mat-icon>
-    Home
-  </a>
+    Back
+  </button>
 
 </section>
