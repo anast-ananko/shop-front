@@ -12,6 +12,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { CustomerService } from '../../../../core/services/customer/customer.service';
+import { AutoFocus } from "../../../../shared/directives/auto-focus";
 
 @Component({
   selector: 'app-sign-in',
@@ -25,7 +26,8 @@ import { CustomerService } from '../../../../core/services/customer/customer.ser
     MatCheckboxModule,
     MatSelectModule,
     MatFormFieldModule,
-  ],
+    AutoFocus
+],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
