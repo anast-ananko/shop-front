@@ -25,6 +25,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { Address, MeResponse } from '../../../../core/services/customer/models';
 import { customerActions } from '../../../../core/services/customer/customerActions';
 import { CustomerService } from '../../../../core/services/customer/customer.service';
+import { PostalCodeSyncDirective } from '../../../../core/directives/postal-code-sync/postal-code-sync';
 
 interface AddressFormValue {
   streetName: string | null;
@@ -48,6 +49,7 @@ interface AddressFormValue {
     MatFormFieldModule,
     MatCard,
     MatCardTitle,
+    PostalCodeSyncDirective,
   ],
   templateUrl: './registration.html',
   styleUrl: './registration.scss',
