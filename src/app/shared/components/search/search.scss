@@ -2,6 +2,10 @@
   width: 320px;
 }
 
+::ng-deep .search-form-field {
+  background-color: white;
+}
+
 @media (max-width: 1024px) {
   .search-form-field {
     width: 220px;
