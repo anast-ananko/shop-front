@@ -3,11 +3,9 @@
     <mat-icon>arrow_back_ios</mat-icon>
   </button>
 
-  <swiper-container #swiperEl   [slidesPerView]="1"
-
+  <swiper-container #swiperEl [slidesPerView]="1"
   [spaceBetween]="16"
-
-  [breakpoints]="breakpoints" loop="true" class="carousel-container">
+    [breakpoints]="breakpoints" loop="true" class="carousel-container">
     @for (book of sliderBooks(); track book.id) {
     <swiper-slide>
       <ng-container *ngTemplateOutlet="cardTemplate(); context: { $implicit: book }"></ng-container>
