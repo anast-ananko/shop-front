@@ -1,4 +1,4 @@
-import { TeamMember } from '../pages/about-us/about-us';
+import { TeamMember } from '../../pages/about-us/about-us';
 
 export const TEAM_MEMBERS: TeamMember[] = [
   {
