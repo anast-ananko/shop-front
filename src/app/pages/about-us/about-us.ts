@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-
-import { TEAM_MEMBERS } from '../../constants/team-data';
 import {
   MatCard,
   MatCardActions,
@@ -8,6 +6,8 @@ import {
   MatCardSubtitle,
   MatCardTitle,
 } from '@angular/material/card';
+
+import { TEAM_MEMBERS } from '../../constants/team-data';
 
 export interface TeamMember {
   name: string;
