@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -26,6 +33,7 @@ import { Address, MeResponse } from '../../../../core/services/customer/models';
 import { customerActions } from '../../../../core/services/customer/customerActions';
 import { CustomerService } from '../../../../core/services/customer/customer.service';
 import { AutoFocus } from '../../../../shared/directives/auto-focus';
+import { PostalCodeSyncDirective } from '../../../../core/directives/postal-code-sync/postal-code-sync';
 
 interface AddressFormValue {
   streetName: string | null;
@@ -50,10 +58,11 @@ interface AddressFormValue {
     MatCard,
     MatCardTitle,
     AutoFocus,
+    PostalCodeSyncDirective,
   ],
   templateUrl: './registration.html',
   styleUrl: './registration.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Registration implements OnInit {
   private fb = inject(FormBuilder);

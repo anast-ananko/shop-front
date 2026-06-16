@@ -74,7 +74,7 @@
     <mat-card class="address-card">
       <mat-card-title>Shipping Address</mat-card-title>
 
-      <div formGroupName="shippingAddress">
+      <div formGroupName="shippingAddress" appPostalCodeSync>
         <mat-form-field appearance="outline">
           <mat-label>Street Name</mat-label>
           <input matInput placeholder="Street" formControlName="streetName" />
@@ -198,7 +198,7 @@
       <mat-card class="address-card billing-card">
         <mat-card-title>Billing Address</mat-card-title>
 
-        <div formGroupName="billingAddress">
+        <div formGroupName="billingAddress" appPostalCodeSync>
           <mat-form-field appearance="outline">
             <mat-label>Street Name</mat-label>
             <input matInput placeholder="Street" formControlName="streetName" />
