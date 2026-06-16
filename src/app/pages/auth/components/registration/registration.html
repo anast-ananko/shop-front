@@ -4,7 +4,7 @@
   <form [formGroup]="form" (ngSubmit)="submit()">
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <input matInput placeholder="Email" formControlName="email" />
+      <input matInput appAutoFocus placeholder="Email" formControlName="email" />
 
       @if (form.controls.email.touched && form.controls.email.hasError('required')) {
         <mat-error>Email is required</mat-error>
