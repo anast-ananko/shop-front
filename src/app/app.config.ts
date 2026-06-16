@@ -9,6 +9,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { routes } from './routers/app.routes';
 import { AppInitializerService } from './core/services/app-initializer/app-initializer.service';
+import { COUNTRIES } from './shared/tokens/countries';
+import { COUNTRIES_DATA } from './shared/data/countries';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,5 +21,9 @@ export const appConfig: ApplicationConfig = {
       const init = inject(AppInitializerService);
       return init.load();
     }),
+    {
+      provide: COUNTRIES,
+      useValue: COUNTRIES_DATA,
+    },
   ],
 };
