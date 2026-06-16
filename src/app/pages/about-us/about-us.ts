@@ -6,7 +6,7 @@ import {
   MatCardSubtitle,
   MatCardTitle,
 } from '@angular/material/card';
-import { TEAM_MEMBERS } from '../../shared/data/team-data';
+import { TEAM_MEMBERS } from '../../shared/data/team';
 
 export interface TeamMember {
   name: string;
