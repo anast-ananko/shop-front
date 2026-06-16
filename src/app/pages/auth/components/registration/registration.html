@@ -2,7 +2,7 @@
   <h2>Registration</h2>
 
   <form [formGroup]="form" (ngSubmit)="submit()">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
       <input matInput appAutoFocus placeholder="Email" formControlName="email" />
 
@@ -14,7 +14,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Password</mat-label>
       <input matInput type="password" placeholder="Password" formControlName="password" />
 
@@ -31,7 +31,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>First Name</mat-label>
       <input matInput placeholder="First Name" formControlName="firstName" />
 
@@ -43,7 +43,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Last Name</mat-label>
       <input matInput placeholder="Last Name" formControlName="lastName" />
 
@@ -55,7 +55,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Date of Birth</mat-label>
       <input
         matInput
@@ -75,7 +75,7 @@
       <mat-card-title>Shipping Address</mat-card-title>
 
       <div formGroupName="shippingAddress">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Street Name</mat-label>
           <input matInput placeholder="Street" formControlName="streetName" />
 
@@ -101,7 +101,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Street Number</mat-label>
           <input matInput placeholder="Street" formControlName="streetNumber" />
 
@@ -120,7 +120,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>City</mat-label>
           <input matInput placeholder="City" formControlName="city" />
 
@@ -147,6 +147,7 @@
         </mat-form-field>
 
         <mat-form-field
+          appearance="outline"
           [class.mat-form-field-invalid]="
             form.controls.shippingAddress.hasError('invalidPostalCode') &&
             (form.controls.shippingAddress.touched || form.controls.shippingAddress.dirty)
@@ -163,7 +164,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Country</mat-label>
           <mat-select formControlName="country">
             @for (c of countriesService.countries(); track c.code) {
@@ -198,7 +199,7 @@
         <mat-card-title>Billing Address</mat-card-title>
 
         <div formGroupName="billingAddress">
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Street Name</mat-label>
             <input matInput placeholder="Street" formControlName="streetName" />
 
@@ -224,7 +225,7 @@
             }
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Street Number</mat-label>
             <input matInput placeholder="Street" formControlName="streetNumber" />
 
@@ -243,7 +244,7 @@
             }
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>City</mat-label>
             <input matInput placeholder="City" formControlName="city" />
 
@@ -270,6 +271,7 @@
           </mat-form-field>
 
           <mat-form-field
+            appearance="outline"
             [class.mat-form-field-invalid]="
               form.controls.billingAddress.hasError('invalidPostalCode') &&
               (form.controls.billingAddress.touched || form.controls.billingAddress.dirty)
@@ -286,7 +288,7 @@
             }
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Country</mat-label>
             <mat-select formControlName="country">
               @for (c of countriesService.countries(); track c.code) {
