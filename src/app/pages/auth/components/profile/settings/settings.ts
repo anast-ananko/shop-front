@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,6 +19,7 @@ import { passwordMatchValidator } from '../../../../../utils/password-match.vali
 import { CustomerService } from '../../../../../core/services/customer/customer.service';
 import { AddressBlock } from '../../../../../shared/components/address-block/address-block';
 import { customerActions } from '../../../../../core/services/customer/customerActions';
+import { FormatDatePipe } from '../../../../../shared/pipes/format-date';
 
 @Component({
   selector: 'app-settings',
@@ -23,10 +31,11 @@ import { customerActions } from '../../../../../core/services/customer/customerA
     MatFormFieldModule,
     MatInputModule,
     AddressBlock,
+    FormatDatePipe,
   ],
   templateUrl: './settings.html',
   styleUrl: './settings.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Settings implements OnInit {
   private fb = inject(FormBuilder);
