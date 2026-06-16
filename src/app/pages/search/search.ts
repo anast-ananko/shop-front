@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { BooksService } from '../../core/services/books-service/books-service';
 import { PaginatedBooksCatalog } from '../../shared/components/paginated-books-catalog/paginated-books-catalog';
 
@@ -12,4 +12,6 @@ import { PaginatedBooksCatalog } from '../../shared/components/paginated-books-c
 export class Search {
   private readonly booksService = inject(BooksService);
   filteredBooks = this.booksService.filteredBooks;
+  pageSize = signal<number>(8);
+
 }
