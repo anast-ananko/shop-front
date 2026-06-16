@@ -23,7 +23,7 @@ import { postalCodeValidator } from '../../../utils/postal-code.validator';
 import { CountriesService } from '../../../core/services/countries/countries.service';
 import { AddressDialogData } from '../address-block/address-block';
 import { AddressVM } from '../../../core/services/customer/models';
-import { PostalCodeSyncDirective } from '../../../core/directives/postal-code-sync/postal-code-sync';
+import { PostalCodeSyncDirective } from '../../directives/postal-code-sync';
 
 export interface AddressDialogResult {
   action: 'save';

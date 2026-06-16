@@ -33,7 +33,7 @@ import { Address, MeResponse } from '../../../../core/services/customer/models';
 import { customerActions } from '../../../../core/services/customer/customerActions';
 import { CustomerService } from '../../../../core/services/customer/customer.service';
 import { AutoFocus } from '../../../../shared/directives/auto-focus';
-import { PostalCodeSyncDirective } from '../../../../core/directives/postal-code-sync/postal-code-sync';
+import { PostalCodeSyncDirective } from '../../../../shared/directives/postal-code-sync';
 
 interface AddressFormValue {
   streetName: string | null;
