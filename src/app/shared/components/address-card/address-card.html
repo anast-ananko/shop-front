@@ -13,7 +13,7 @@
 
     <div class="address-meta">
       {{ address.postalCode }} {{ address.city }},
-      {{ countriesService.countries().find((c) => c.code === address.country)?.name }}
+      {{ countries.find((c) => c.code === address.country)?.name }}
     </div>
 
     @if (showActions) {
