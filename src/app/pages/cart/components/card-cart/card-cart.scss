@@ -17,6 +17,7 @@
   .mat-mdc-card-actions {
     opacity: 0;
     transition: 0.3s;
+    padding: 0 !important;
   }
 
   &:hover {
@@ -85,6 +86,11 @@
 
 }
 
+.wrapper-btn {
+  @include mixins.flex(justify, center);
+  gap: 10px;
+}
+
 
 @media (max-width: 860px) {
   .wrapper-card {
@@ -92,17 +98,32 @@
     justify-content: space-around;
 
     .mat-mdc-card-content {
+      width: 100%;
       align-items: center;
+      justify-content: space-around;
       gap: 5px;
 
     }
   }
 
   .mat-mdc-card-actions {
+    width: 48px;
+    @include mixins.flex(center, center);
     opacity: 1 !important;
-    position: absolute;
-    top: -10px;
-    left: -20px;
+  }
+
+  .wrapper-btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  mat-card-title {
+    padding: 0 !important;
+    padding-left: 15px !important;
+  }
+
+  mat-card-subtitle {
+    padding-right: 0px !important;
   }
 
 

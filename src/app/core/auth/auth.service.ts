@@ -1,5 +1,5 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { computed, inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
 import { environment } from '../http/environment/environment';
@@ -25,8 +25,9 @@ export class AuthService {
   private customerService = inject(CustomerService);
   private router = inject(Router);
 
-  isAuth = computed(() => !!this.customerService.customer());
-  isGuest = computed(() => this.customerService.customer() === null);
+  customerToken = signal<string | null>(this.storage.getCustomerToken());
+  isAuth = computed(() => !!this.customerToken());
+  isGuest = computed(() => this.customerToken() === null);
 
   getAccessToken(): Observable<AppToken> {
     const body = new HttpParams().set('grant_type', 'client_credentials').set('scope', this.scope);
@@ -108,6 +109,7 @@ export class AuthService {
           this.storage.setCustomerToken(res.access_token);
           this.storage.setRefreshToken(res.refresh_token);
           this.storage.deleteAnonymousToken();
+          this.customerToken.set(res.access_token);
         }),
       );
   }
@@ -160,6 +162,7 @@ export class AuthService {
   logout(): void {
     this.storage.clearTokens();
     this.customerService.customer.set(null);
+    this.customerToken.set(null);
 
     this.getAnonymousToken().subscribe();
     this.router.navigate(['/']);
