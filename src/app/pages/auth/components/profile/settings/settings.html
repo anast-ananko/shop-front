@@ -113,7 +113,7 @@
 
         <div class="value">
           @if (editingField() !== 'dateOfBirth') {
-            <span>{{ customer.dateOfBirth }}</span>
+            <span>{{ customer.dateOfBirth | formatDate }}</span>
           } @else {
             <input matInput appearance="outline" type="date" formControlName="dateOfBirth" />
           }

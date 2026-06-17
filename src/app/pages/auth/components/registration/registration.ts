@@ -27,13 +27,13 @@ import { map, Observable, of, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { postalCodeValidator } from '../../../../utils/postal-code.validator';
-import { CountriesService } from '../../../../core/services/countries/countries.service';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { Address, MeResponse } from '../../../../core/services/customer/models';
 import { customerActions } from '../../../../core/services/customer/customerActions';
 import { CustomerService } from '../../../../core/services/customer/customer.service';
 import { AutoFocus } from '../../../../shared/directives/auto-focus';
-import { PostalCodeSyncDirective } from '../../../../core/directives/postal-code-sync/postal-code-sync';
+import { PostalCodeSyncDirective } from '../../../../shared/directives/postal-code-sync';
+import { COUNTRIES } from '../../../../shared/tokens/countries';
 
 interface AddressFormValue {
   streetName: string | null;
@@ -66,11 +66,11 @@ interface AddressFormValue {
 })
 export class Registration implements OnInit {
   private fb = inject(FormBuilder);
-  countriesService = inject(CountriesService);
   private authService = inject(AuthService);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
   private customerService = inject(CustomerService);
+  countries = inject(COUNTRIES);
 
   serverError = signal<string | null>(null);
   success = signal<boolean>(false);
