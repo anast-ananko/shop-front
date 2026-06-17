@@ -1,1 +1,8 @@
-<p>catalog works!</p>
+<app-category-bar />
+
+<app-paginated-books-catalog
+  [currentPageSize]="pageSize()"
+  [filteredBooks]="filteredBooks()"
+  [title]="'books'"
+  [emptyMessage]="'No books'"
+/>
