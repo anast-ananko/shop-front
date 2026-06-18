@@ -74,7 +74,7 @@ export class BooksService {
   }
 
   getBooks(): Observable<Book[]> {
-    const token = this.storage.getAppToken();
+    const token = this.storage.getCurrentAppToken();
 
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,

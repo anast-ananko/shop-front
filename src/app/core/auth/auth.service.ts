@@ -43,7 +43,7 @@ export class AuthService {
   isGuest = computed(() => this.customerService.customer() === null);
 
   initAuthFlow() {
-    const customerToken = this.storage.getCustomerToken();
+    const customerToken = this.storage.getCurrentCustomerToken();
     if (customerToken) {
       this.customerService
         .getMe()
@@ -52,7 +52,7 @@ export class AuthService {
       return;
     }
 
-    const anonToken = this.storage.getAnonymousToken();
+    const anonToken = this.storage.getCurrentAnonymousToken();
     if (anonToken) return;
 
     this.getAnonymousToken().subscribe();
@@ -94,7 +94,7 @@ export class AuthService {
         this.getClientCredentialsBody(),
         this.getBasicHeaders(),
       )
-      .pipe(tap((res) => this.storage.setAppToken(res.access_token)));
+      .pipe(tap((res) => this.storage.setCurrentAppToken(res.access_token)));
   }
 
   getAnonymousToken(): Observable<Token> {
@@ -106,8 +106,8 @@ export class AuthService {
       )
       .pipe(
         tap((res) => {
-          this.storage.setAnonymousToken(res.access_token);
-          this.storage.setRefreshToken(res.refresh_token);
+          this.storage.setCurrentAnonymousToken(res.access_token);
+          this.storage.setCurrentRefreshToken(res.refresh_token);
         }),
       );
   }
@@ -127,9 +127,9 @@ export class AuthService {
       )
       .pipe(
         tap((res) => {
-          this.storage.setCustomerToken(res.access_token);
-          this.storage.setRefreshToken(res.refresh_token);
-          this.storage.deleteAnonymousToken();
+          this.storage.setCurrentCustomerToken(res.access_token);
+          this.storage.setCurrentRefreshToken(res.refresh_token);
+          this.storage.deleteCurrentAnonymousToken();
         }),
       );
   }

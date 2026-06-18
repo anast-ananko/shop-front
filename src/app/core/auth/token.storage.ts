@@ -8,43 +8,43 @@ export class TokenStorage {
   private REF_KEY = 'refresh_token';
 
   getCurrentToken() {
-    return this.getCustomerToken() ??
-      this.getAnonymousToken();
+    return this.getCurrentCustomerToken() ??
+      this.getCurrentAnonymousToken();
   }
 
-  setAppToken(token: string): void {
+  setCurrentAppToken(token: string): void {
     localStorage.setItem(this.APP_KEY, token);
   }
 
-  getAppToken(): string | null {
+  getCurrentAppToken(): string | null {
     return localStorage.getItem(this.APP_KEY);
   }
 
-  setAnonymousToken(token: string): void {
+  setCurrentAnonymousToken(token: string): void {
     localStorage.setItem(this.ANON_KEY, token);
   }
 
-  getAnonymousToken(): string | null {
+  getCurrentAnonymousToken(): string | null {
     return localStorage.getItem(this.ANON_KEY);
   }
 
-  deleteAnonymousToken(): void {
+  deleteCurrentAnonymousToken(): void {
     return localStorage.removeItem(this.ANON_KEY);
   }
 
-  setRefreshToken(token: string): void {
+  setCurrentRefreshToken(token: string): void {
     localStorage.setItem(this.REF_KEY, token);
   }
 
-  getRefreshToken(): string | null {
+  getCurrentRefreshToken(): string | null {
     return localStorage.getItem(this.REF_KEY);
   }
 
-  setCustomerToken(token: string): void {
+  setCurrentCustomerToken(token: string): void {
     localStorage.setItem(this.CUSTOMER_KEY, token);
   }
 
-  getCustomerToken(): string | null {
+  getCurrentCustomerToken(): string | null {
     return localStorage.getItem(this.CUSTOMER_KEY);
   }
 
