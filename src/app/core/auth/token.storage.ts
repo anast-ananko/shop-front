@@ -7,6 +7,11 @@ export class TokenStorage {
   private CUSTOMER_KEY = 'customer_token';
   private REF_KEY = 'refresh_token';
 
+  getCurrentToken() {
+    return this.getCustomerToken() ??
+      this.getAnonymousToken();
+  }
+
   setAppToken(token: string): void {
     localStorage.setItem(this.APP_KEY, token);
   }

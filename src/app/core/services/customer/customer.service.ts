@@ -21,10 +21,10 @@ export class CustomerService {
   customer = signal<Customer | null>(null);
 
   getMe(): Observable<MeResponse> {
-    const token = this.storage.getCustomerToken();
+    // const token = this.storage.getCustomerToken();
 
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
 
@@ -34,10 +34,10 @@ export class CustomerService {
   }
 
   updateMe(actions: unknown[]): Observable<MeResponse> {
-    const token = this.storage.getCustomerToken();
+    // const token = this.storage.getCustomerToken();
 
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
 
@@ -56,10 +56,10 @@ export class CustomerService {
   }
 
   changePassword(currentPassword: string, newPassword: string) {
-    const token = this.storage.getCustomerToken();
+    // const token = this.storage.getCustomerToken();
 
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
 

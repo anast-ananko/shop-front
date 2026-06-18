@@ -91,8 +91,10 @@ export class AuthService {
       .set('password', dto.password)
       .set('scope', this.scope);
 
+
     const basicAuth = btoa(`${this.client_id}:${this.secret}`);
     const headers = new HttpHeaders({
+
       Authorization: `Basic ${basicAuth}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     });
@@ -113,10 +115,11 @@ export class AuthService {
   }
 
   signup(data: SignupRequest): Observable<SignupResponse> {
-    const token = this.storage.getAppToken();
+    // const token = this.storage.getAppToken();
+    // const token = this.storage.getAnonymousToken();
 
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
 

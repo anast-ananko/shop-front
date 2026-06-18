@@ -9,9 +9,12 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { routes } from './routers/app.routes';
 import { AppInitializerService } from './core/services/app-initializer/app-initializer.service';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/http/interceptors/auth/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes, withViewTransitions()),
     provideNativeDateAdapter(),
