@@ -24,57 +24,51 @@ export class AuthService {
   private apiService = inject(Api);
   private customerService = inject(CustomerService);
   private router = inject(Router);
+  private getClientCredentialsBody(): string{
+    return new HttpParams()
+      .set('grant_type', 'client_credentials')
+      .set('scope', this.scope)
+      .toString();
+  }
+
+  private getBasicHeaders(): HttpHeaders {
+  const basicAuth = btoa(`${this.client_id}:${this.secret}`);
+  return new HttpHeaders({
+    Authorization: `Basic ${basicAuth}`,
+    'Content-Type': 'application/x-www-form-urlencoded',
+  });
+}
 
   isAuth = computed(() => !!this.customerService.customer());
   isGuest = computed(() => this.customerService.customer() === null);
 
   getAccessToken(): Observable<AppToken> {
-    const body = new HttpParams().set('grant_type', 'client_credentials').set('scope', this.scope);
-
-    const basicAuth = btoa(`${this.client_id}:${this.secret}`);
-    const headers = new HttpHeaders({
-      Authorization: `Basic ${basicAuth}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    });
-
     return this.apiService
-      .post<AppToken>(`${this.authUrl}/oauth/token`, body.toString(), headers)
+      .post<AppToken>(`${this.authUrl}/oauth/token`, this.getClientCredentialsBody(), this.getBasicHeaders())
       .pipe(tap((res) => this.storage.setAppToken(res.access_token)));
   }
 
   initAuthFlow() {
-    const customer = this.storage.getCustomerToken();
-    if (customer) {
+    const customerToken = this.storage.getCustomerToken();
+    if (customerToken) {
       this.customerService
         .getMe()
         .pipe(tap((customer) => this.customerService.customer.set(customer)))
         .subscribe();
-
       return;
     }
 
-    const anon = this.storage.getAnonymousToken();
-    if (anon) {
-      return;
-    }
+    const anonToken = this.storage.getAnonymousToken();
+    if (anonToken) return;
 
     this.getAnonymousToken().subscribe();
   }
 
   getAnonymousToken(): Observable<Token> {
-    const body = new HttpParams().set('grant_type', 'client_credentials').set('scope', this.scope);
-
-    const basicAuth = btoa(`${this.client_id}:${this.secret}`);
-    const headers = new HttpHeaders({
-      Authorization: `Basic ${basicAuth}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    });
-
     return this.apiService
       .post<Token>(
         `${this.authUrl}/oauth/${this.project_key}/anonymous/token`,
-        body.toString(),
-        headers,
+        this.getClientCredentialsBody(), this.getBasicHeaders(),
       )
       .pipe(
         tap((res) => {
@@ -91,19 +85,11 @@ export class AuthService {
       .set('password', dto.password)
       .set('scope', this.scope);
 
-
-    const basicAuth = btoa(`${this.client_id}:${this.secret}`);
-    const headers = new HttpHeaders({
-
-      Authorization: `Basic ${basicAuth}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    });
-
     return this.apiService
       .post<Token>(
         `${this.authUrl}/oauth/${this.project_key}/customers/token`,
         body.toString(),
-        headers,
+        this.getBasicHeaders(),
       )
       .pipe(
         tap((res) => {
@@ -115,11 +101,7 @@ export class AuthService {
   }
 
   signup(data: SignupRequest): Observable<SignupResponse> {
-    // const token = this.storage.getAppToken();
-    // const token = this.storage.getAnonymousToken();
-
     const headers = new HttpHeaders({
-      // Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
 
@@ -131,34 +113,6 @@ export class AuthService {
         }),
       );
   }
-
-  // refreshToken(): Observable<Token> | undefined {
-  //   const refreshToken = this.storage.getRefreshToken();
-
-  //   if (!refreshToken) {
-  //     return; // to impove
-  //   }
-
-  //   const body = new URLSearchParams();
-  //   body.set('grant_type', 'refresh_token');
-  //   body.set('refresh_token', refreshToken);
-  //   body.set('client_id', this.client_id);
-  //   body.set('client_secret', this.secret);
-
-  //   return this.http
-  //     .post<Token>(`${this.authUrl}/oauth/token`, body.toString(), {
-  //       headers: {
-  //         'Content-Type': 'application/x-www-form-urlencoded',
-  //       },
-  //     })
-  //     .pipe(
-  //       tap((res) => {
-  //         this.storage.setCustomerToken(res.access_token);
-
-  //         this.authState.set('customer');
-  //       }),
-  //     );
-  // }
 
   logout(): void {
     this.storage.clearTokens();

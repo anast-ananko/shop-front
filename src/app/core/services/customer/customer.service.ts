@@ -4,7 +4,6 @@ import { Observable, tap } from 'rxjs';
 
 import { environment } from '../../http/environment/environment';
 import { MeResponse } from './models';
-import { TokenStorage } from '../../auth/token.storage';
 import { Api } from '../../http/services/api/api';
 import { Customer } from '../../auth/models';
 
@@ -14,17 +13,12 @@ import { Customer } from '../../auth/models';
 export class CustomerService {
   private url = environment.apiUrl;
   private project_key = environment.projectKey;
-
-  private storage = inject(TokenStorage);
   private apiService = inject(Api);
 
   customer = signal<Customer | null>(null);
 
   getMe(): Observable<MeResponse> {
-    // const token = this.storage.getCustomerToken();
-
     const headers = new HttpHeaders({
-      // Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
 
@@ -34,10 +28,8 @@ export class CustomerService {
   }
 
   updateMe(actions: unknown[]): Observable<MeResponse> {
-    // const token = this.storage.getCustomerToken();
 
     const headers = new HttpHeaders({
-      // Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
 
@@ -56,10 +48,8 @@ export class CustomerService {
   }
 
   changePassword(currentPassword: string, newPassword: string) {
-    // const token = this.storage.getCustomerToken();
 
     const headers = new HttpHeaders({
-      // Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
 
