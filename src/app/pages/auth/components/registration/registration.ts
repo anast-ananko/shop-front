@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -21,10 +28,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { postalCodeValidator } from '../../../../utils/postal-code.validator';
 import { CountriesService } from '../../../../core/services/countries/countries.service';
-import { AuthService } from '../../../../core/auth/auth.service';
+import { AuthService } from '../../../../core/auth/services/auth.service';
 import { Address, MeResponse } from '../../../../core/services/customer/models';
 import { customerActions } from '../../../../core/services/customer/customerActions';
 import { CustomerService } from '../../../../core/services/customer/customer.service';
+import { TokenService } from '../../../../core/auth/services/token-service';
 
 interface AddressFormValue {
   streetName: string | null;
@@ -51,12 +59,13 @@ interface AddressFormValue {
   ],
   templateUrl: './registration.html',
   styleUrl: './registration.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Registration implements OnInit {
   private fb = inject(FormBuilder);
   countriesService = inject(CountriesService);
   private authService = inject(AuthService);
+  private tokenService = inject(TokenService);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
   private customerService = inject(CustomerService);
@@ -250,7 +259,7 @@ export class Registration implements OnInit {
       .signup(signupPayload)
       .pipe(
         switchMap(() =>
-          this.authService.getCustomerToken({
+          this.tokenService.getCustomerToken({
             email: signupPayload.email,
             password: signupPayload.password,
           }),
