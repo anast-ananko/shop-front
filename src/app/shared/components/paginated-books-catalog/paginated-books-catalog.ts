@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, input, signal } from '@angular/core';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ProductCard } from '../product-card/product-card';
 import { Book } from '../../../types/book.interface';
@@ -18,6 +18,11 @@ export class PaginatedBooksCatalog {
   pageIndex = signal(0);
   pageSizeOptions = [4, 8, 12, 16];
   pageSize = signal(4);
+  currentPageSize = input<number>(4);
+
+  constructor() {
+    effect(() => this.pageSize.set(this.currentPageSize()));
+  }
 
   paginatedBooks = computed(() => {
     const start = this.pageIndex() * this.pageSize();

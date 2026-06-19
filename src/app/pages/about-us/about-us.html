@@ -1,1 +1,40 @@
-<p>about-us works!</p>
+<div class="about-container">
+  <h1>About Our Team</h1>
+
+  <p class="team-description">
+    We collaborate through regular meetings, Jira-based task tracking, and clear distribution of
+    responsibilities. Code reviews are an essential part of our workflow, helping maintain code
+    quality and shared understanding of the project. We use CI to ensure stability and prevent
+    breaking changes, while sprint planning keeps development structured and predictable.
+    Communication is constant and focused on solving problems quickly and efficiently.
+  </p>
+
+  <div class="cards">
+    @for (member of members; track member.name) {
+      <mat-card class="team-card">
+        <div class="avatar-wrapper">
+          <img [src]="member.photo" [alt]="member.name" class="avatar" />
+        </div>
+
+        <mat-card-title>{{ member.name }}</mat-card-title>
+        <mat-card-subtitle>{{ member.role }}</mat-card-subtitle>
+
+        <mat-card-content>
+          <p>{{ member.bio }}</p>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <a matButton [href]="member.github" class="github-link" target="_blank">
+            <img src="assets/icons/github.png" alt="GitHub" />
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
+
+  <div class="rs-school">
+    <a href="https://rs.school" target="_blank">
+      <img src="assets/images/rs-school.png" alt="RS School Logo" />
+    </a>
+  </div>
+</div>

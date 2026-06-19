@@ -27,12 +27,14 @@ import { map, Observable, of, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { postalCodeValidator } from '../../../../utils/postal-code.validator';
-import { CountriesService } from '../../../../core/services/countries/countries.service';
 import { AuthService } from '../../../../core/auth/services/auth.service';
 import { Address, MeResponse } from '../../../../core/services/customer/models';
 import { customerActions } from '../../../../core/services/customer/customerActions';
 import { CustomerService } from '../../../../core/services/customer/customer.service';
 import { TokenService } from '../../../../core/auth/services/token-service';
+import { AutoFocus } from '../../../../shared/directives/auto-focus';
+import { PostalCodeSyncDirective } from '../../../../shared/directives/postal-code-sync';
+import { COUNTRIES } from '../../../../shared/tokens/countries';
 
 interface AddressFormValue {
   streetName: string | null;
@@ -56,6 +58,8 @@ interface AddressFormValue {
     MatFormFieldModule,
     MatCard,
     MatCardTitle,
+    AutoFocus,
+    PostalCodeSyncDirective,
   ],
   templateUrl: './registration.html',
   styleUrl: './registration.scss',
@@ -63,12 +67,12 @@ interface AddressFormValue {
 })
 export class Registration implements OnInit {
   private fb = inject(FormBuilder);
-  countriesService = inject(CountriesService);
   private authService = inject(AuthService);
   private tokenService = inject(TokenService);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
   private customerService = inject(CustomerService);
+  countries = inject(COUNTRIES);
 
   serverError = signal<string | null>(null);
   success = signal<boolean>(false);

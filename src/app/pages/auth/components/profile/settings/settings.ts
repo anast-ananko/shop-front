@@ -19,6 +19,7 @@ import { CustomerService } from '../../../../../core/services/customer/customer.
 import { AddressBlock } from '../../../../../shared/components/address-block/address-block';
 import { customerActions } from '../../../../../core/services/customer/customerActions';
 import { TokenService } from '../../../../../core/auth/services/token-service';
+import { FormatDatePipe } from '../../../../../shared/pipes/format-date';
 
 @Component({
   selector: 'app-settings',
@@ -30,6 +31,7 @@ import { TokenService } from '../../../../../core/auth/services/token-service';
     MatFormFieldModule,
     MatInputModule,
     AddressBlock,
+    FormatDatePipe,
   ],
   templateUrl: './settings.html',
   styleUrl: './settings.scss',
