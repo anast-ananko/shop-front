@@ -15,6 +15,7 @@ export const authRoutes: Routes = [
           const m = await import('../pages/auth/components/registration/registration');
           return m.Registration;
         },
+        canActivate: [guestGuard],
       },
       {
         path: 'sign-in',
