@@ -24,8 +24,8 @@ export class AuthService {
   private tokenService = inject(TokenService);
 
 
-  isAuth = computed(() => !!this.customerService.customer());
-  isGuest = computed(() => this.customerService.customer() === null);
+  isAuth = computed(() => !!this.storage.getCurrentCustomerToken());
+  isGuest = computed(() => this.storage.getCurrentCustomerToken() === null);
 
   initAuthFlow() {
     const customerToken = this.storage.getCurrentCustomerToken();
