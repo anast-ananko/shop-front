@@ -9,7 +9,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { Search } from '../../../shared/components/search/search';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../auth/services/auth.service';
 import { BooksService } from '../../services/books-service/books-service';
 
 @Component({

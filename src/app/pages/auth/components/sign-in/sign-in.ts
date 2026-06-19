@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -8,9 +15,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../../../core/auth/auth.service';
+import { AuthService } from '../../../../core/auth/services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs';
 import { CustomerService } from '../../../../core/services/customer/customer.service';
 import { AutoFocus } from "../../../../shared/directives/auto-focus";
 
@@ -68,10 +74,8 @@ export class SignIn implements OnInit {
     const signupPayload = this.form.getRawValue();
 
     this.authService
-      .getCustomerToken(signupPayload)
-      .pipe(
-        switchMap(() => this.customerService.getMe()),
-        takeUntilDestroyed(this.destroyRef))
+      .signIn(signupPayload)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => this.successLogin(),
         error: (err) => {

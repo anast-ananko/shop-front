@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Book } from '../../../types/book.interface';
-import { TokenStorage } from '../../auth/token.storage';
+import { TokenStorage } from '../../auth/services/token.storage';
 import { HttpHeaders } from '@angular/common/http';
 import { Api } from '../../http/services/api/api';
 import { environment } from '../../http/environment/environment';
@@ -76,7 +76,7 @@ export class BooksService {
   }
 
   getBooks(): Observable<Book[]> {
-    const token = this.storage.getAppToken();
+    const token = this.storage.getCurrentAppToken();
 
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
