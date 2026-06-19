@@ -27,10 +27,11 @@ import { map, Observable, of, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { postalCodeValidator } from '../../../../utils/postal-code.validator';
-import { AuthService } from '../../../../core/auth/auth.service';
+import { AuthService } from '../../../../core/auth/services/auth.service';
 import { Address, MeResponse } from '../../../../core/services/customer/models';
 import { customerActions } from '../../../../core/services/customer/customerActions';
 import { CustomerService } from '../../../../core/services/customer/customer.service';
+import { TokenService } from '../../../../core/auth/services/token-service';
 import { AutoFocus } from '../../../../shared/directives/auto-focus';
 import { PostalCodeSyncDirective } from '../../../../shared/directives/postal-code-sync';
 import { COUNTRIES } from '../../../../shared/tokens/countries';
@@ -67,6 +68,7 @@ interface AddressFormValue {
 export class Registration implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private tokenService = inject(TokenService);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
   private customerService = inject(CustomerService);
@@ -261,7 +263,7 @@ export class Registration implements OnInit {
       .signup(signupPayload)
       .pipe(
         switchMap(() =>
-          this.authService.getCustomerToken({
+          this.tokenService.getCustomerToken({
             email: signupPayload.email,
             password: signupPayload.password,
           }),

@@ -14,11 +14,11 @@ import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
 
-import { AuthService } from '../../../../../core/auth/auth.service';
 import { passwordMatchValidator } from '../../../../../utils/password-match.validator';
 import { CustomerService } from '../../../../../core/services/customer/customer.service';
 import { AddressBlock } from '../../../../../shared/components/address-block/address-block';
 import { customerActions } from '../../../../../core/services/customer/customerActions';
+import { TokenService } from '../../../../../core/auth/services/token-service';
 import { FormatDatePipe } from '../../../../../shared/pipes/format-date';
 
 @Component({
@@ -39,7 +39,7 @@ import { FormatDatePipe } from '../../../../../shared/pipes/format-date';
 })
 export class Settings implements OnInit {
   private fb = inject(FormBuilder);
-  authService = inject(AuthService);
+  tokenService = inject(TokenService);
   customerService = inject(CustomerService);
   private destroyRef = inject(DestroyRef);
 
@@ -190,7 +190,7 @@ export class Settings implements OnInit {
       .changePassword(current, newPass)
       .pipe(
         switchMap(() => {
-          return this.authService.getCustomerToken({
+          return this.tokenService.getCustomerToken({
             email,
             password: this.formPassword.getRawValue().newPassword,
           });
