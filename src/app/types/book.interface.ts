@@ -18,3 +18,5 @@ export interface Book {
   isFavorite: boolean;
   isInCart: boolean;
 }
+
+export type SortOption = 'priceAsc' | 'priceDesc' | 'nameAsc' | 'nameDesc';

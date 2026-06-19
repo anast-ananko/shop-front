@@ -1,4 +1,4 @@
-@use "../../shared/styles/mixins.scss" as mixins;
+@use '../../shared/styles/mixins.scss' as mixins;
 
 .loader {
   @include mixins.flex(center, center);
@@ -10,4 +10,26 @@
   border-radius: 8px;
   text-align: center;
   color: red;
+}
+
+.catalog-controls {
+  @include mixins.flex(space-between, flex-start);
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 0 20px;
+}
+
+.sort-select {
+  width: 220px;
+  margin: 10px 0;
+}
+
+@media (max-width: 600px) {
+  .catalog-controls {
+    margin-bottom: 10px;
+  }
+
+  .sort-select {
+    margin: 0;
+  }
 }

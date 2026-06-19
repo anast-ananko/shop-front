@@ -5,7 +5,7 @@ import { map, Observable, tap } from 'rxjs';
 import { environment } from '../../http/environment/environment';
 import { Api } from '../../http/services/api/api';
 import { TokenStorage } from '../../auth/token.storage';
-import { ApiCategory, Category, CategoryNode } from '../../../types/categories';
+import { ApiCategory, CategoryNode } from '../../../types/categories';
 import { buildCategoryTree } from '../../../utils/build-category-tree';
 
 @Injectable({
