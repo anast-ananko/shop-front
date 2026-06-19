@@ -1,11 +1,11 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 
 import { environment } from '../../http/environment/environment';
 import { Api } from '../../http/services/api/api';
 import { TokenStorage } from '../../auth/token.storage';
-import { ApiCategory, CategoriesState } from '../../../types/categories';
+import { ApiCategory, Category, CategoryNode } from '../../../types/categories';
 import { buildCategoryTree } from '../../../utils/build-category-tree';
 
 @Injectable({
@@ -18,19 +18,9 @@ export class CategoriesService {
   private apiService = inject(Api);
   private storage = inject(TokenStorage);
 
-  private state = signal<CategoriesState>({
-    data: [],
-    loading: false,
-    error: null,
-  });
+  categories = signal<CategoryNode[]>([]);
 
-  categories = computed(() => this.state().data);
-  loading = computed(() => this.state().loading);
-  error = computed(() => this.state().error);
-
-  getCategories() {
-    this.state.update((s) => ({ ...s, loading: true, error: null }));
-
+  getCategories(): Observable<CategoryNode[]> {
     const token = this.storage.getCustomerToken();
 
     const headers = new HttpHeaders({
@@ -38,24 +28,11 @@ export class CategoriesService {
       'Content-Type': 'application/json',
     });
 
-    this.apiService
+    return this.apiService
       .get<ApiCategory>(`${this.url}/${this.project_key}/categories`, headers)
-      .pipe(map((res) => buildCategoryTree(res.results)))
-      .subscribe({
-        next: (data) => {
-          this.state.set({
-            data,
-            loading: false,
-            error: null,
-          });
-        },
-        error: () => {
-          this.state.set({
-            data: [],
-            loading: false,
-            error: 'Failed to load categories',
-          });
-        },
-      });
+      .pipe(
+        map((res) => buildCategoryTree(res.results)),
+        tap((categories) => this.categories.set(categories)),
+      );
   }
 }

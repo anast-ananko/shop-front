@@ -9,10 +9,10 @@ export interface ApiCategory {
 export interface Category {
   id: string;
   name: {
-    'de-DE': string;
+    'en-US': string;
   };
   slug: {
-    'de-DE': string;
+    'en-US': string;
   };
   ancestors: {
     id: string;
@@ -25,8 +25,6 @@ export interface CategoryNode {
   children: CategoryNode[];
 }
 
-export interface CategoriesState {
-  data: CategoryNode[];
-  loading: boolean;
-  error: string | null;
+export interface BooksFilters {
+  categoryId?: string | null;
 }

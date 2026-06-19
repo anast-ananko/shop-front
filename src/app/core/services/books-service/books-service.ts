@@ -6,6 +6,7 @@ import { Api } from '../../http/services/api/api';
 import { environment } from '../../http/environment/environment';
 import { map, Observable, tap } from 'rxjs';
 import { Product, ProductsResponse } from '../../../types/api.response';
+import { BooksFilters } from '../../../types/categories';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class BooksService {
   private apiService = inject(Api);
 
   readonly books = signal<Book[]>([]);
+  readonly filteredFromApi = signal<Book[]>([]);
   public searchValue = signal<string>('');
 
   private url = environment.apiUrl;
@@ -89,6 +91,25 @@ export class BooksService {
         map((response) => response.results.map((product) => this.mapProductToBook(product))),
         tap((books) => this.books.set(books)),
       );
+  }
+
+  getBooksWithFilters(filters: BooksFilters = {}): Observable<Book[]> {
+    const token = this.storage.getAppToken();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    let url = `${this.url}/${this.project_key}/product-projections?limit=100`;
+
+    if (filters.categoryId) {
+      url += `&where=categories(id="${filters.categoryId}")`;
+    }
+
+    return this.apiService.get<ProductsResponse>(url, headers).pipe(
+      map((res) => res.results.map((p) => this.mapProductToBook(p))),
+      tap((books) => this.filteredFromApi.set(books)),
+    );
   }
 
   private mapProductToBook(product: Product): Book {

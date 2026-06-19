@@ -1,40 +1,21 @@
-<div class="category-bar">
-  @for (category of categories(); track category.id) {
-    <button (click)="setActiveCategory(category)">
-      {{ category.name }}
-    </button>
-  }
-</div>
+<div class="categories-wrapper">
+  <div class="category-bar">
+    @for (category of categories(); track category.id) {
+      <button (click)="setActiveCategory(category)">
+        {{ category.name }}
+      </button>
+    }
+  </div>
 
-<div class="sub-bar" [class.hidden]="!active()?.children?.length">
-  @for (sub of active()?.children ?? []; track sub.id) {
-    <button (click)="selectCategory(sub)">
-      {{ sub.name }}
-    </button>
-  }
+  <div class="sub-bar" [class.hidden]="!selectedCategory()?.children?.length">
+    @for (sub of selectedCategory()?.children ?? []; track sub.id) {
+      <button (click)="setActiveSubcategory(sub)">
+        {{ sub.name }}
+      </button>
+    }
+  </div>
 </div>
 
 <h1 class="page-title">
   {{ title() }}
 </h1>
-
-<!-- <mat-toolbar class="category-bar">
-  @for (category of categoriesService.categories(); track category.id) {
-    <button
-      mat-button
-      [matMenuTriggerFor]="menu"
-      (click)="setActiveCategory(category)"
-      [class.active]="activeCategory()?.id === category.id"
-    >
-      {{ category.name }}
-    </button>
-  }
-</mat-toolbar>
-
-<mat-menu #menu="matMenu">
-  @for (sub of activeCategory()?.children ?? []; track sub.id) {
-    <button mat-menu-item (click)="selectCategory(sub)" [class.active]="selected()?.id === sub.id">
-      {{ sub.name }}
-    </button>
-  }
-</mat-menu> -->

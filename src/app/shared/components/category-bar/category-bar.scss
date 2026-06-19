@@ -1,5 +1,13 @@
-.category-bar {
+.categories-wrapper {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.category-bar {
+  display: inline-flex;
+  width: fit-content;
   gap: 8px;
   overflow-x: auto;
   background: white;
@@ -13,7 +21,8 @@
 }
 
 .sub-bar {
-  display: flex;
+  display: inline-flex;
+  width: fit-content;
   gap: 8px;
   margin-top: 10px;
   padding: 6px 10px;
@@ -52,5 +61,5 @@ button {
 
 .page-title {
   padding: 20px 10px;
-  margin: 0 10px;
+  margin: 5px 0 20px;
 }

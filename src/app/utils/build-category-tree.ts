@@ -7,7 +7,7 @@ export function buildCategoryTree(categories: Category[]): CategoryNode[] {
   categories.forEach((cat) => {
     map.set(cat.id, {
       id: cat.id,
-      name: cat.name['de-DE'],
+      name: cat.name['en-US'],
       children: [],
     });
   });

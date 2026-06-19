@@ -1,8 +1,16 @@
 <app-category-bar />
 
-<app-paginated-books-catalog
-  [currentPageSize]="pageSize()"
-  [filteredBooks]="filteredBooks()"
-  [title]="'books'"
-  [emptyMessage]="'No books'"
-/>
+@if (loadingBooks()) {
+  <div class="loader">Loading books...</div>
+} @else if (errorBooks()) {
+  <div class="error">
+    {{ errorBooks() }}
+  </div>
+} @else {
+  <app-paginated-books-catalog
+    [currentPageSize]="pageSize()"
+    [filteredBooks]="books()"
+    [title]="'Books'"
+    [emptyMessage]="'No books'"
+  />
+}

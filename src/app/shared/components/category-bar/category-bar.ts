@@ -1,9 +1,17 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 
 import { CategoriesService } from '../../../core/services/categories/categories.service';
 import { CategoryNode } from '../../../types/categories';
+import { BooksService } from '../../../core/services/books-service/books-service';
+import { Book } from '../../../types/book.interface';
+
+const ALL_CATEGORY: CategoryNode = {
+  id: 'all',
+  name: 'All',
+  children: [],
+};
 
 @Component({
   selector: 'app-category-bar',
@@ -13,40 +21,48 @@ import { CategoryNode } from '../../../types/categories';
 })
 export class CategoryBar {
   private categoriesService = inject(CategoriesService);
+  private booksService = inject(BooksService);
 
-  active = signal<CategoryNode | null>(null);
-  selected = signal<CategoryNode | null>(null);
-  categories = computed(() => [
-    {
-      id: 'all',
-      name: 'All',
-      children: [],
-    },
-    ...this.categoriesService.categories(),
-  ]);
+  books = signal<Book[]>([]);
 
-  ngOnInit() {
-    this.categoriesService.getCategories();
-    console.log(this.categoriesService.categories());
+  selectedCategory = signal<CategoryNode | null>(null);
+  selectedSubcategory = signal<CategoryNode | null>(null);
+  categories = computed(() => [ALL_CATEGORY, ...this.categoriesService.categories()]);
+
+  constructor() {
+    effect(() => {
+      const subcategory = this.selectedSubcategory();
+
+      if (!subcategory) {
+        this.booksService.getBooksWithFilters().subscribe();
+        return;
+      } else {
+        this.booksService
+          .getBooksWithFilters({
+            categoryId: subcategory.id,
+          })
+          .subscribe();
+        return;
+      }
+    });
   }
 
   setActiveCategory(category: CategoryNode): void {
     if (category.id === 'all') {
-      this.selected.set(null);
-      this.active.set(null);
+      this.selectedCategory.set(ALL_CATEGORY);
+      this.selectedSubcategory.set(null);
       return;
     }
 
-    this.active.set(category);
+    this.selectedCategory.set(category);
   }
 
-  selectCategory(category: CategoryNode): void {
-    this.selected.set(category);
-    console.log(this.selected());
+  setActiveSubcategory(category: CategoryNode): void {
+    this.selectedSubcategory.set(category);
   }
 
   title = computed(() => {
-    const selected = this.selected();
+    const selected = this.selectedSubcategory();
 
     if (!selected) return 'All Books';
 
