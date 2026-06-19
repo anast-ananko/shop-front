@@ -23,7 +23,6 @@ export class AuthService {
   private router = inject(Router);
   private tokenService = inject(TokenService);
 
-
   isAuth = computed(() => !!this.storage.getCurrentCustomerToken());
   isGuest = computed(() => this.storage.getCurrentCustomerToken() === null);
 
