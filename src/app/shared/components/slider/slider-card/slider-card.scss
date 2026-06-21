@@ -3,7 +3,7 @@
 .slide {
   width: 260px;
   height: 220px;
-  @include mixins.flex(center, center);
+  @include mixins.flex($justify: center, $align: center);
   position: relative;
   overflow: hidden;
   border-radius: 16px;

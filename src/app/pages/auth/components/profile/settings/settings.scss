@@ -1,7 +1,7 @@
 @use "../../../../../shared/styles/mixins.scss" as mixins;
 
 :host {
-  @include mixins.flex(center, center);
+  @include mixins.flex($justify: center, $align: center);
   flex-direction: column;
   max-width: 600px;
   width: 100%;
@@ -45,7 +45,7 @@ form {
 }
 
 .value {
-  @include mixins.flex(null, center);
+  @include mixins.flex($align: center);
   min-height: 40px;
 }
 
@@ -63,7 +63,7 @@ form {
 }
 
 .actions {
-  @include mixins.flex(flex-end, null);
+  @include mixins.flex($justify: flex-end);
   gap: 8px;
 
   button[matIconButton] {
@@ -130,7 +130,7 @@ mat-error {
 }
 
 .password-actions {
-  @include mixins.flex(center, center);
+  @include mixins.flex($justify: center, $align: center);
   gap: 10px;
   margin: 10px 0;
 

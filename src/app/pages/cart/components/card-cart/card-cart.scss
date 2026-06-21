@@ -38,7 +38,7 @@
 }
 
 .wrapper-card {
-  @include mixins.flex(space-between, center);
+  @include mixins.flex($justify: space-between, $align: center);
   gap: 15px;
   flex-wrap: wrap;
 
@@ -62,7 +62,7 @@
   }
 
   .mat-mdc-card-content {
-    @include mixins.flex(space-between, flex-end);
+    @include mixins.flex($justify: space-between, $align: flex-end);
     flex-direction: column;
     padding: 0;
     gap: 10px;
@@ -87,7 +87,7 @@
 }
 
 .wrapper-btn {
-  @include mixins.flex(justify, center);
+  @include mixins.flex($justify: justify, $align: center);
   gap: 10px;
 }
 
@@ -108,7 +108,7 @@
 
   .mat-mdc-card-actions {
     width: 48px;
-    @include mixins.flex(center, center);
+    @include mixins.flex($justify: center, $align: center);
     opacity: 1 !important;
   }
 

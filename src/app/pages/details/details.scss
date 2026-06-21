@@ -14,7 +14,7 @@
 }
 
 .book-details-content {
-  @include mixins.flex(space-around, center);
+  @include mixins.flex($justify: space-around, $align: center);
   flex-wrap: wrap;
   gap: 40px;
   margin-bottom: 40px;
@@ -34,7 +34,7 @@
   }
 
   .wrapper-content {
-    @include mixins.flex(space-between, start);
+    @include mixins.flex($justify: space-between, $align: start);
     width: 100%;
     border-bottom: 1px dashed var(--mat-sys-primary);
     padding: 5px 0px 15px;
@@ -60,7 +60,7 @@
   }
 
   .book-info {
-    @include mixins.flex(end, center);
+    @include mixins.flex($justify: end, $align: center);
     width: 100%;
     gap: 15px;
 

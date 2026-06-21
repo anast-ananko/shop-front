@@ -8,7 +8,7 @@
 }
 
 .wrapper_content {
-  @include mixins.flex(center, center);
+  @include mixins.flex($justify: center, $align: center);
   width: 100%;
   gap: 20px;
   text-align: center;
@@ -25,7 +25,7 @@ h1 {
 }
 
 h3 {
-  @include mixins.flex(null, center);
+  @include mixins.flex( $align: center);
   font-size: 48px;
   flex-direction: column;
   gap: 10px;
@@ -51,7 +51,7 @@ h3::after {
 }
 
 .wrapper_buttons {
-  @include mixins.flex(center, center);
+  @include mixins.flex($justify: center, $align: center);
   gap: 20px;
 }
 
