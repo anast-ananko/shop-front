@@ -45,7 +45,7 @@ form {
 }
 
 .value {
-  @include mixins.flex($align: center);
+  @include mixins.flex($justify: null, $align: center);
   min-height: 40px;
 }
 
@@ -63,7 +63,7 @@ form {
 }
 
 .actions {
-  @include mixins.flex($justify: flex-end);
+  @include mixins.flex($justify: flex-end, $align: null);
   gap: 8px;
 
   button[matIconButton] {

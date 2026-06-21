@@ -38,7 +38,7 @@
 }
 
 .wrapper-card {
-  @include mixins.flex($justify: space-between, $align: center);
+  @include mixins.flex();
   gap: 15px;
   flex-wrap: wrap;
 

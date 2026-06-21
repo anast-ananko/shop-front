@@ -44,7 +44,7 @@ mat-checkbox {
 
 .checkbox {
   margin: 16px 0;
-  @include mixins.flex($justify: flex-start);
+  @include mixins.flex($justify: flex-start, $align: null);
 }
 
 .billing-card {
@@ -69,7 +69,7 @@ mat-checkbox {
 }
 
 .actions {
-  @include mixins.flex($justify: center);
+  @include mixins.flex($justify: center, $align: null);
   margin-top: 20px;
 
   button {

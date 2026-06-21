@@ -25,7 +25,7 @@ h1 {
 }
 
 h3 {
-  @include mixins.flex( $align: center);
+  @include mixins.flex( $justify: null, $align: center);
   font-size: 48px;
   flex-direction: column;
   gap: 10px;

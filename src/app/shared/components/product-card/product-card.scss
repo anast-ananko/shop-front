@@ -12,7 +12,7 @@
 }
 
 .mat-mdc-card-header {
-  @include mixins.flex($justify: space-between, $align: center);
+  @include mixins.flex();
   text-align: center;
   padding: 0px;
 }
@@ -88,7 +88,7 @@
 }
 
 .content-wrapper {
-  @include mixins.flex($justify: space-between, $align: center);
+  @include mixins.flex();
 
   p {
     margin: 0;
@@ -96,7 +96,7 @@
 }
 
 .actions {
-  @include mixins.flex($justify: space-between, $align: center);
+  @include mixins.flex();
   padding: 0px;
 }
 

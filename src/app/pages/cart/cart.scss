@@ -12,7 +12,7 @@
 }
 
 .wrapper-cards {
-  @include mixins.flex($justify: space-between);
+  @include mixins.flex($justify: space-between, $align: null);
   flex-direction: column;
   gap: 20px;
   background-color: var(--mat-sys-surface-variant);
@@ -26,7 +26,7 @@ h2 {
 }
 
 .wrapper-total {
-  @include mixins.flex($justify: space-between, $align: center);
+  @include mixins.flex( );
   border-top: 1px solid var(--mat-sys-primary);
   padding: 20px 0;
   gap: 20px;
