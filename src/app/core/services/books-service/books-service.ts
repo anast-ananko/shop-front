@@ -97,6 +97,10 @@ export class BooksService {
       attributes.find((attribute) => attribute.name === name)?.value;
 
     const price = product.masterVariant.prices?.[0]?.value.centAmount ?? 0;
+    console.log(String(getAttribute('category') ?? ''))
+    console.log(String(getAttribute('subcategory') ?? ''))
+    console.log("--------")
+
 
     return {
       id: product.id,
@@ -113,6 +117,7 @@ export class BooksService {
       stockStatus: String(getAttribute('stockStatus') ?? ''),
       rating: Number(getAttribute('rating') ?? 0),
       category: String(getAttribute('category') ?? ''),
+      subcategory: String(getAttribute('subcategory') ?? ''),
       reviews: Number(getAttribute('reviews') ?? 0),
       publisher: String(getAttribute('publisher') ?? ''),
       isFavorite: false,
