@@ -98,6 +98,7 @@
 .actions {
   @include mixins.flex($justify: space-between, $align: center);
   padding: 0px;
+  margin-top: auto;
 }
 
 .card {
