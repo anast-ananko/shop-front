@@ -121,6 +121,7 @@ export class BooksService {
       stockStatus: String(getAttribute('stockStatus') ?? ''),
       rating: Number(getAttribute('rating') ?? 0),
       category: String(getAttribute('category') ?? ''),
+      subcategory: String(getAttribute('subcategory') ?? ''),
       reviews: Number(getAttribute('reviews') ?? 0),
       publisher: String(getAttribute('publisher') ?? ''),
       isFavorite: false,
