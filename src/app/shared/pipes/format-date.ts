@@ -1,4 +1,4 @@
-import { Inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
+import { inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
 
 type DateFormat = 'short' | 'long' | 'full';
 
@@ -6,7 +6,7 @@ type DateFormat = 'short' | 'long' | 'full';
   name: 'formatDate',
 })
 export class FormatDatePipe implements PipeTransform {
-  constructor(@Inject(LOCALE_ID) private locale: string) {}
+  private locale = inject(LOCALE_ID);
 
   transform(value: string | Date, format: DateFormat = 'long'): string {
     if (!value) return '';
