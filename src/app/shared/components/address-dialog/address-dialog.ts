@@ -1,4 +1,11 @@
-import { Component, DestroyRef, inject, model, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  model,
+  OnInit,
+} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -13,10 +20,10 @@ import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { postalCodeValidator } from '../../../utils/postal-code.validator';
-import { CountriesService } from '../../../core/services/countries/countries.service';
 import { AddressDialogData } from '../address-block/address-block';
 import { AddressVM } from '../../../core/services/customer/models';
-import { PostalCodeSyncDirective } from '../../../core/directives/postal-code-sync/postal-code-sync';
+import { PostalCodeSyncDirective } from '../../directives/postal-code-sync';
+import { COUNTRIES } from '../../tokens/countries';
 
 export interface AddressDialogResult {
   action: 'save';
@@ -39,14 +46,15 @@ export interface AddressDialogResult {
   ],
   templateUrl: './address-dialog.html',
   styleUrl: './address-dialog.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddressDialog implements OnInit {
   readonly dialogRef = inject(MatDialogRef<AddressDialog>);
   readonly data = inject<AddressDialogData>(MAT_DIALOG_DATA);
   readonly address = model(this.data.address);
   private fb = inject(FormBuilder);
-  countriesService = inject(CountriesService);
   private destroyRef = inject(DestroyRef);
+  countries = inject(COUNTRIES);
 
   form = this.fb.nonNullable.group(
     {

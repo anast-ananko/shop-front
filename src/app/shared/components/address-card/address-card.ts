@@ -1,4 +1,11 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+} from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,20 +18,21 @@ import { Address } from '../../../core/services/customer/models';
 import { CustomerService } from '../../../core/services/customer/customer.service';
 import { AddressDialog, AddressDialogResult } from '../address-dialog/address-dialog';
 import { customerActions } from '../../../core/services/customer/customerActions';
-import { CountriesService } from '../../../core/services/countries/countries.service';
 import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
+import { COUNTRIES } from '../../tokens/countries';
 
 @Component({
   selector: 'app-address-card',
   imports: [MatCard, MatChipsModule, MatIcon, NgClass],
   templateUrl: './address-card.html',
   styleUrl: './address-card.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddressCard {
   readonly dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
   customerService = inject(CustomerService);
-  countriesService = inject(CountriesService);
+  countries = inject(COUNTRIES);
 
   @Input() address!: Address;
   @Input() showActions = true;

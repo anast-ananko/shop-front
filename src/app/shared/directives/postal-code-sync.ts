@@ -3,20 +3,20 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, ControlContainer, FormGroup, ValidationErrors } from '@angular/forms';
 
 @Directive({
-  selector: 'form[appPostalCodeSync]',
+  selector: '[appPostalCodeSync]',
 })
 export class PostalCodeSyncDirective implements OnInit {
   private destroyRef = inject(DestroyRef);
   private controlContainer = inject(ControlContainer);
 
-  private get form(): FormGroup {
-    const form = this.controlContainer.control;
+  private get group(): FormGroup {
+    const control = this.controlContainer.control;
 
-    if (!form) {
-      throw new Error('PostalCodeSyncDirective must be used inside a formGroup');
+    if (!control || !(control instanceof FormGroup)) {
+      throw new Error('appPostalCodeSync must be used inside a FormGroup');
     }
 
-    return form as FormGroup;
+    return control;
   }
 
   ngOnInit() {
@@ -24,25 +24,25 @@ export class PostalCodeSyncDirective implements OnInit {
   }
 
   private initLogic(): void {
-    const form = this.form;
-    const { country, postalCode } = form.controls;
+    const group = this.group;
+    const { country, postalCode } = group.controls;
 
     country.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       postalCode.reset('');
       postalCode.markAsUntouched();
-      form.updateValueAndValidity();
+      group.updateValueAndValidity();
     });
 
-    form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+    group.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.syncErrors();
     });
   }
 
   private syncErrors(): void {
-    const form = this.form;
-    const { country, postalCode } = form.controls;
+    const group = this.group;
+    const { country, postalCode } = group.controls;
 
-    const error = form.hasError('invalidPostalCode');
+    const error = group.hasError('invalidPostalCode');
 
     if (error) {
       country.setErrors({ invalidPostalCode: true });

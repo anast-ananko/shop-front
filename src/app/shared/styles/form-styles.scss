@@ -1,8 +1,8 @@
+@use "./mixins.scss" as mixins;
+
 :host {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include mixins.flex($justify: center, $align: center);
+  min-height: 70vh;
   padding: 24px;
 }
 
@@ -44,8 +44,7 @@ mat-checkbox {
 
 .checkbox {
   margin: 16px 0;
-  display: flex;
-  justify-content: flex-start;
+  @include mixins.flex($justify: flex-start, $align: null);
 }
 
 .billing-card {
@@ -70,9 +69,8 @@ mat-checkbox {
 }
 
 .actions {
+  @include mixins.flex($justify: center, $align: null);
   margin-top: 20px;
-  display: flex;
-  justify-content: center;
 
   button {
     width: 100%;
@@ -83,12 +81,10 @@ mat-checkbox {
 
 .auth-footer {
   margin-top: 16px;
-  display: flex;
-  justify-content: center;
+  @include mixins.flex($justify: center, $align: center);
   gap: 8px;
   font-size: 14px;
   color: var(--mat-sys-on-surface-variant);
-  align-items: center;
 }
 
 @media (max-width: 550px) {

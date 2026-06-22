@@ -1,0 +1,21 @@
+<div class="categories-wrapper">
+  <div class="category-bar">
+    @for (category of categories(); track category.id) {
+      <button (click)="setActiveCategory(category)">
+        {{ category.name }}
+      </button>
+    }
+  </div>
+
+  <div class="sub-bar" [class.hidden]="!selectedCategory()?.children?.length">
+    @for (sub of selectedCategory()?.children ?? []; track sub.id) {
+      <button (click)="setActiveSubcategory(sub)">
+        {{ sub.name }}
+      </button>
+    }
+  </div>
+</div>
+
+<h1 class="page-title">
+  {{ title() }}
+</h1>

@@ -1,3 +1,5 @@
+@use "../../../../shared/styles/mixins.scss" as mixins;
+
 .card-cart {
   width: 100%;
   padding: 15px;
@@ -15,6 +17,7 @@
   .mat-mdc-card-actions {
     opacity: 0;
     transition: 0.3s;
+    padding: 0 !important;
   }
 
   &:hover {
@@ -35,10 +38,8 @@
 }
 
 .wrapper-card {
-  display: flex;
+  @include mixins.flex();
   gap: 15px;
-  justify-content: space-between;
-  align-items: center;
   flex-wrap: wrap;
 
   .mat-mdc-card-header {
@@ -53,7 +54,7 @@
     }
   }
 
-  .stock{
+  .stock {
     font-size: 12px;
     color: #0000008a;
     padding-top: 5px;
@@ -61,9 +62,8 @@
   }
 
   .mat-mdc-card-content {
-    display: flex;
+    @include mixins.flex($justify: space-between, $align: flex-end);
     flex-direction: column;
-    align-items: flex-end;
     padding: 0;
     gap: 10px;
 
@@ -86,6 +86,11 @@
 
 }
 
+.wrapper-btn {
+  @include mixins.flex($justify: justify, $align: center);
+  gap: 10px;
+}
+
 
 @media (max-width: 860px) {
   .wrapper-card {
@@ -93,17 +98,32 @@
     justify-content: space-around;
 
     .mat-mdc-card-content {
+      width: 100%;
       align-items: center;
-      gap:5px;
+      justify-content: space-around;
+      gap: 5px;
 
     }
   }
 
   .mat-mdc-card-actions {
+    width: 48px;
+    @include mixins.flex($justify: center, $align: center);
     opacity: 1 !important;
-    position: absolute;
-    top: -10px;
-    left: -20px;
+  }
+
+  .wrapper-btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  mat-card-title {
+    padding: 0 !important;
+    padding-left: 15px !important;
+  }
+
+  mat-card-subtitle {
+    padding-right: 0px !important;
   }
 
 

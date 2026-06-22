@@ -1,3 +1,5 @@
+@use '../../styles/mixins.scss' as mixins;
+
 .card {
   width: 100%;
   max-width: 270px;
@@ -5,14 +7,14 @@
   transition: 0.3s;
   display: flex;
   flex-direction: column;
-  max-height: 600px;
+  max-height: 500px;
+  padding: 15px;
 }
 
 .mat-mdc-card-header {
-  display: flex;
-  justify-content: space-between;
+  @include mixins.flex();
   text-align: center;
-  align-items: center;
+  padding: 0px;
 }
 
 .mat-mdc-card-avatar {
@@ -21,9 +23,9 @@
 
 .header-title {
   margin: 0 auto;
-  padding: 5px 15px;
-  line-height: 1.2;
-  height: calc(1.2em * 4);
+  padding: 0px;
+  line-height: 1;
+  height: calc(1em * 4);
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 4;
@@ -32,7 +34,7 @@
 
 .mat-mdc-button>.mat-icon {
   width: 100%;
-  margin: auto;
+  margin: 0px auto;
   font-size: 30px;
 }
 
@@ -42,13 +44,36 @@
   background-position: center;
 }
 
-.card-poster {
+.poster-wrapper {
   width: 100%;
-  aspect-ratio: 2 / 1.5;
-  height: auto;
-  object-fit: cover;
-  object-position: center;
+  @include mixins.flex($justify: center, $align: center);
+  position: relative;
+  overflow: hidden;
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  z-index: 0;
+}
+
+.poster-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
+  background: rgba(18, 11, 53, 0.65);
+  z-index: 1;
+}
+
+.card-poster {
+  width: 130px;
+  height: 90%;
+  z-index: 1;
   display: block;
+  box-shadow: 0px 0px 15px black;
+  border-radius: 4px;
 }
 
 .author {
@@ -58,10 +83,12 @@
   margin: 0;
 }
 
+.mat-mdc-card-content{
+    padding: 0px;
+}
+
 .content-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include mixins.flex();
 
   p {
     margin: 0;
@@ -69,8 +96,9 @@
 }
 
 .actions {
-  display: flex;
-  justify-content: space-between;
+  @include mixins.flex();
+  padding: 0px;
+  margin-top: auto;
 }
 
 .card {
@@ -87,6 +115,7 @@
       background-color: var(--mat-sys-primary);
       color: var(--mat-sys-on-primary);
     }
+
   }
 }
 

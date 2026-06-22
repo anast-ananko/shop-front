@@ -2,7 +2,9 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
+  margin-bottom: 65px;
+  padding: 0 10px;
 }
 
 .carousel-container {
@@ -10,8 +12,23 @@
   min-width: 0;
 }
 
-.mat-icon{
-  margin: 0px;
+swiper-container {
+  width: 100%;
+}
+
+swiper-slide {
+  width: 100%;
+  min-width: 270px;
+  height: auto;
+}
+
+app-product-card {
+  display: block;
+  width: 100%;
+}
+
+.mat-icon {
+  margin: 0;
   font-size: 24px;
 }
 
@@ -22,3 +39,20 @@
   height: 40px;
   padding: 0;
 }
+
+@media (max-width: 680px) {
+  .carousel-wrapper {
+    gap: 0;
+  }
+
+  .carousel-wrapper button {
+    display: none;
+  }
+
+  swiper-slide {
+    min-width: 0;
+    width: 100%;
+  }
+
+}
+

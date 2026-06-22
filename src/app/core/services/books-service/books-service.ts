@@ -1,11 +1,12 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
+import { map, Observable, tap } from 'rxjs';
+
 import { Book } from '../../../types/book.interface';
-import { TokenStorage } from '../../auth/token.storage';
-import { HttpHeaders } from '@angular/common/http';
+import { TokenStorage } from '../../auth/services/token.storage';
 import { Api } from '../../http/services/api/api';
 import { environment } from '../../http/environment/environment';
-import { map, Observable, tap } from 'rxjs';
 import { Product, ProductsResponse } from '../../../types/api.response';
+import { BooksFilters } from '../../../types/categories';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class BooksService {
   private apiService = inject(Api);
 
   readonly books = signal<Book[]>([]);
+  readonly filteredFromApi = signal<Book[]>([]);
   public searchValue = signal<string>('');
 
   private url = environment.apiUrl;
@@ -74,21 +76,27 @@ export class BooksService {
   }
 
   getBooks(): Observable<Book[]> {
-    const token = this.storage.getAppToken();
-
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
     return this.apiService
       .get<ProductsResponse>(
         `${this.url}/${this.project_key}/product-projections?limit=${this.limit}`,
-        headers,
       )
       .pipe(
         map((response) => response.results.map((product) => this.mapProductToBook(product))),
         tap((books) => this.books.set(books)),
       );
+  }
+
+  getBooksWithFilters(filters: BooksFilters = {}): Observable<Book[]> {
+    let url = `${this.url}/${this.project_key}/product-projections?limit=${this.limit}`;
+
+    if (filters.categoryId) {
+      url += `&where=categories(id="${filters.categoryId}")`;
+    }
+
+    return this.apiService.get<ProductsResponse>(url).pipe(
+      map((res) => res.results.map((p) => this.mapProductToBook(p))),
+      tap((books) => this.filteredFromApi.set(books)),
+    );
   }
 
   private mapProductToBook(product: Product): Book {
@@ -113,6 +121,7 @@ export class BooksService {
       stockStatus: String(getAttribute('stockStatus') ?? ''),
       rating: Number(getAttribute('rating') ?? 0),
       category: String(getAttribute('category') ?? ''),
+      subcategory: String(getAttribute('subcategory') ?? ''),
       reviews: Number(getAttribute('reviews') ?? 0),
       publisher: String(getAttribute('publisher') ?? ''),
       isFavorite: false,

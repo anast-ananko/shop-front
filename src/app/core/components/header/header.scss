@@ -1,3 +1,5 @@
+@use "../../../shared/styles/mixins.scss" as mixins;
+
 .header-wrapper {
   background-color: var(--mat-sys-primary);
   padding: 10px 0;
@@ -6,17 +8,14 @@
 .header {
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include mixins.flex();
   gap: 10px;
   height: 80px;
   background-color: var(--mat-sys-primary);
 }
 
 .logo-link {
-  display: flex;
-  align-items: center;
+  @include mixins.flex($justify: null, $align: center);
   gap: 10px;
   text-decoration: none;
 }
@@ -33,8 +32,7 @@
 }
 
 .header-nav {
-  display: flex;
-  align-items: center;
+  @include mixins.flex($justify: null, $align: center);
   gap: 30px;
 }
 
@@ -64,9 +62,7 @@
 }
 
 .auth-trigger {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include mixins.flex($justify: center, $align: center);
   gap: 5px;
   font-weight: 500;
   border-radius: 6px;
@@ -99,10 +95,10 @@
   }
 
   .header {
+    @include mixins.flex($justify: center, $align: center);
     max-width: 100%;
     padding: 0 10px;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 10px;
     height: 120px;
   }

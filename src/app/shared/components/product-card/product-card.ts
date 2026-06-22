@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { Book } from '../../../types/book.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -11,6 +11,7 @@ import { RouterLink } from '@angular/router';
   imports: [MatCardModule, MatButtonModule, MatIconModule, RouterLink],
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductCard {
   book = input<Book>();

@@ -13,8 +13,11 @@ export interface Book {
   stockStatus: string;
   rating: number;
   category: string;
+  subcategory: string
   reviews: number;
   publisher: string;
   isFavorite: boolean;
   isInCart: boolean;
 }
+
+export type SortOption = 'priceAsc' | 'priceDesc' | 'nameAsc' | 'nameDesc';

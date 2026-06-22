@@ -1,38 +1,36 @@
 @if (book(); as book) {
-  <mat-card class="card" appearance="outlined" [routerLink]="['/details', book.id]">
-    <mat-card-header>
-      <div
-        mat-card-avatar
-        class="header-image"
-        [style.background-image]="'url(' + book.imageUrl + ')'"
-      ></div>
+<mat-card class="card" appearance="outlined" [routerLink]="['/details', book.id]">
+  <mat-card-header>
+    <div mat-card-avatar class="header-image" [style.background-image]="'url(' + book.imageUrl + ')'"></div>
 
-      <button matButton class="favorite" (click)="favoriteToggled($event, book.id)">
-        <mat-icon> {{ book.isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
-      </button>
-    </mat-card-header>
+    <button matButton class="favorite" (click)="favoriteToggled($event, book.id)">
+      <mat-icon> {{ book.isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
+    </button>
+  </mat-card-header>
 
-    <mat-card-header class="header-title">
-      <mat-card-title>{{ book.title }}</mat-card-title>
-    </mat-card-header>
+  <mat-card-header class="header-title">
+    <mat-card-title>{{ book.title }}</mat-card-title>
+  </mat-card-header>
 
+  <div class="poster-wrapper" [style.--bg]="'url(' + book.imageUrl + ')'">
     <img mat-card-image class="card-poster" [src]="book.imageUrl" alt="{{ book.title }}" />
+  </div>
 
-    <mat-card-content>
-      <p class="author">
-        Author: {{ book.author }}
-      </p>
-      <div class="content-wrapper">
-        <p>Rating: {{ book.rating }}</p>
-        <p class="price">Price: {{ book.price }}$</p>
-      </div>
-    </mat-card-content>
+  <mat-card-content>
+    <p class="author">
+      Author: {{ book.author }}
+    </p>
+    <div class="content-wrapper">
+      <p>Rating: {{ book.rating }}</p>
+      <p class="price">Price: {{ book.price }}$</p>
+    </div>
+  </mat-card-content>
 
-    <mat-card-actions class="actions">
-      <p>In stock: {{ book.copiesLeft }}</p>
-      <button matButton (click)="cartToggled($event, book.id)">
-        <mat-icon>{{ book.isInCart ? 'remove_shopping_cart' : 'add_shopping_cart' }}</mat-icon>
-      </button>
-    </mat-card-actions>
-  </mat-card>
+  <mat-card-actions class="actions">
+    <p>In stock: {{ book.copiesLeft }}</p>
+    <button matButton (click)="cartToggled($event, book.id)">
+      <mat-icon>{{ book.isInCart ? 'remove_shopping_cart' : 'add_shopping_cart' }}</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
 }

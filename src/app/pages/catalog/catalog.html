@@ -1,1 +1,29 @@
-<p>catalog works!</p>
+<div class="catalog-controls">
+  <app-category-bar />
+
+  <mat-form-field appearance="outline" class="sort-select">
+    <mat-label>Sort by</mat-label>
+
+    <mat-select [value]="sortBy()" (selectionChange)="setSort($event.value)">
+      <mat-option value="nameAsc">Name A → Z</mat-option>
+      <mat-option value="nameDesc">Name Z → A</mat-option>
+      <mat-option value="priceAsc">Price ↑</mat-option>
+      <mat-option value="priceDesc">Price ↓</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+@if (loadingBooks()) {
+  <div class="loader">Loading books...</div>
+} @else if (errorBooks()) {
+  <div class="error">
+    {{ errorBooks() }}
+  </div>
+} @else {
+  <app-paginated-books-catalog
+    [currentPageSize]="pageSize()"
+    [filteredBooks]="sortedBooks()"
+    [title]="'Books'"
+    [emptyMessage]="'No books'"
+  />
+}
