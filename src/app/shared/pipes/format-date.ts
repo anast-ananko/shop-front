@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
 
 type DateFormat = 'short' | 'long' | 'full';
 
@@ -6,6 +6,8 @@ type DateFormat = 'short' | 'long' | 'full';
   name: 'formatDate',
 })
 export class FormatDatePipe implements PipeTransform {
+  private locale = inject(LOCALE_ID);
+
   transform(value: string | Date, format: DateFormat = 'long'): string {
     if (!value) return '';
 
@@ -30,6 +32,6 @@ export class FormatDatePipe implements PipeTransform {
       },
     };
 
-    return new Intl.DateTimeFormat('en-GB', optionsMap[format]).format(date);
+    return new Intl.DateTimeFormat(this.locale, optionsMap[format]).format(date);
   }
 }

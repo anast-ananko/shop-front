@@ -98,6 +98,7 @@
 .actions {
   @include mixins.flex();
   padding: 0px;
+  margin-top: auto;
 }
 
 .card {
