@@ -5,6 +5,7 @@ import { AuthService } from '../../auth/services/auth.service';
 import { BooksService } from '../books-service/books-service';
 import { TokenService } from '../../auth/services/token-service';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -15,8 +16,8 @@ export class AppInitializerService {
 
   async load(): Promise<void> {
     await firstValueFrom(this.tokenService.getAccessToken());
+    await firstValueFrom(this.authService.initAuthFlow());
     await firstValueFrom(this.booksService.getBooks());
 
-    this.authService.initAuthFlow();
   }
 }
