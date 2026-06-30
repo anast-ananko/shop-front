@@ -8,6 +8,7 @@ export class TokenStorage {
   private REF_KEY = 'refresh_token';
 
   getCurrentToken() {
+    console.log("current token===>: ", this.getCurrentCustomerToken() ?? this.getCurrentAnonymousToken())
     return this.getCurrentCustomerToken() ??
       this.getCurrentAnonymousToken();
   }

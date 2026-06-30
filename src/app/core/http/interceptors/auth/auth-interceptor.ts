@@ -9,6 +9,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const tokenStorage = inject(TokenStorage);
   const token = tokenStorage.getCurrentToken();
 
+  console.log(token);
+
   if (token) {
     req = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${token}`),

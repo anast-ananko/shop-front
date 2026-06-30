@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable } from '@angular/core';
-import { Observable, switchMap, tap } from 'rxjs';
+import { map, Observable, of, switchMap, tap } from 'rxjs';
 
 import { environment } from '../../http/environment/environment';
 import { TokenStorage } from './token.storage';
@@ -28,18 +28,21 @@ export class AuthService {
 
   initAuthFlow() {
     const customerToken = this.storage.getCurrentCustomerToken();
+
     if (customerToken) {
-      this.customerService
-        .getMe()
-        .pipe(tap((customer) => this.customerService.customer.set(customer)))
-        .subscribe();
-      return;
+      return this.customerService.getMe().pipe(
+        tap((customer) => this.customerService.customer.set(customer)),
+        map(() => customerToken),
+      );
     }
 
     const anonToken = this.storage.getCurrentAnonymousToken();
-    if (anonToken) return;
 
-    this.tokenService.getAnonymousToken().subscribe();
+    if (anonToken) {
+      return of(anonToken);
+    }
+
+    return this.tokenService.getAnonymousToken().pipe(map((token) => token.access_token));
   }
 
   signup(data: SignupRequest): Observable<SignupResponse> {
@@ -57,7 +60,9 @@ export class AuthService {
   }
 
   signIn(signupPayload: { email: string; password: string }) {
-    return this.tokenService.getCustomerToken(signupPayload).pipe(switchMap(() => this.customerService.getMe()));
+    return this.tokenService
+      .getCustomerToken(signupPayload)
+      .pipe(switchMap(() => this.customerService.getMe()));
   }
 
   logout(): void {
@@ -67,5 +72,4 @@ export class AuthService {
     this.tokenService.getAnonymousToken().subscribe();
     this.router.navigate(['/']);
   }
-
 }
