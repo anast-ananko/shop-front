@@ -8,3 +8,13 @@
 - **What I practiced:** Practiced Angular application initialization (`APP_INITIALIZER`), Signals, reactive state management, dependency injection, and authentication flow design.
 - **Time spent:** 4.5 hours
 - **AI usage:** Not used.
+
+
+## Part 11
+
+- **What was done:** Improved the authentication routing flow by adding a dedicated authentication entry page. Implemented role-based navigation so authenticated users are redirected to the Main page, while guests are presented with authentication options.
+- **Main challenge:** It was discovered that users could manually navigate to the `/auth` route, which previously displayed an empty page because only the `/auth/login` and `/auth/registration` routes existed.
+- **Solution:** Introduced a dedicated parent authentication route that serves as an entry point for guests, displays navigation to Login and Registration, and redirects authenticated users to their Main page. Updated the nested routing structure to provide a consistent navigation experience.
+- **What I practiced:** Practiced Angular Router configuration, nested routes, route guards, conditional rendering, and authentication flow design.
+- **Time spent:** 1,5 hours
+- **AI usage:** Not used.
