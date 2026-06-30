@@ -2,4 +2,13 @@
   display: block;
   width: 100%;
   align-self: flex-start;
+
+  .wrapper-link{
+    width: 100%;
+    padding-top: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
 }
