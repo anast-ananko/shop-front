@@ -11,6 +11,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Search } from '../../../shared/components/search/search';
 import { AuthService } from '../../auth/services/auth.service';
 import { BooksService } from '../../services/books-service/books-service';
+import { TokenService } from '../../auth/services/token-service';
 
 @Component({
   selector: 'app-header',
@@ -32,11 +33,13 @@ import { BooksService } from '../../services/books-service/books-service';
 })
 export class Header {
   authService = inject(AuthService);
+  tokenService = inject(TokenService);
   booksService = inject(BooksService);
 
   cartCount = input(0);
   logoutClick = output<void>();
   booksInCart = this.booksService.booksInCart;
+  isAuth = this.tokenService.isAuth;
 
   logout() {
     this.authService.logout();

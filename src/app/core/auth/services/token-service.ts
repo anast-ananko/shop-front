@@ -1,5 +1,5 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { AppToken, Token } from '../models';
 import { Api } from '../../http/services/api/api';
@@ -17,6 +17,11 @@ export class TokenService {
   private secret = environment.clientSecret;
   private scope = environment.scope;
   private storage = inject(TokenStorage);
+
+  customerToken = signal<string | null>(this.storage.getCurrentCustomerToken());
+
+  isAuth = computed(() => this.customerToken() !== null);
+  isGuest = computed(() => this.customerToken() === null);
 
   private getClientCredentialsBody(): string {
     return new HttpParams()
@@ -44,7 +49,6 @@ export class TokenService {
       )
       .pipe(
         tap((res) => {
-          // console.log("access token: ", res.access_token)
           this.storage.setCurrentAppToken(res.access_token);
         }),
       );
@@ -59,8 +63,7 @@ export class TokenService {
       )
       .pipe(
         tap((res) => {
-          console.log('anonymous token: ', res.access_token);
-          console.log('refresh token: ', res.access_token);
+          this.customerToken.set(null);
           this.storage.setCurrentAnonymousToken(res.access_token);
           this.storage.setCurrentRefreshToken(res.refresh_token);
         }),
@@ -82,6 +85,7 @@ export class TokenService {
       )
       .pipe(
         tap((res) => {
+          this.customerToken.set(res.access_token);
           this.storage.setCurrentCustomerToken(res.access_token);
           this.storage.setCurrentRefreshToken(res.refresh_token);
           this.storage.deleteCurrentAnonymousToken();

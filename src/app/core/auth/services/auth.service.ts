@@ -1,5 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
-import { computed, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { map, Observable, of, switchMap, tap } from 'rxjs';
 
 import { environment } from '../../http/environment/environment';
@@ -23,8 +23,6 @@ export class AuthService {
   private router = inject(Router);
   private tokenService = inject(TokenService);
 
-  isAuth = computed(() => !!this.storage.getCurrentCustomerToken());
-  isGuest = computed(() => this.storage.getCurrentCustomerToken() === null);
 
   initAuthFlow() {
     const customerToken = this.storage.getCurrentCustomerToken();
