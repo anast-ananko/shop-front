@@ -1,13 +1,16 @@
 import { Routes } from '@angular/router';
 
-import { Auth } from '../pages/auth/auth';
 import { authRequiredGuard } from '../core/auth/guards/auth-required-guard';
 import { guestGuard } from '../core/auth/guards/guest-guard';
 
 export const authRoutes: Routes = [
   {
     path: 'auth',
-    component: Auth,
+    canActivate: [guestGuard],
+    loadComponent: async () => {
+          const m = await import('../pages/auth/auth');
+          return m.Auth;
+        },
     children: [
       {
         path: 'registration',
