@@ -24,6 +24,8 @@ export class ProductCard {
 
   cartToggled(e: Event, id: string): void {
     e.stopPropagation();
+    const isInCart = this.bookService.isBookInCart(id);
+    console.log(isInCart);
     this.bookService.toggleCart(id);
   }
 }

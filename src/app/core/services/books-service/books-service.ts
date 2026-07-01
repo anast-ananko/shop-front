@@ -61,6 +61,10 @@ export class BooksService {
     );
   }
 
+  isBookInCart(id: string): boolean {
+    return this.books().some((book) => book.id === id && book.isInCart);
+  }
+
   toggleCart(id: string): void {
     this.books.update((books) =>
       books.map((book) => (book.id === id ? { ...book, isInCart: !book.isInCart } : book)),
