@@ -6,7 +6,6 @@ import { guestGuard } from '../core/auth/guards/guest-guard';
 export const authRoutes: Routes = [
   {
     path: 'auth',
-    canActivate: [guestGuard],
     loadComponent: async () => {
           const m = await import('../pages/auth/auth');
           return m.Auth;
