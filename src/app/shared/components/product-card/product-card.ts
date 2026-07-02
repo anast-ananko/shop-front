@@ -28,5 +28,5 @@ export class ProductCard {
     console.log(isInCart);
     this.bookService.toggleCart(id);
   }
-  
+
 }

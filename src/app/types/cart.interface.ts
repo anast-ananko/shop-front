@@ -2,11 +2,18 @@ export interface Cart {
   id: string;
   version: number;
   lineItems: LineItem[];
-  totalLineItemQuantity?: number;
+  totalPrice: Price;
+  totalLineItemQuantity: number;
 }
 
 export interface LineItem {
   id: string;
   productId: string;
   quantity: number;
+}
+
+export interface Price {
+  currencyCode: string;
+  centAmount: number;
+  fractionDigits: number;
 }
