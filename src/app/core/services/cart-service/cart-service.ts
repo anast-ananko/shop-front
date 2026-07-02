@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { catchError, Observable, tap } from 'rxjs';
 import { Cart } from '../../../types/cart.interface';
 import { environment } from '../../http/environment/environment';
@@ -11,16 +11,31 @@ export class CartService {
   private apiService = inject(Api);
   private url = environment.apiUrl;
   private project_key = environment.projectKey;
+  readonly cart = signal<Cart | null>(null);
+  private readonly CART_STORAGE_KEY = 'cart';
 
-  cart = signal<Cart | null>(null);
+  constructor() {
+    effect(() => {
+      const cart = this.cart();
+
+      if (!cart) {
+        localStorage.removeItem(this.CART_STORAGE_KEY);
+        return;
+      }
+
+      const cartData = JSON.stringify({
+        id: cart.id,
+        anonymousId: cart.anonymousId,
+      });
+
+      localStorage.setItem(this.CART_STORAGE_KEY, cartData);
+    });
+  }
 
   getActiveCart(): Observable<Cart> {
-    return this.apiService.get<Cart>(`${this.url}/${this.project_key}/me/active-cart`).pipe(
-      tap((cart) => {
-        this.cart.set(this.mapCart(cart));
-        console.log('Active cart fetched:', this.cart());
-      }),
-    );
+    return this.apiService
+      .get<Cart>(`${this.url}/${this.project_key}/me/active-cart`)
+      .pipe(tap((cart) => this.cart.set(this.mapCart(cart))));
   }
 
   createCart(): Observable<Cart> {
@@ -29,12 +44,7 @@ export class CartService {
         currency: 'USD',
         country: 'US',
       })
-      .pipe(
-        tap((cart) => {
-          this.cart.set(this.mapCart(cart));
-          console.log('Cart created:', this.cart());
-        }),
-      );
+      .pipe(tap((cart) => this.cart.set(this.mapCart(cart))));
   }
 
   initCart(): Observable<Cart> {
@@ -50,6 +60,7 @@ export class CartService {
     return {
       id: cart.id,
       version: cart.version,
+      anonymousId: cart.anonymousId,
       lineItems: cart.lineItems.map((item) => ({
         id: item.id,
         productId: item.productId,

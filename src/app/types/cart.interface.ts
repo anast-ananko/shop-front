@@ -4,6 +4,7 @@ export interface Cart {
   lineItems: LineItem[];
   totalPrice: Price;
   totalLineItemQuantity: number;
+  anonymousId?: string;
 }
 
 export interface LineItem {
