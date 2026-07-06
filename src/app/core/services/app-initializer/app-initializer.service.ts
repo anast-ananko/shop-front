@@ -17,7 +17,8 @@ export class AppInitializerService {
   async load(): Promise<void> {
     await firstValueFrom(this.tokenService.getAccessToken());
     await firstValueFrom(this.authService.initAuthFlow());
-    await firstValueFrom(this.booksService.getBooks());
+    // await firstValueFrom(this.booksService.getBooks());
+    await firstValueFrom(this.booksService.initStore());
 
   }
 }
