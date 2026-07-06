@@ -1,1 +1,17 @@
+@if(isAuthRootPage()){
+
+@if(isAuth()){
+<div class="wrapper-link">
+  <a matButton color="accent" [routerLink]="['/']"> Home </a>
+  <a matButton color="accent" [routerLink]="['/auth', 'profile']"> Your profile </a>
+</div>
+}@else {
+<div class="wrapper-link">
+  <a matButton color="accent" [routerLink]="['/auth', 'sign-in']"> Login </a>
+  <a matButton color="accent" [routerLink]="['/auth', 'registration']"> Registration </a>
+</div>
+}
+
+}
+
 <router-outlet>

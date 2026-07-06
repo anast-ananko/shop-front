@@ -1,21 +1,25 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { forkJoin, map, Observable, tap } from 'rxjs';
 
 import { Book } from '../../../types/book.interface';
-import { TokenStorage } from '../../auth/services/token.storage';
+// import { TokenStorage } from '../../auth/services/token.storage';
 import { Api } from '../../http/services/api/api';
 import { environment } from '../../http/environment/environment';
 import { Product, ProductsResponse } from '../../../types/api.response';
 import { BooksFilters } from '../../../types/categories';
+import { Cart } from '../../../types/cart.interface';
+import { CartService } from '../cart-service/cart-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BooksService {
-  private storage = inject(TokenStorage);
+  // private storage = inject(TokenStorage);
   private apiService = inject(Api);
+  private cartService = inject(CartService);
 
   readonly books = signal<Book[]>([]);
+  readonly cart = signal<Cart | null>(null);
   readonly filteredFromApi = signal<Book[]>([]);
   public searchValue = signal<string>('');
 
@@ -59,6 +63,10 @@ export class BooksService {
     this.books.update((books) =>
       books.map((book) => (book.id === id ? { ...book, isFavorite: !book.isFavorite } : book)),
     );
+  }
+
+  isBookInCart(id: string): boolean {
+    return this.books().some((book) => book.id === id && book.isInCart);
   }
 
   toggleCart(id: string): void {
@@ -127,5 +135,12 @@ export class BooksService {
       isFavorite: false,
       isInCart: false,
     };
+  }
+
+  initStore() {
+    return forkJoin([
+      this.getBooks(),
+      this.cartService.initCart()
+    ]);
   }
 }
