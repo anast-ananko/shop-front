@@ -1,6 +1,6 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
-import { catchError, Observable, tap } from 'rxjs';
-import { Cart } from '../../../types/cart.interface';
+import { catchError, map, Observable, tap } from 'rxjs';
+import { Cart, CartStorage } from '../../../types/cart.interface';
 import { environment } from '../../http/environment/environment';
 import { Api } from '../../http/services/api/api';
 
@@ -47,7 +47,26 @@ export class CartService {
       .pipe(tap((cart) => this.cart.set(this.mapCart(cart))));
   }
 
+  getCartById(cartId: string): Observable<Cart> {
+    return this.apiService.get<Cart>(`/carts/${cartId}`).pipe(map((cart) => this.mapCart(cart)));
+  }
+
   initCart(): Observable<Cart> {
+    const savedCart = localStorage.getItem(this.CART_STORAGE_KEY);
+    console.log(savedCart);
+
+    if (savedCart) {
+      console.log("its works");
+      const { id } = JSON.parse(savedCart) as CartStorage;
+      return this.getCartById(id).pipe(
+        catchError(() => this.getActiveCart()),
+        catchError((error) => {
+          if (error.status === 404) return this.createCart();
+          throw error;
+        }),
+      );
+    }
+
     return this.getActiveCart().pipe(
       catchError((error) => {
         if (error.status === 404) return this.createCart();

@@ -18,3 +18,9 @@ export interface Price {
   centAmount: number;
   fractionDigits: number;
 }
+
+export interface CartStorage {
+  id: string;
+  anonymousId?: string;
+
+}
